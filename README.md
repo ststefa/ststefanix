@@ -58,13 +58,3 @@ Your current nix-darwin configuration's structure should be as follows:
 └── scripts
     └── darwin_set_proxy.py  # a script to set http proxy for nix & homebrew.
 ```
-
-## Notes on Network Proxy
-
-If you are in a network environment that requires proxy(such as China), you may need to set up proxy for nix and homebrew.
-
-Related files:
-
-- [rich-demo/scripts/darwin_set_proxy.py](/rich-demo/scripts/darwin_set_proxy.py)
-- [rich-demo/Justfile](/rich-demo/Justfile)
-- [rich-demo - homebrew's mirror settings](/rich-demo/modules/homebrew-mirror.nix)
