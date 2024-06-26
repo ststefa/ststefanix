@@ -50,6 +50,8 @@
     gnutar
     go #dbcicd
     go-task #dbcicd
+    golangci-lint #dbcicd
+    golangci-lint-langserver #dbcicd
     jq
     just
     k3d
@@ -195,7 +197,7 @@
       "bartender"
       "choosy"
       "deepl"
-      #"docker"
+      "docker"
       "element"
       "elgato-control-center"
       "evernote"
