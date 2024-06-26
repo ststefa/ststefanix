@@ -2,7 +2,7 @@
 
   ##################################################################################################################
   #
-  # This was derived by ststefa from github.com:ryan4yin/nix-darwin-kickstarter.git/rich-demo
+  # This was derived by @ststefa from github.com:ryan4yin/nix-darwin-kickstarter.git/rich-demo
   #
   ##################################################################################################################
 
