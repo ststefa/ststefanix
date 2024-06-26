@@ -15,6 +15,10 @@
   programs.git = {
     enable = true;
     lfs.enable = true;
+    ignores = [
+      "*~"
+      ".DS_Store"
+    ];
 
     # System level is taken by global config
     #userName = username;
@@ -33,7 +37,7 @@
     extraConfig = {
       init.defaultBranch = "main";
       push.autoSetupRemote = true;
-      pull.rebase = true;
+      #pull.rebase = false;
     };
 
     # signing = {
