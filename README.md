@@ -1,19 +1,21 @@
 # Nix Darwin Kickstarter - Rich Demo
 
- An extensive demo featuring a plethora of configurations that can serve as a reference for your setup. This was derived by ststefa from [github.com/ryan4yin/nix-darwin-kickstarter/rich-demo](https://github.com/ryan4yin/nix-darwin-kickstarter/tree/main/rich-demo).
+ This was derived by ststefa from <https://github.com/ryan4yin/nix-darwin-kickstarter/tree/main/rich-demo>.
+
+ An extensive demo featuring a plethora of configurations that can serve as a reference for your setup.
 
  Exercise caution, as it may **OVERWRITE** your system configuration. **DO NOT** deploy it directly to your system.
 
 ## How to Start
 
-1. Install Nix package manager via [Nix Official](https://nixos.org/download.html#nix-install-macos).
+1. Install Nix package manager via <https://nixos.org/download.html#nix-install-macos>.
 
 2. Install Homebrew, see <https://brew.sh/>
 
    1. Homebrew is required to install most of the GUI apps, App Store's apps, and some CLI apps that are not available in nix's package repository `nixpkgs`.
 
 3. Read all the files in this repository, and understand what they do.
-   1. If you have trouble understanding, [ryan4yin/nixos-and-flakes-book](https://github.com/ryan4yin/nixos-and-flakes-book) is a good resource to learn nix and flakes.
+   1. If you have trouble understanding, <https://github.com/ryan4yin/nixos-and-flakes-book> is a good resource to learn nix and flakes.
 
 4. Copy and CUSTOMIZE the configuration you need from this demo to your own configuration.
 
@@ -31,7 +33,7 @@
     ./result/sw/bin/darwin-rebuild switch --flake .#<hostname>
     ```
 
-47. Run `just deploy` in the root of your nix configuration to deploy your configuration.
+7. Run `just deploy` in the root of your nix configuration to deploy your configuration.
 
 ## Configuration Structure
 
