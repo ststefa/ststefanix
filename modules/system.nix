@@ -21,6 +21,10 @@
     '';
 
     defaults = {
+      # The options are fully documented at https://daiderd.com/nix-darwin/manual/index.html
+
+      # Current system settings can be obtained using the "defaults read" command. E.g. "dock" seetings correspond to "defaults read com.apple.dock"
+
       # menuExtraClock.Show24Hour = true;  # show 24 hour clock
 
       # customize dock
@@ -28,11 +32,11 @@
         autohide = false;
         show-recents = false;  # disable recent apps
 
-        # customize Hot Corners(触发角, 鼠标移动到屏幕角落时触发的动作)
-        wvous-tl-corner = 2;  # top-left - Mission Control
-        wvous-tr-corner = 13;  # top-right - Lock Screen
-        wvous-bl-corner = 3;  # bottom-left - Application Windows
-        wvous-br-corner = 4;  # bottom-right - Desktop
+        # customize Hot Corners
+        wvous-tl-corner = 1;
+        wvous-tr-corner = 6;
+        wvous-bl-corner = 1;
+        wvous-br-corner = 14;
       };
 
       # customize finder
@@ -46,7 +50,7 @@
       };
 
       # customize trackpad
-      # ststsefa: Removed because it bdisables three-finger-gestures
+      # ststsefa: Removed because it disables three-finger-gestures
       # resume at https://github.com/yannbertrand/macos-defaults/blob/main/docs/trackpad/trackpadthreefingerdrag.md
       #trackpad = {
       #  # tap - 轻触触摸板, click - 点击触摸板
@@ -71,7 +75,7 @@
         # sets how long it takes before it starts repeating.
         InitialKeyRepeat = 15;  # normal minimum is 15 (225 ms), maximum is 120 (1800 ms)
         # sets how fast it repeats once it starts.
-        KeyRepeat = 3;  # normal minimum is 2 (30 ms), maximum is 120 (1800 ms)
+        KeyRepeat = 2;  # normal minimum is 2 (30 ms), maximum is 120 (1800 ms)
 
         NSAutomaticCapitalizationEnabled = false;  # disable auto capitalization(自动大写)
         NSAutomaticDashSubstitutionEnabled = false;  # disable auto dash substitution(智能破折号替换)
@@ -201,14 +205,7 @@
 
   # Fonts
   fonts = {
-    # will be removed after this PR is merged:
-    #   https://github.com/LnL7/nix-darwin/pull/754
-    fontDir.enable = true;
-
-    # will change to `fonts.packages` after this PR is merged:
-    #   https://github.com/LnL7/nix-darwin/pull/754
-    fonts = with pkgs; [
-    # packages = with pkgs; [
+    packages = with pkgs; [
       # icon fonts
       material-design-icons
       font-awesome
