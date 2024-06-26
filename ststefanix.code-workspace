@@ -1,0 +1,60 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"type": "shell",
+				"command": "just",
+				"args": [
+					"history"
+				],
+				"label": "just: history",
+				"problemMatcher": [
+					"$tsc"
+				],
+				"presentation": {
+					"panel": "dedicated",
+					"showReuseMessage": false,
+					"clear": false
+				}
+			},
+			{
+				"type": "shell",
+				"command": "just",
+				"args": [
+					"update-flake"
+				],
+				"label": "just: update-flake",
+				"problemMatcher": [
+					"$tsc"
+				],
+				"presentation": {
+					"panel": "dedicated",
+					"showReuseMessage": false,
+					"clear": false
+				}
+			},
+			{
+				"type": "shell",
+				"command": "just",
+				"args": [
+					"apply-flake"
+				],
+				"label": "just: apply-flake",
+				"problemMatcher": [
+					"$tsc"
+				],
+				"presentation": {
+					"panel": "dedicated",
+					"showReuseMessage": false,
+					"clear": false
+				}
+			}
+		]
+	}
+}
