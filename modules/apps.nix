@@ -60,6 +60,7 @@
     kubectl
     kubelogin-oidc #dbcicd
     kubernetes-helm
+    # kubeval #dbcicd #misses important errors
     kustomize
     lefthook #dbcicd
     less
