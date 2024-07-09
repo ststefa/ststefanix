@@ -37,7 +37,8 @@
     extraConfig = {
       init.defaultBranch = "main";
       push.autoSetupRemote = true;
-      #pull.rebase = false;
+      pull.rebase = "merges";
+      pull.ff = "only";
     };
 
     # signing = {
