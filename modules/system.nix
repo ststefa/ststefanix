@@ -50,7 +50,7 @@
       };
 
       # customize trackpad
-      # ststsefa: Removed because it disables three-finger-gestures
+      # ststefa: Removed because it disables three-finger-gestures
       # resume at https://github.com/yannbertrand/macos-defaults/blob/main/docs/trackpad/trackpadthreefingerdrag.md
       #trackpad = {
       #  # tap - 轻触触摸板, click - 点击触摸板
@@ -65,7 +65,7 @@
       NSGlobalDomain = {
         # `defaults read NSGlobalDomain "xxx"`
         "com.apple.swipescrolldirection" = true;  # enable natural scrolling(default to true)
-        "com.apple.sound.beep.feedback" = 0;  # disable beep sound when pressing volume up/down key
+        "com.apple.sound.beep.feedback" = 1;  # disable beep sound when pressing volume up/down key
         #AppleInterfaceStyle = "Dark";  # dark mode
         #AppleKeyboardUIMode = 3;  # Mode 3 enables full keyboard control.
         #ApplePressAndHoldEnabled = true;  # enable press and hold
