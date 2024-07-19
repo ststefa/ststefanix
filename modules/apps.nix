@@ -60,7 +60,7 @@
     kubectl
     kubelogin-oidc #dbcicd
     kubernetes-helm
-    # kubeval #dbcicd #misses important errors
+    kubeval #dbcicd #misses important errors
     kustomize
     lefthook #dbcicd
     less
@@ -91,6 +91,7 @@
     stern
     tcpdump
     terraform
+    tldr
     tree
     unzip
     vendir
@@ -212,6 +213,7 @@
       "signal"
       "telegram"
       "transmit"
+      "wifi-explorer"
       "wireshark"
     ];
   };
