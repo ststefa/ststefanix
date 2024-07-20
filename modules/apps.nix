@@ -194,7 +194,6 @@
       # Development
       #"insomnia" # REST client
 
-      # ststefa
       "aldente"
       "bartender"
       "choosy"
@@ -208,6 +207,7 @@
       "iterm2"
       "launchcontrol"
       "little-snitch"
+      "obsidian"
       "openlens"
       "paletro"
       "signal"
