@@ -52,6 +52,7 @@
     go-task #dbcicd
     golangci-lint #dbcicd
     golangci-lint-langserver #dbcicd
+    jfrog-cli #dbcicd
     jq
     just
     k3d
