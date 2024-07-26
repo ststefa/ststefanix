@@ -113,9 +113,10 @@
     enable = true;
 
     onActivation = {
-      autoUpdate = false; # runs an brew update on any darwin-rebuild. Too slow.
+      autoUpdate = true; # runs an brew update on any darwin-rebuild. Too slow.
       # 'zap': uninstalls all formulae(and related files) not listed here.
       cleanup = "zap";
+      upgrade = true;
     };
 
     # Applications to install from Mac App Store using mas.
@@ -175,6 +176,10 @@
       #"readline"
     ];
 
+    #caskArgs = { # Error: "The option `homebrew.caskArgs.greedy' does not exist."
+    #  greedy = true;
+    #};
+
     # `brew install --cask`
     # TODO Feel free to add your favorite apps here.
     casks = [
@@ -194,28 +199,94 @@
 
       # Development
       #"insomnia" # REST client
-
-      "aldente"
-      "bartender"
-      "choosy"
-      "deepl"
-      "docker"
-      "element"
-      "elgato-control-center"
-      "evernote"
-      "hammerspoon"
-      "istat-menus"
-      "iterm2"
-      "launchcontrol"
-      "little-snitch"
-      "obsidian"
-      "openlens"
-      "paletro"
-      "signal"
-      "telegram"
-      "transmit"
-      "wifi-explorer"
-      "wireshark"
+      {
+        name = "aldente";
+        greedy = true;
+      }
+      {
+        name = "bartender";
+        greedy = true;
+      }
+      {
+        name = "choosy";
+        greedy = true;
+      }
+      {
+        name = "deepl";
+        greedy = true;
+      }
+      {
+        name = "docker";
+        greedy = true;
+      }
+      {
+        name = "element";
+        greedy = true;
+      }
+      {
+        name = "elgato-control-center";
+        greedy = true;
+      }
+      {
+        name = "evernote";
+        greedy = true;
+      }
+      {
+        name = "hammerspoon";
+        greedy = true;
+      }
+      {
+        name = "istat-menus";
+        greedy = true;
+      }
+      {
+        name = "iterm2";
+        greedy = true;
+      }
+      {
+        name = "launchcontrol";
+        greedy = true;
+      }
+      {
+        name = "little-snitch";
+        greedy = true;
+      }
+      {
+        name = "obsidian";
+        greedy = true;
+      }
+      {
+        name = "openlens";
+        greedy = true;
+      }
+      {
+        name = "paletro";
+        greedy = true;
+      }
+      {
+        name = "signal";
+        greedy = true;
+      }
+      {
+        name = "telegram";
+        greedy = true;
+      }
+      {
+        name = "transmit";
+        greedy = true;
+      }
+      {
+        name = "vivaldi"; # dbcicd, used as distinct browser for annoying OAUTH process
+        greedy = true;
+      }
+      {
+        name = "wifi-explorer";
+        greedy = true;
+      }
+      {
+        name = "wireshark";
+        greedy = true;
+      }
     ];
   };
 }
