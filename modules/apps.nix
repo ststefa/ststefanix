@@ -280,6 +280,10 @@
         greedy = true;
       }
       {
+        name = "unison";
+        greedy = true;
+      }
+      {
         name = "vivaldi"; # dbcicd, used as distinct browser for annoying OAUTH process
         greedy = true;
       }
