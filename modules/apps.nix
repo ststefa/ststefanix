@@ -166,16 +166,17 @@
       #"httpie" # http client
 
       # ststefa
-      #"openssl@3"
       "docker" # cli part of docker. Try using nix app?
-      "sqlite"
+      "imagemagick" # maybe switch to nix pkg
       #"iproute2mac" # requires python but that is handled by nix
-      "mpdecimal"
-      #"python@3.12" # handled by nix
       "kcl"
       "kcl-lsp"
+      "mpdecimal"
       #"mqttx-cli"
+      #"openssl@3"
+      #"python@3.12" # handled by nix
       #"readline"
+      "sqlite"
     ];
 
     #caskArgs = { # Error: "The option `homebrew.caskArgs.greedy' does not exist."
