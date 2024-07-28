@@ -69,7 +69,7 @@
     mas
     nats-top #dbcicd
     natscli #dbcicd
-    nixd # ni language server, used by vscode nix plugin
+    nixd # nix language server, used by vscode nix plugin
     nmap
     nnn # terminal file manager
     nodejs
