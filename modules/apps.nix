@@ -165,7 +165,7 @@
 
       # ststefa
       #"openssl@3"
-      #"docker" # cli part of docker, for cask see below. Try using nix app before enabling
+      #"docker" # cli part of docker, collides with cask (see below). Try using nix app?
       "sqlite"
       #"iproute2mac" # requires python but that is handled by nix
       "mpdecimal"
