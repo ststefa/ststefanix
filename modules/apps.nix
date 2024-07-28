@@ -165,11 +165,11 @@
 
       # ststefa
       #"openssl@3"
+      #"docker" # cli part of docker, for cask see below. Try using nix app before enabling
       "sqlite"
       #"iproute2mac" # requires python but that is handled by nix
       "mpdecimal"
       #"python@3.12" # handled by nix
-      #"xz"
       "kcl"
       "kcl-lsp"
       #"mqttx-cli"
