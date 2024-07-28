@@ -289,10 +289,11 @@
         name = "vivaldi"; # dbcicd, used as distinct browser for annoying OAUTH process
         greedy = true;
       }
-      {
-        name = "wifi-explorer";
-        greedy = true;
-      }
+      # requires license, installed via appstore
+      #{
+      #  name = "wifi-explorer";
+      #  greedy = true;
+      #}
       {
         name = "wireshark";
         greedy = true;
