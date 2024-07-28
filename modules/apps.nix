@@ -115,7 +115,9 @@
     onActivation = {
       autoUpdate = true; # runs an brew update on any darwin-rebuild. Too slow.
       # 'zap': uninstalls all formulae(and related files) not listed here.
-      cleanup = "zap";
+      #cleanup = "zap";
+      # I need to keep surplus formulae for now (i.e., until a way is found to handle formulae device-secific)
+      cleanup = "none";
       upgrade = true;
     };
 
@@ -165,7 +167,7 @@
 
       # ststefa
       #"openssl@3"
-      #"docker" # cli part of docker, collides with cask (see below). Try using nix app?
+      "docker" # cli part of docker. Try using nix app?
       "sqlite"
       #"iproute2mac" # requires python but that is handled by nix
       "mpdecimal"
