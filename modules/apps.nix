@@ -204,6 +204,10 @@
         greedy = true;
       }
       {
+        name = "apparency";
+        greedy = true;
+      }
+      {
         name = "bartender";
         greedy = true;
       }
