@@ -94,6 +94,8 @@
     terraform
     tldr
     tree
+    unixtools.nettools
+    unixtools.procps
     unzip
     vendir
     vscode
