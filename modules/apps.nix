@@ -139,11 +139,14 @@
       "Affinity Designer 2" = 1616831348;
       "Affinity Photo 2" = 1616822987;
       "Affinity Publisher 2" = 1606941598;
+      "ColorSlurp" = 1287239339;
       "Consent-O-Matic" = 1606897889;
+      "Core Tunnel" = 1354318707;
       "EasyFind" = 411673888;
       "Free Ruler" = 1483172210;
       "Gapplin" = 768053424;
       "HazeOver" = 430798174;
+      "Luminar Neo - AI Foto-Editor" = 1584373150;
       "Meeter" = 1510445899;
       "Microsoft Remote Desktop" = 1295203466;
       "Msg Viewer Pro" = 1019539949;
@@ -170,6 +173,7 @@
       # ststefa
       "docker" # cli part of docker. Try using nix app?
       "imagemagick" # maybe switch to nix pkg
+      "openjdl@21" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk
       #"iproute2mac" # requires python but that is handled by nix
       "kcl"
       "kcl-lsp"
@@ -217,7 +221,23 @@
         greedy = true;
       }
       {
+        name = "betterdisplay";
+        greedy = true;
+      }
+      {
+        name = "betterzip";
+        greedy = true;
+      }
+      {
         name = "choosy";
+        greedy = true;
+      }
+      {
+        name = "chromium";
+        greedy = true;
+      }
+      {
+        name = "db-browser-for-sqlite";
         greedy = true;
       }
       {
@@ -232,12 +252,34 @@
         name = "element";
         greedy = true;
       }
+      # Only hudson
+      #{
+      #  name = "elgato-camera-hub";
+      #  greedy = true;
+      #}
       {
         name = "elgato-control-center";
         greedy = true;
       }
+      # Only hudson
+      #{
+      #  name = "elgato-stream-deck";
+      #  greedy = true;
+      #}
       {
         name = "evernote";
+        greedy = true;
+      }
+      {
+        name = "figma";
+        greedy = true;
+      }
+      {
+        name = "gather";
+        greedy = true;
+      }
+      {
+        name = "gimp";
         greedy = true;
       }
       {
@@ -261,6 +303,18 @@
         greedy = true;
       }
       {
+        name = "macfuse";
+        greedy = true;
+      }
+      #{
+      #  name = "miro";
+      #  greedy = true;
+      #}
+      {
+        name = "mqttx";
+        greedy = true;
+      }
+      {
         name = "obsidian";
         greedy = true;
       }
@@ -273,34 +327,90 @@
         greedy = true;
       }
       {
+        name = "qlmarkdown";
+        greedy = true;
+      }
+      {
+        name = "qlstephen";
+        greedy = true;
+      }
+      {
+        name = "quicklook-csv";
+        greedy = true;
+      }
+      {
+        name = "quicklook-json";
+        greedy = true;
+      }
+      # Required for AWS session manager
+      {
+        name = "session-manager-plugin";
+        greedy = true;
+      }
+      {
+        name = "sf-symbols";
+        greedy = true;
+      }
+      {
         name = "signal";
+        greedy = true;
+      }
+      #{
+      #  name = "slack";
+      #  greedy = true;
+      #}
+      #{
+      #  name = "snapmaker-luban";
+      #  greedy = true;
+      #}
+      {
+        name = "spotify";
+        greedy = true;
+      }
+      {
+        name = "suspicious-package";
         greedy = true;
       }
       {
         name = "telegram";
         greedy = true;
       }
+      #{
+      #  name = "tor-browser";
+      #  greedy = true;
+      #}
       {
         name = "transmit";
         greedy = true;
       }
+      #{
+      #  name = "tunnelblick";
+      #  greedy = true;
+      #}
       {
         name = "unison";
+        greedy = true;
+      }
+      {
+        name = "veracrypt";
         greedy = true;
       }
       {
         name = "vivaldi"; # dbcicd, used as distinct browser for annoying OAUTH process
         greedy = true;
       }
-      # requires license, installed via appstore
-      #{
-      #  name = "wifi-explorer";
-      #  greedy = true;
-      #}
+      {
+        name = "vlc";
+        greedy = true;
+      }
       {
         name = "wireshark";
         greedy = true;
       }
+      #{
+      #  name = "zoom";
+      #  greedy = true;
+      #}
     ];
   };
 }
