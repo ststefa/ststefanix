@@ -30,6 +30,7 @@
     argocd
     argocd-autopilot
     azure-cli
+    bat
     bc
     coreutils
     cowsay
@@ -231,10 +232,11 @@
         name = "choosy";
         greedy = true;
       }
-      {
-        name = "chromium";
-        greedy = true;
-      }
+      # Cannot be opened by MacOS 2024-07-31)
+      #{
+      #  name = "chromium";
+      #  greedy = true;
+      #}
       {
         name = "core-tunnel";
         greedy = true;
