@@ -146,7 +146,6 @@
       "Free Ruler" = 1483172210;
       "Gapplin" = 768053424;
       "HazeOver" = 430798174;
-      "Luminar Neo - AI Foto-Editor" = 1584373150;
       "Meeter" = 1510445899;
       "Microsoft Remote Desktop" = 1295203466;
       "Msg Viewer Pro" = 1019539949;
@@ -175,8 +174,8 @@
       "imagemagick" # maybe switch to nix pkg
       "openjdl@21" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk
       #"iproute2mac" # requires python but that is handled by nix
-      "kcl"
-      "kcl-lsp"
+      "kcl" # a tool to create an abstratction layer for k8s manifests
+      "kcl-lsp" # kcl language server (for vscode)
       "mpdecimal"
       #"mqttx-cli"
       #"openssl@3"
