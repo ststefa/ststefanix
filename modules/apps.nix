@@ -141,7 +141,7 @@
       "Affinity Publisher 2" = 1606941598;
       "ColorSlurp" = 1287239339;
       "Consent-O-Matic" = 1606897889;
-      "Core Tunnel" = 1354318707;
+      #"Core Tunnel" = 1354318707; # Appstore version cannot do advanced things, see https://community.codinn.com/t/core-tunnel-difference-between-codinn-store-and-app-store-versions/4590 . Using cask instead.
       "EasyFind" = 411673888;
       "Free Ruler" = 1483172210;
       "Gapplin" = 768053424;
@@ -172,7 +172,7 @@
       # ststefa
       "docker" # cli part of docker. Try using nix app?
       "imagemagick" # maybe switch to nix pkg
-      "openjdl@21" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk
+      "openjdk@21" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk
       #"iproute2mac" # requires python but that is handled by nix
       "kcl" # a tool to create an abstratction layer for k8s manifests
       "kcl-lsp" # kcl language server (for vscode)
@@ -233,6 +233,10 @@
       }
       {
         name = "chromium";
+        greedy = true;
+      }
+      {
+        name = "core-tunnel";
         greedy = true;
       }
       {
@@ -364,6 +368,10 @@
       #}
       {
         name = "spotify";
+        greedy = true;
+      }
+      {
+        name = "squirrelsql";
         greedy = true;
       }
       {
