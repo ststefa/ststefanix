@@ -21,7 +21,7 @@
     #docker # does not include docker daemon
     #k3s
     #kcl-cli # kcl-lsp not available, so using brew for all kcl
-    #mqttx # not available for aarch64-darwin #dbcicd
+    #mqttx # not available for aarch64-darwin @dbcicd
     #openlens # not available for aarch64-darwin
     #python311Packages.rstcheck # python3.11-rstcheck-core-1.0.3.drv tests fail
     #python312
@@ -36,10 +36,10 @@
     cowsay
     curl
     darwin.trash
-    delve # go debugger #dbcicd
+    delve # go debugger @dbcicd
     diffutils
     docutils
-    earthly #dbcicd
+    earthly # @dbcicd
     file
     fswatch
     fzf
@@ -49,34 +49,34 @@
     gnupg
     gnused
     gnutar
-    go #dbcicd
-    go-task #dbcicd
-    golangci-lint #dbcicd
-    golangci-lint-langserver #dbcicd
-    jfrog-cli #dbcicd
+    go # @dbcicd
+    go-task # @dbcicd
+    golangci-lint # @dbcicd
+    golangci-lint-langserver # @dbcicd
+    jfrog-cli # Artifactory cli @dbcicd
     jq
     just
     k3d
     k9s
     krew
     kubectl
-    kubelogin-oidc #dbcicd
+    kubelogin-oidc # kubectl plugin for OIDC login @dbcicd
     kubernetes-helm
-    kubeval #dbcicd #misses important errors
+    kubeval # @dbcicd #misses important errors
     kustomize
-    lefthook #dbcicd
+    lefthook # git hook setup helper @dbcicd
     less
     lsof
     mas
-    nats-top #dbcicd
-    natscli #dbcicd
+    nats-top # NATS messaging @dbcicd
+    natscli # NATS messaging @dbcicd
     nixd # nix language server, used by vscode nix plugin
     nmap
     nnn # terminal file manager
     nodejs
     opentofu
     pipx
-    pre-commit #dbcicd
+    pre-commit # git precommit helper @dbcicd
     pstree
     python311
     python311Packages.docutils
@@ -98,6 +98,7 @@
     unixtools.nettools
     unixtools.procps
     unzip
+    vault # Hashicorp vault cli @dbcicd
     vendir
     vscode
     watchexec
@@ -147,6 +148,7 @@
       "Free Ruler" = 1483172210;
       "Gapplin" = 768053424;
       "HazeOver" = 430798174;
+      "Kagi for Safari" = 1622835804;
       "Meeter" = 1510445899;
       "Microsoft Remote Desktop" = 1295203466;
       "Msg Viewer Pro" = 1019539949;
@@ -327,6 +329,10 @@
         name = "openlens";
         greedy = true;
       }
+      { # The orion web browser
+        name = "orion";
+        greedy = true;
+      }
       {
         name = "paletro";
         greedy = true;
@@ -405,7 +411,7 @@
         greedy = true;
       }
       {
-        name = "vivaldi"; # dbcicd, used as distinct browser for annoying OAUTH process
+        name = "vivaldi"; #@dbcicd, used as distinct browser for annoying OAUTH process
         greedy = true;
       }
       {
