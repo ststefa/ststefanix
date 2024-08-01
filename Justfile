@@ -6,13 +6,13 @@ HOSTNAME := `hostname`
 default:
     @just --list
 
-# Build and activate nix-darwin
+# Build and activate nix-darwin (run once)
 build:
   nix build .#darwinConfigurations.{{HOSTNAME}}.system \
     --extra-experimental-features 'nix-command flakes'
   ./result/sw/bin/darwin-rebuild switch --flake .#{{HOSTNAME}}
 
-# Build and activate nix-darwin with debug output
+# Build and activate nix-darwin with debug output (run once)
 build-debug:
   nix build .#darwinConfigurations.{{HOSTNAME}}.system --show-trace --verbose \
     --extra-experimental-features 'nix-command flakes'
@@ -40,7 +40,7 @@ history:
 
 # Wipe profile history older than 7d and do a nix garbage-collect
 gc:
-  sudo nix profile wipe-history --profile /nix/var/nix/profiles/system  --older-than 7d
+  sudo nix profile wipe-history --profile /nix/var/nix/profiles/system  --older-than 30d
   sudo nix store gc --debug
 
 # Remove build output
