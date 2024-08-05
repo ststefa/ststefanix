@@ -273,10 +273,11 @@
       #  name = "elgato-stream-deck";
       #  greedy = true;
       #}
-      {
-        name = "evernote";
-        greedy = true;
-      }
+      # Migrated to Obsidian
+      #{
+      #  name = "evernote";
+      #  greedy = true;
+      #}
       {
         name = "figma";
         greedy = true;
