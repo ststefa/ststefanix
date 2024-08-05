@@ -33,7 +33,7 @@
     ./result/sw/bin/darwin-rebuild switch --flake .#<hostname>
     ```
 
-7. Run `just deploy` in the root of your nix configuration to deploy your configuration.
+7. Run `just apply` in the root of your nix configuration to apply your configuration.
 
 ## Configuration Structure
 
