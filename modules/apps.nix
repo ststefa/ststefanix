@@ -210,22 +210,16 @@
       "kcl-lang/tap"
     ];
 
-    # `brew install`
     brews = [
-      #"wget" # download tool
       #"curl" # no not install curl via nixpkgs, it's not working well on macOS! # Moved to nixpkg
-      #"aria2" # download tool
-      #"httpie" # http client
-
-      # ststefa
       "docker" # cli part of docker. Try using nix app?
-      # "imagemagick" # Moved to nixpkg
+      #"imagemagick" # Moved to nixpkg
       #"openjdk@21" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk # Replaced with nixpkg
-      #"iproute2mac" # requires python but that is handled by nix
-      "kcl" # a tool to create an abstratction layer for k8s manifests # Available from nixpkg as "kcl-cli" but missing kcl-lsp
+      #"iproute2mac" # Moved to nixpkg darwin.iproute2mac
+      "kcl" # Tool to create an abstratction layer for k8s manifests # Available from nixpkg as "kcl-cli" but missing kcl-lsp
       "kcl-lsp" # kcl language server (for vscode)
       "mpdecimal"
-      "mqttx-cli"
+      "mqttui"
       #"openssl@3"
       #"readline"
       "switchaudio-osx"
@@ -235,8 +229,6 @@
     #  greedy = true;
     #};
 
-    # `brew install --cask`
-    # TODO Feel free to add your favorite apps here.
     casks = [
       #"anki" # Learning cards
       #"raycast" # (HotKey: alt/option + space)search, caculate and run scripts(with many plugins)
@@ -264,8 +256,7 @@
         name = "choosy";
         greedy = true;
       }
-      # Cannot be opened by MacOS 2024-07-31)
-      #{
+      #{ # Cannot be opened by MacOS 2024-07-31)
       #  name = "chromium";
       #  greedy = true;
       #}
@@ -289,8 +280,7 @@
         name = "element";
         greedy = true;
       }
-      # Only hudson
-      #{
+      #{ # Only hudson
       #  name = "elgato-camera-hub";
       #  greedy = true;
       #}
@@ -298,13 +288,11 @@
         name = "elgato-control-center";
         greedy = true;
       }
-      # Only hudson
-      #{
+      #{ # Only hudson
       #  name = "elgato-stream-deck";
       #  greedy = true;
       #}
-      # Migrated to Obsidian
-      #{
+      #{ # Migrated to Obsidian
       #  name = "evernote";
       #  greedy = true;
       #}
@@ -384,8 +372,7 @@
         name = "quicklook-json";
         greedy = true;
       }
-      # Required for AWS session manager
-      {
+      { # Enable AWS session manager connections
         name = "session-manager-plugin";
         greedy = true;
       }
@@ -441,8 +428,8 @@
         name = "veracrypt";
         greedy = true;
       }
-      {
-        name = "vivaldi"; #@dbcicd, used as distinct browser for annoying OAUTH process
+      { #@dbcicd, used as distinct browser for annoying OAUTH process
+        name = "vivaldi";
         greedy = true;
       }
       {
