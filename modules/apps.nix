@@ -76,10 +76,12 @@
     nodejs
     opentofu
     pipx
+    poetry
     pre-commit # git precommit helper @dbcicd
     pstree
     python311
     python311Packages.docutils
+    python311Packages.keyring
     python311Packages.pip
     python311Packages.pytest
     python311Packages.restructuredtext-lint
@@ -104,6 +106,7 @@
     watchexec
     which
     xz
+    yapf
     yq
     zip
     zstd
