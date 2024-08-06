@@ -16,17 +16,6 @@
   #
   # Related Discussion: https://discourse.nixos.org/t/darwin-again/29331
   environment.systemPackages = with pkgs; [
-    #bash # somehow not reuqired
-    #caddy # golang config server
-    #docker # does not include docker daemon
-    #k3s
-    #kcl-cli # kcl-lsp not available, so using brew for all kcl
-    #mqttx # not available for aarch64-darwin @dbcicd
-    #openlens # not available for aarch64-darwin
-    #python311Packages.rstcheck # python3.11-rstcheck-core-1.0.3.drv tests fail
-    #python312
-    #python312Packages.pip
-    #rstcheck # python3.11-rstcheck-core-1.0.3.drv tests fail
     age
     ansible
     argocd
@@ -37,6 +26,7 @@
     bat
     bc
     bottom
+    #caddy # golang config server
     cmakeMinimal
     colima
     coreutils
@@ -47,6 +37,7 @@
     delve # go debugger @dbcicd
     diffoscope
     diffutils
+    #docker # does not include docker daemon
     docutils
     dutree
     earthly # @dbcicd
@@ -85,7 +76,9 @@
     jq
     just
     k3d
+    #k3s
     k9s
+    #kcl-cli # kcl-lsp not available, so using brew for all kcl
     krew
     kubectl
     kubelogin-oidc # kubectl plugin for OIDC login @dbcicd
@@ -107,6 +100,7 @@
     nnn # terminal file manager
     nodejs
     oath-toolkit # Provides oathtool
+    #openlens # not available for aarch64-darwin
     openshift # openshift "oc" client
     openssh
     opentofu
@@ -128,11 +122,13 @@
     python311Packages.pylint
     python311Packages.pytest
     python311Packages.restructuredtext-lint
+    #python311Packages.rstcheck # python3.11-rstcheck-core-1.0.3.drv tests fail
     python311Packages.sphinx
     python311Packages.virtualenv
     python311Packages.wheel
     qemu_kvm
     ripgrep
+    #rstcheck # python3.11-rstcheck-core-1.0.3.drv tests fail
     ruby
     #rustup cleanup on hudson required first
     shellcheck
@@ -167,7 +163,7 @@
     zstd
   ];
 
-  # TODO To make this work, homebrew need to be installed manually, see https://brew.sh
+  # TODO To make this works, homebrew needs to be installed manually, see https://brew.sh
   #
   # The apps installed by homebrew are not managed by nix, and not reproducible!
   # But on macOS, homebrew has a much larger selection of apps than nixpkgs, especially for GUI apps!
@@ -178,7 +174,7 @@
       autoUpdate = true; # runs an brew update on any darwin-rebuild. Too slow.
       # 'zap': uninstalls all formulae(and related files) not listed here.
       #cleanup = "zap";
-      # I need to keep surplus formulae for now (i.e., until a way is found to handle formulae device-secific)
+      # I need to keep surplus formulae for now (i.e., until a way is found to handle formulae device-specific)
       cleanup = "none";
       upgrade = true;
     };
@@ -188,14 +184,6 @@
     # otherwise Apple Store will refuse to install them.
     # For details, see https://github.com/mas-cli/mas
     masApps = {
-      #Xcode = 497799835;
-      # Wechat = 836500024;
-      # NeteaseCloudMusic = 944848654;
-      # QQ = 451108668;
-      # WeCom = 1189898970;  # Wechat for Work
-      # TecentMetting = 1484048379;
-      # QQMusic = 595615424;
-
       "Affinity Designer 2" = 1616831348;
       "Affinity Photo 2" = 1616822987;
       "Affinity Publisher 2" = 1606941598;
@@ -215,7 +203,6 @@
       "WiFi Explorer" = 494803304;
       "WiFi Signal" = 525912054;
       "Xcode" = 497799835;
-
     };
 
     taps = [
@@ -251,22 +238,8 @@
     # `brew install --cask`
     # TODO Feel free to add your favorite apps here.
     casks = [
-      #"firefox"
-      #"google-chrome"
-      #"visual-studio-code"
-
-      # IM & audio & remote desktop & meeting
-      #"telegram"
-      #"discord"
-
-      #"anki"
-      #"iina" # video player
+      #"anki" # Learning cards
       #"raycast" # (HotKey: alt/option + space)search, caculate and run scripts(with many plugins)
-      #"stats" # beautiful system monitor
-      #"eudic" # 欧路词典
-
-      # Development
-      #"insomnia" # REST client
       {
         name = "aldente";
         greedy = true;
@@ -387,7 +360,7 @@
         name = "openlens";
         greedy = true;
       }
-      { # The orion web browser
+      {
         name = "orion";
         greedy = true;
       }
