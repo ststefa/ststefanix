@@ -27,25 +27,46 @@
     #python312
     #python312Packages.pip
     #rstcheck # python3.11-rstcheck-core-1.0.3.drv tests fail
+    age
+    ansible
     argocd
     argocd-autopilot
+    asciinema
+    awscli2
     azure-cli
     bat
     bc
+    bottom
+    cmakeMinimal
+    colima
     coreutils
     cowsay
     curl
+    darwin.iproute2mac
     darwin.trash
     delve # go debugger @dbcicd
+    diffoscope
     diffutils
     docutils
+    dutree
     earthly # @dbcicd
+    esptool
+    exiftool
+    ffmpeg-headless
+    figlet
     file
+    fortune
     fswatch
     fzf
     gawk
+    gcc
     git
+    git-crypt
+    git-agecrypt
+    glances # nicer top
     glow # markdown previewer in terminal
+    gnugrep
+    gnumake
     gnupg
     gnused
     gnutar
@@ -53,7 +74,14 @@
     go-task # @dbcicd
     golangci-lint # @dbcicd
     golangci-lint-langserver # @dbcicd
+    gopls # go language server
+    hackrf
+    htop # Colored top
+    imagemagick
+    iperf
+    jdk21_headless
     jfrog-cli # Artifactory cli @dbcicd
+    jinja2-cli
     jq
     just
     k3d
@@ -66,44 +94,71 @@
     kustomize
     lefthook # git hook setup helper @dbcicd
     less
+    lima
+    llvm_18
     lsof
-    mas
+    mas # Mac Appstore cli
+    minio-client
+    #mqttx Not available for aarch64-apple-darwin
     nats-top # NATS messaging @dbcicd
     natscli # NATS messaging @dbcicd
     nixd # nix language server, used by vscode nix plugin
     nmap
     nnn # terminal file manager
     nodejs
+    oath-toolkit # Provides oathtool
+    openshift # openshift "oc" client
+    openssh
     opentofu
+    parallel
+    pdfminer # PDF parser and analyzer
     pipx
     poetry
     pre-commit # git precommit helper @dbcicd
     pstree
+    psutils
+    pv
     python311
+    python311Packages.coverage
+    python311Packages.debugpy
     python311Packages.docutils
+    python311Packages.jsonpatch
     python311Packages.keyring
     python311Packages.pip
+    python311Packages.pylint
     python311Packages.pytest
     python311Packages.restructuredtext-lint
     python311Packages.sphinx
     python311Packages.virtualenv
+    python311Packages.wheel
+    qemu_kvm
     ripgrep
+    ruby
+    #rustup cleanup on hudson required first
+    shellcheck
     sipcalc
     socat
     sops
     sphinx
+    sqlite
     stern
+    stress-ng
     tcpdump
     terraform
+    tesseract4
+    tflint
     tldr
+    tmux
     tree
     unixtools.nettools
     unixtools.procps
     unzip
+    upx # Executable file compressor. Nice for golang ;)
     vault # Hashicorp vault cli @dbcicd
     vendir
     vscode
     watchexec
+    wget
     which
     xz
     yapf
@@ -171,23 +226,22 @@
     # `brew install`
     brews = [
       #"wget" # download tool
-      #"curl" # no not install curl via nixpkgs, it's not working well on macOS!
+      #"curl" # no not install curl via nixpkgs, it's not working well on macOS! # Moved to nixpkg
       #"aria2" # download tool
       #"httpie" # http client
 
       # ststefa
       "docker" # cli part of docker. Try using nix app?
-      "imagemagick" # maybe switch to nix pkg
-      "openjdk@21" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk
+      # "imagemagick" # Moved to nixpkg
+      #"openjdk@21" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk # Replaced with nixpkg
       #"iproute2mac" # requires python but that is handled by nix
-      "kcl" # a tool to create an abstratction layer for k8s manifests
+      "kcl" # a tool to create an abstratction layer for k8s manifests # Available from nixpkg as "kcl-cli" but missing kcl-lsp
       "kcl-lsp" # kcl language server (for vscode)
       "mpdecimal"
-      #"mqttx-cli"
+      "mqttx-cli"
       #"openssl@3"
-      #"python@3.12" # handled by nix
       #"readline"
-      "sqlite"
+      "switchaudio-osx"
     ];
 
     #caskArgs = { # Error: "The option `homebrew.caskArgs.greedy' does not exist."
