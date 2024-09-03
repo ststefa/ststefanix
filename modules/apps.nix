@@ -90,6 +90,7 @@
     lima
     llvm_18
     lsof
+    lzip
     mas # Mac Appstore cli
     minio-client
     #mqttx Not available for aarch64-apple-darwin
