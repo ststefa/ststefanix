@@ -130,6 +130,7 @@
     ripgrep
     #rstcheck # python3.11-rstcheck-core-1.0.3.drv tests fail
     ruby
+    #rustdesk # not up to date, use cask
     #rustup cleanup on hudson required first
     shellcheck
     sipcalc
@@ -372,6 +373,10 @@
         name = "quicklook-json";
         greedy = true;
       }
+      {
+        name = "rustdesk";
+        greedy = true;
+      }
       { # Enable AWS session manager connections
         name = "session-manager-plugin";
         greedy = true;
@@ -384,11 +389,11 @@
         name = "signal";
         greedy = true;
       }
-      #{
+      #{ # Only hudson
       #  name = "slack";
       #  greedy = true;
       #}
-      #{
+      #{ # Only hudson
       #  name = "snapmaker-luban";
       #  greedy = true;
       #}
@@ -408,7 +413,7 @@
         name = "telegram";
         greedy = true;
       }
-      #{
+      #{ # Only hudson
       #  name = "tor-browser";
       #  greedy = true;
       #}
@@ -416,7 +421,7 @@
         name = "transmit";
         greedy = true;
       }
-      #{
+      #{ # Only hudson
       #  name = "tunnelblick";
       #  greedy = true;
       #}
@@ -428,7 +433,7 @@
         name = "veracrypt";
         greedy = true;
       }
-      { #@dbcicd, used as distinct browser for annoying OAUTH process
+      { # @dbcicd, used as distinct browser for annoying kubectl oidc plugin login process
         name = "vivaldi";
         greedy = true;
       }
@@ -440,7 +445,7 @@
         name = "wireshark";
         greedy = true;
       }
-      #{
+      #{ # Only hudson
       #  name = "zoom";
       #  greedy = true;
       #}
