@@ -90,12 +90,13 @@
     lima
     llvm_18
     lsof
-    lzip
+    lzip # lzma compression used in tzdb @dbcicd
     mas # Mac Appstore cli
     minio-client
     #mqttx Not available for aarch64-apple-darwin
-    nats-top # NATS messaging @dbcicd
-    natscli # NATS messaging @dbcicd
+    nats-server # NATS messaging server @dbcicd
+    nats-top # NATS messaging perf @dbcicd
+    natscli # NATS messaging client @dbcicd
     nixd # nix language server, used by vscode nix plugin
     nmap
     nnn # terminal file manager
@@ -131,6 +132,7 @@
     ripgrep
     #rstcheck # python3.11-rstcheck-core-1.0.3.drv tests fail
     ruby
+    #ruff # not up to date, use cask
     #rustdesk # not up to date, use cask
     #rustup cleanup on hudson required first
     shellcheck
@@ -152,12 +154,13 @@
     unixtools.procps
     unzip
     upx # Executable file compressor. Nice for golang ;)
+    #uv # python package manager written in rust, not up to date, use cask
     vault # Hashicorp vault cli @dbcicd
     vendir
     vscode
     watchexec
     wget
-    which
+    #which # Non-standard version, does not support "-s"
     xz
     yapf
     yq
@@ -210,21 +213,24 @@
     taps = [
       "homebrew/services"
       "kcl-lang/tap"
+      "emqx/mqttx"
     ];
 
     brews = [
-      #"curl" # no not install curl via nixpkgs, it's not working well on macOS! # Moved to nixpkg
+      #"curl" # Moved to nixpkg
       "docker" # cli part of docker. Try using nix app?
       #"imagemagick" # Moved to nixpkg
       #"openjdk@21" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk # Replaced with nixpkg
       #"iproute2mac" # Moved to nixpkg darwin.iproute2mac
-      "kcl" # Tool to create an abstratction layer for k8s manifests # Available from nixpkg as "kcl-cli" but missing kcl-lsp
+      "kcl-lang/tap/kcl" # Tool to create an abstratction layer for k8s manifests # Available from nixpkg as "kcl-cli" but missing kcl-lsp
       "kcl-lsp" # kcl language server (for vscode)
       "mpdecimal"
-      "mqttui"
+      "emqx/mqttx/mqttx-cli" # https://mqttx.app
       #"openssl@3"
+      "ruff" # fast python linter
       #"readline"
       "switchaudio-osx"
+      "uv" # python package manager
     ];
 
     #caskArgs = { # Error: "The option `homebrew.caskArgs.greedy' does not exist."
@@ -338,10 +344,10 @@
       #  name = "miro";
       #  greedy = true;
       #}
-      {
-        name = "mqttx";
-        greedy = true;
-      }
+      #{ # This is the (useless) GUI App. Use mqttx-cli above instead
+      #  name = "mqttx";
+      #  greedy = true;
+      #}
       {
         name = "obsidian";
         greedy = true;
