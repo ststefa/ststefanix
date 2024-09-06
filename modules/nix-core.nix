@@ -14,12 +14,41 @@
   # don't wan't the daemon service to be managed for you.
   # nix.useDaemon = true;
 
+  # add overlays to make updated derivations of existing modules
+  nixpkgs.overlays = [
+    (final: prev: {
+      #uv = prev.uv.overrideAttrs (oldAttrs: rec {
+      #  version = "0.4.4";
+      #  src = prev.fetchFromGitHub {
+      #    owner = "astral-sh";
+      #    repo = "uv";
+      #    rev = version;
+      #    hash = "sha256-PhLatO4XeYFrv0DqPc0NlSGXJvLkem0pqxEcoVZddZw=";
+      #  };
+      #});
+
+      #ruff = prev.ruff.overrideAttrs (oldAttrs: rec {
+      #  version = "0.5.0";
+      #  src = prev.fetchFromGitHub {
+      #    owner = "astral-sh";
+      #    repo = "ruff";
+      #    rev = version;
+      #    hash = "";
+      #  };
+      #});
+
+      #ruff = prev.ruff.override {
+      #  version = "0.5.0";
+      #};
+    })
+  ];
+
   nix.package = pkgs.nix;
 
   # do garbage collection weekly to keep disk usage low
   nix.gc = {
     automatic = lib.mkDefault true;
-    options = lib.mkDefault "--delete-older-than 7d";
+    options = lib.mkDefault "--delete-older-than 30d";
   };
 
   # Disable auto-optimise-store because of this issue:
