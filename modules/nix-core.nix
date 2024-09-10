@@ -17,6 +17,16 @@
   # add overlays to make updated derivations of existing modules
   nixpkgs.overlays = [
     (final: prev: {
+      #k3d = prev.k3d.overrideAttrs (oldAttrs: rec {
+      #  version = "5.7.3";
+      #  src = prev.fetchFromGitHub {
+      #    owner = "k3d-io";
+      #    repo = "k3d";
+      #    rev = "refs/tags/v${version}";
+      #    hash = "sha256-G9z4yJ7Oa2zmxYTRIMCiXlBPLlc3vGPUqUOoIohDKU8=";
+      #  };
+      #});
+
       #uv = prev.uv.overrideAttrs (oldAttrs: rec {
       #  version = "0.4.4";
       #  src = prev.fetchFromGitHub {

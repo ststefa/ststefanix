@@ -75,7 +75,7 @@
     jinja2-cli
     jq
     just
-    k3d
+    # k3d # not up to date, use cask
     #k3s
     k9s
     #kcl-cli # kcl-lsp not available, so using brew for all kcl
@@ -222,6 +222,7 @@
       #"imagemagick" # Moved to nixpkg
       #"openjdk@21" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk # Replaced with nixpkg
       #"iproute2mac" # Moved to nixpkg darwin.iproute2mac
+      "k3d"
       "kcl-lang/tap/kcl" # Tool to create an abstratction layer for k8s manifests # Available from nixpkg as "kcl-cli" but missing kcl-lsp
       "kcl-lsp" # kcl language server (for vscode)
       "mpdecimal"
@@ -380,10 +381,10 @@
         name = "quicklook-json";
         greedy = true;
       }
-      {
-        name = "rustdesk";
-        greedy = true;
-      }
+      #{ # Not allowed on DB Mac
+      #  name = "rustdesk";
+      #  greedy = true;
+      #}
       { # Enable AWS session manager connections
         name = "session-manager-plugin";
         greedy = true;
