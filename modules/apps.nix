@@ -35,7 +35,7 @@
     darwin.iproute2mac
     darwin.trash
     delve # go debugger @dbcicd
-    diffoscope
+    #diffoscope # takes too long to build on update
     diffutils
     #docker # does not include docker daemon
     docutils
@@ -250,6 +250,10 @@
         greedy = true;
       }
       {
+        name = "audacity";
+        greedy = true;
+      }
+      {
         name = "bartender";
         greedy = true;
       }
@@ -409,8 +413,12 @@
         name = "spotify";
         greedy = true;
       }
+      #{ # requires /usr/bin/java which is only available on BWP (reason unknown)
+      #  name = "squirrelsql";
+      #  greedy = true;
+      #}
       {
-        name = "squirrelsql";
+        name = "subler";
         greedy = true;
       }
       {
