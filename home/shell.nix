@@ -79,7 +79,7 @@
     PATH=''${PATH}:''${HOME}/bin
 
     ## rust bin (created by homebrew rustup-init
-    #PATH=''${PATH}:$HOME/.cargo/bin
+    PATH=''${PATH}:$HOME/.cargo/bin
 
     ## kubectl krew binaries
     PATH=''${PATH}:$HOME/.krew/bin
