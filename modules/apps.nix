@@ -365,6 +365,10 @@
         name = "paletro";
         greedy = true;
       }
+      { # Extended app for Apple Fotos libraries
+        name = "powerphotos";
+        greedy = true;
+      }
       {
         name = "qlmarkdown";
         greedy = true;
