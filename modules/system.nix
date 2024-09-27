@@ -20,6 +20,8 @@
       /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
     '';
 
+    stateVersion = 4;
+
     defaults = {
       # The options are fully documented at https://daiderd.com/nix-darwin/manual/index.html
 

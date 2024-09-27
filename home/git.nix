@@ -21,10 +21,8 @@
     ];
 
     # System level is taken by global config
-    #userName = username;
-    #userEmail = useremail;
-    userName = "ststefa";
-    userEmail = "ststefa@heldenzeit.net";
+    userName = username;
+    userEmail = useremail;
 
     includes = [
       {

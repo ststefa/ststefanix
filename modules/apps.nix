@@ -46,6 +46,7 @@
     ffmpeg-headless
     figlet
     file
+    findutils # GNU find, locate, updatedb, xargs
     fortune
     fswatch
     fzf
@@ -75,7 +76,7 @@
     jinja2-cli
     jq
     just
-    # k3d # not up to date, use cask
+    k3d #not up to date, use cask #using unstable
     #k3s
     k9s
     #kcl-cli # kcl-lsp not available, so using brew for all kcl
@@ -84,6 +85,7 @@
     kubelogin-oidc # kubectl plugin for OIDC login @dbcicd
     kubernetes-helm
     kubeval # @dbcicd #misses important errors
+    kubevirt # @dbcicd kubevirt cli (virtctl)
     kustomize
     lefthook # git hook setup helper @dbcicd
     less
@@ -99,7 +101,7 @@
     natscli # NATS messaging client @dbcicd
     nixd # nix language server, used by vscode nix plugin
     nmap
-    nnn # terminal file manager
+    #nnn # terminal file manager, replaced by yazi
     nodejs
     oath-toolkit # Provides oathtool
     #openlens # not available for aarch64-darwin
@@ -117,7 +119,7 @@
     python311
     python311Packages.coverage
     python311Packages.debugpy
-    python311Packages.docutils
+    # python311Packages.docutils #build error in unstable
     python311Packages.jsonpatch
     python311Packages.keyring
     python311Packages.pip
@@ -125,15 +127,15 @@
     python311Packages.pytest
     python311Packages.restructuredtext-lint
     #python311Packages.rstcheck # python3.11-rstcheck-core-1.0.3.drv tests fail
-    python311Packages.sphinx
+    #python311Packages.sphinx #build error in unstable
     python311Packages.virtualenv
     python311Packages.wheel
     qemu_kvm
     ripgrep
     #rstcheck # python3.11-rstcheck-core-1.0.3.drv tests fail
     ruby
-    #ruff # not up to date, use cask
-    #rustdesk # not up to date, use cask
+    #ruff # not up to date, use brew
+    #rustdesk # not up to date, use brew
     #rustup cleanup on hudson required first
     shellcheck
     sipcalc
@@ -144,7 +146,7 @@
     stern
     stress-ng
     tcpdump
-    terraform
+    #terraform #Takes too long to build, using brew
     tesseract4
     tflint
     tldr
@@ -154,16 +156,18 @@
     unixtools.procps
     unzip
     upx # Executable file compressor. Nice for golang ;)
-    #uv # python package manager written in rust, not up to date, use cask
-    vault # Hashicorp vault cli @dbcicd
+    #uv # python package manager written in rust, not up to date, use brew
+    #vault # Hashicorp vault cli @dbcicd #Takes too long to build, using brew
     vendir
-    vscode
+    # vscode # Shell integration always resolves symlinks, leading to broken Dock icons and Automator Actions, using brew instead
     watchexec
     wget
     #which # Non-standard version, does not support "-s"
     xz
     yapf
+    yazi # terminal file manager
     yq
+    zellij # terminal multiplexer with programmable layouts, nice for demos
     zip
     zstd
   ];
@@ -222,7 +226,7 @@
       #"imagemagick" # Moved to nixpkg
       #"openjdk@21" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk # Replaced with nixpkg
       #"iproute2mac" # Moved to nixpkg darwin.iproute2mac
-      "k3d"
+      #"k3d" #using nix
       "kcl-lang/tap/kcl" # Tool to create an abstratction layer for k8s manifests # Available from nixpkg as "kcl-cli" but missing kcl-lsp
       "kcl-lsp" # kcl language server (for vscode)
       "mpdecimal"
@@ -231,7 +235,9 @@
       "ruff" # fast python linter
       #"readline"
       "switchaudio-osx"
+      "terraform"
       "uv" # python package manager
+      "vault"
     ];
 
     #caskArgs = { # Error: "The option `homebrew.caskArgs.greedy' does not exist."
@@ -246,13 +252,17 @@
         greedy = true;
       }
       {
-        name = "apparency";
+        name = "alfred";
         greedy = true;
       }
       {
-        name = "audacity";
+        name = "apparency";
         greedy = true;
       }
+      #{ # Only hudson
+      #  name = "audacity";
+      #  greedy = true;
+      #}
       {
         name = "bartender";
         greedy = true;
@@ -289,10 +299,10 @@
         name = "docker";
         greedy = true;
       }
-      {
-        name = "element";
-        greedy = true;
-      }
+      #{ # Only hudson
+      #  name = "element";
+      #  greedy = true;
+      #}
       #{ # Only hudson
       #  name = "elgato-camera-hub";
       #  greedy = true;
@@ -305,18 +315,18 @@
       #  name = "elgato-stream-deck";
       #  greedy = true;
       #}
-      {
-        name = "figma";
-        greedy = true;
-      }
-      {
-        name = "gather";
-        greedy = true;
-      }
-      {
-        name = "gimp";
-        greedy = true;
-      }
+      #{ # Not better than webapp
+      #  name = "figma";
+      #  greedy = true;
+      #}
+      #{ # Pixel collab world
+      #  name = "gather";
+      #  greedy = true;
+      #}
+      #{
+      #  name = "gimp";
+      #  greedy = true;
+      #}
       {
         name = "hammerspoon";
         greedy = true;
@@ -341,7 +351,7 @@
         name = "macfuse";
         greedy = true;
       }
-      #{
+      #{ # Not better than webapp
       #  name = "miro";
       #  greedy = true;
       #}
@@ -365,10 +375,10 @@
         name = "paletro";
         greedy = true;
       }
-      { # Extended app for Apple Fotos libraries
-        name = "powerphotos";
-        greedy = true;
-      }
+      #{ # Extended app for Apple Fotos libraries # Only hudson
+      #  name = "powerphotos";
+      #  greedy = true;
+      #}
       {
         name = "qlmarkdown";
         greedy = true;
@@ -389,7 +399,7 @@
       #  name = "rustdesk";
       #  greedy = true;
       #}
-      { # Enable AWS session manager connections
+      { # Enable AWS session manager connections @dbcicd
         name = "session-manager-plugin";
         greedy = true;
       }
@@ -397,10 +407,10 @@
         name = "sf-symbols";
         greedy = true;
       }
-      {
-        name = "signal";
-        greedy = true;
-      }
+      #{ # Only hudson
+      #  name = "signal";
+      #  greedy = true;
+      #}
       {
         name = "slack";
         greedy = true;
@@ -409,10 +419,10 @@
       #  name = "snapmaker-luban";
       #  greedy = true;
       #}
-      {
-        name = "spotify";
-        greedy = true;
-      }
+      #{ # Only hudson
+      #  name = "spotify";
+      #  greedy = true;
+      #}
       #{ # requires /usr/bin/java which is only available on BWP (reason unknown)
       #  name = "squirrelsql";
       #  greedy = true;
@@ -423,6 +433,10 @@
       }
       {
         name = "suspicious-package";
+        greedy = true;
+      }
+      { # Prefpane to configure default apps for filename extension and Uri schemes
+        name = "swiftdefaultappsprefpane";
         greedy = true;
       }
       {
@@ -445,12 +459,16 @@
         name = "unison";
         greedy = true;
       }
-      {
-        name = "veracrypt";
-        greedy = true;
-      }
+      #{ # Only hudson
+      #  name = "veracrypt";
+      #  greedy = true;
+      #}
       { # @dbcicd, used as distinct browser for annoying kubectl oidc plugin login process
         name = "vivaldi";
+        greedy = true;
+      }
+      {
+        name = "visual-studio-code";
         greedy = true;
       }
       {
