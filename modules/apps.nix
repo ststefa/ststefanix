@@ -106,7 +106,7 @@
     oath-toolkit # Provides oathtool
     #openlens # not available for aarch64-darwin
     openshift # openshift "oc" client
-    openssh
+    #openssh # sometimes aborts sessions with "package too long" errors, esp. on apume. Using brew.
     opentofu
     parallel
     pdfminer # PDF parser and analyzer
@@ -232,7 +232,8 @@
       "kcl-lsp" # kcl language server (for vscode)
       "mpdecimal"
       "emqx/mqttx/mqttx-cli" # https://mqttx.app
-      #"openssl@3"
+      #"openssl@3" # dependency of e.g. vault-cli
+      "openssh"
       "ruff" # fast python linter
       #"readline"
       "switchaudio-osx"
