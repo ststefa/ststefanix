@@ -58,6 +58,10 @@
     # append to the history file, don't overwrite it
     shopt -s histappend
 
+    # K3d runs into the low macos default file ulimit setting of 256.
+    # This also requires launchctl setup, see /usr/local/bin/bootconfig.sh
+    ulimit -n 16384
+
     # PATH modifications
 
     ## Prefer homebrew tools. This might impact installers and other mechanisms which build on apple specifics
@@ -93,6 +97,9 @@
     # shellcheck source=/dev/null
     #. ~/.iterm2_shell_integration."$(basename "''${SHELL}")"
 
+    # k9s editor
+    export KUBE_EDITOR="code -w"
+
     # AWS autocomplete
     #complete -C aws_completer aws
     # OpenStack autocomplete, takes several seconds
@@ -115,10 +122,6 @@
 
     # Choose java, see https://knasmueller.net/how-to-install-java-openjdk-16-on-macos-big-sur
     #export JAVA_HOME=/opt/homebrew/opt/openjdk
-
-    # K3d runs into the low macos default file ulimit setting of 256.
-    # This also requires launchctl setup, see /usr/local/bin/bootconfig.sh
-    ulimit -n 16384
 
     # SAP
     ## Default hashi-vault settings
