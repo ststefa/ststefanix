@@ -71,7 +71,7 @@
     htop # Colored top
     imagemagick
     iperf
-    jdk21_headless
+    # jdk21_headless # does not provide bin, use temurin instead
     jfrog-cli # Artifactory cli @dbcicd
     jinja2-cli
     jq
@@ -146,6 +146,7 @@
     stern
     stress-ng
     tcpdump
+    temurin-bin-21
     #terraform #Takes too long to build, using brew
     tesseract4
     tflint
