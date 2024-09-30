@@ -237,7 +237,7 @@
       "switchaudio-osx"
       "terraform"
       "uv" # python package manager
-      "vault"
+      "vault-cli"
     ];
 
     #caskArgs = { # Error: "The option `homebrew.caskArgs.greedy' does not exist."
