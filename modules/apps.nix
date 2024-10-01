@@ -236,6 +236,7 @@
       "openssh"
       "ruff" # fast python linter
       #"readline"
+      "screen"
       "switchaudio-osx"
       "terraform"
       "uv" # python package manager
