@@ -279,6 +279,10 @@
         greedy = true;
       }
       {
+        name = "camo-studio";
+        greedy = true;
+      }
+      {
         name = "choosy";
         greedy = true;
       }
