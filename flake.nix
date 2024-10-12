@@ -87,10 +87,19 @@
     };
 
   in {
+    # A seperate Mac config for any system
+    ## Main private Mac
+    darwinConfigurations.hudson = mkDarwinConfig {
+      username = "steinert";
+      useremail = "ststefa@heldenzeit.net";
+      system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
+      hostname = "hudson";
+    };
+    ## DB CICD Mac
     darwinConfigurations.bwpm-L454QQVWM2 = mkDarwinConfig {
       username = "stefansteinert";
       useremail = "stefan.steinert-extern@deutschebahn.com";
-      system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
+      system = "aarch64-darwin";
       hostname = "bwpm-L454QQVWM2";
     };
 
