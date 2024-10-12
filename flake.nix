@@ -57,18 +57,16 @@
     home-manager,
     ...
   }: let
-    # TODO replace with your own username and system
-    username = "stefansteinert";
-    useremail = "stefan.steinert-extern@deutschebahn.com";
-    system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
-    hostname = "bwpm-L454QQVWM2";
-    specialArgs =
+
+    mkDarwinConfig = { username, useremail, system, hostname }:
+      let
+      specialArgs =
       inputs
       // {
         inherit username useremail hostname;
       };
-  in {
-    darwinConfigurations."${hostname}" = darwin.lib.darwinSystem {
+      in
+     darwin.lib.darwinSystem {
       inherit system specialArgs;
       modules = [
         ./modules/nix-core.nix
@@ -88,7 +86,15 @@
       ];
     };
 
-    # nix code formatter
-    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
+  in {
+    darwinConfigurations.bwpm-L454QQVWM2 = mkDarwinConfig {
+      username = "stefansteinert";
+      useremail = "stefan.steinert-extern@deutschebahn.com";
+      system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
+      hostname = "bwpm-L454QQVWM2";
+    };
+
+    # nix code formatter, not required for now and interfering
+    #formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
   };
 }
