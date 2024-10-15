@@ -70,6 +70,7 @@
     hackrf
     htop # Colored top
     imagemagick
+    #inotify-tools #No aarch64-apple-darwin
     iperf
     # jdk21_headless # does not provide bin, use temurin instead
     #jfrog-cli # Artifactory cli @dbcicd #Outdated on unstable
@@ -226,6 +227,7 @@
       "docker" # cli part of docker. Try using nix app?
       #"imagemagick" # Moved to nixpkg
       #"openjdk@21" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk # Replaced with nixpkg
+      # "inotify-tools" # No aarch64-apple-darwin
       #"iproute2mac" # Moved to nixpkg darwin.iproute2mac
       "jfrog-cli" # CLI for Artifactory @dbcicd
       #"k3d" #using nix
