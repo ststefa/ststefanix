@@ -72,7 +72,7 @@
     imagemagick
     iperf
     # jdk21_headless # does not provide bin, use temurin instead
-    jfrog-cli # Artifactory cli @dbcicd
+    #jfrog-cli # Artifactory cli @dbcicd #Outdated on unstable
     jinja2-cli
     jq
     just
@@ -227,6 +227,7 @@
       #"imagemagick" # Moved to nixpkg
       #"openjdk@21" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk # Replaced with nixpkg
       #"iproute2mac" # Moved to nixpkg darwin.iproute2mac
+      "jfrog-cli" # CLI for Artifactory @dbcicd
       #"k3d" #using nix
       "kcl-lang/tap/kcl" # Tool to create an abstratction layer for k8s manifests # Available from nixpkg as "kcl-cli" but missing kcl-lsp
       "kcl-lsp" # kcl language server (for vscode)
