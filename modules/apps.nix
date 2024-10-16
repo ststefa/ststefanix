@@ -377,6 +377,10 @@
         name = "openlens";
         greedy = true;
       }
+      #{ # Only hudson. Outdated 2024-10-12
+      #  name = "orcaslicer";
+      #  greedy = true;
+      #}
       {
         name = "orion";
         greedy = true;
