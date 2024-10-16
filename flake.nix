@@ -71,7 +71,8 @@
       modules = [
         ./modules/nix-core.nix
         ./modules/system.nix
-        ./modules/apps.nix
+        ./modules/apps_all.nix
+        ./modules/apps_${hostname}.nix
         ./modules/host-users.nix
 
         # home manager

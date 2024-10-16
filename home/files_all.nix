@@ -1,0 +1,33 @@
+{ username, useremail,  hostname, ... }:
+
+{
+  home = {
+    # Manage files in home dir. They will be symlinked to nix store.
+    # Will not be overwritten if they exist. If undeclared, they will be removed.
+    file = {
+      ".ansible.cfg".text =
+      ''
+        # ATTENTION, managed by NIX
+        #Global ansible settings disabled. Be careful not to interfere with project settings!
+
+        [defaults]
+        host_key_checking = false
+        #force_color = 1
+        #timeout = 10
+        #
+        ## Use the YAML callback plugin for formatted error messages
+        stdout_callback = yaml
+        ## Use the stdout_callback when running ad-hoc commands.
+        bin_ansible_callbacks = stdout, stderr
+        ## silence discovery warnings
+        interpreter_python = auto_silent
+        ## ansible vault shared secret
+        ##vault_password_file = ~/.vault_pass
+        #
+        #[ssh_connection]
+        #retries = 1
+        #ssh_args = -C -o ControlMaster=auto -o ControlPersist=30s
+      '';
+    };
+  };
+}

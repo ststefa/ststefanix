@@ -169,7 +169,7 @@
     yapf
     yazi # terminal file manager
     yq
-    zellij # terminal multiplexer with programmable layouts, nice for demos
+    zellij # terminal multiplexer a la tmux with programmable layouts, nice for shell demos
     zip
     zstd
   ];
@@ -182,7 +182,7 @@
     enable = true;
 
     onActivation = {
-      autoUpdate = true; # runs an brew update on any darwin-rebuild. Too slow.
+      autoUpdate = true; # runs an brew update on any darwin-rebuild. Slow.
       # 'zap': uninstalls all formulae(and related files) not listed here.
       #cleanup = "zap";
       # I need to keep surplus formulae for now (i.e., until a way is found to handle formulae device-specific)
@@ -251,7 +251,6 @@
     #};
 
     casks = [
-      #"anki" # Learning cards
       #"raycast" # (HotKey: alt/option + space)search, caculate and run scripts(with many plugins)
       {
         name = "aldente";
@@ -265,10 +264,6 @@
         name = "apparency";
         greedy = true;
       }
-      #{ # Only hudson
-      #  name = "audacity";
-      #  greedy = true;
-      #}
       {
         name = "bartender";
         greedy = true;
@@ -309,22 +304,10 @@
         name = "docker";
         greedy = true;
       }
-      #{ # Only hudson
-      #  name = "element";
-      #  greedy = true;
-      #}
-      #{ # Only hudson
-      #  name = "elgato-camera-hub";
-      #  greedy = true;
-      #}
       {
         name = "elgato-control-center";
         greedy = true;
       }
-      #{ # Only hudson
-      #  name = "elgato-stream-deck";
-      #  greedy = true;
-      #}
       #{ # Not better than webapp
       #  name = "figma";
       #  greedy = true;
@@ -377,10 +360,6 @@
         name = "openlens";
         greedy = true;
       }
-      #{ # Only hudson. Outdated 2024-10-12
-      #  name = "orcaslicer";
-      #  greedy = true;
-      #}
       {
         name = "orion";
         greedy = true;
@@ -389,10 +368,6 @@
         name = "paletro";
         greedy = true;
       }
-      #{ # Extended app for Apple Fotos libraries # Only hudson
-      #  name = "powerphotos";
-      #  greedy = true;
-      #}
       {
         name = "qlmarkdown";
         greedy = true;
@@ -413,38 +388,18 @@
       #  name = "rustdesk";
       #  greedy = true;
       #}
-      { # Enable AWS session manager connections @dbcicd
-        name = "session-manager-plugin";
-        greedy = true;
-      }
       {
         name = "sf-symbols";
         greedy = true;
       }
-      #{ # Only hudson
-      #  name = "signal";
-      #  greedy = true;
-      #}
       {
         name = "slack";
         greedy = true;
       }
-      #{ # Only hudson
-      #  name = "snapmaker-luban";
-      #  greedy = true;
-      #}
-      #{ # Only hudson
-      #  name = "spotify";
-      #  greedy = true;
-      #}
       #{ # requires /usr/bin/java which is only available on BWP (reason unknown)
       #  name = "squirrelsql";
       #  greedy = true;
       #}
-      {
-        name = "subler";
-        greedy = true;
-      }
       {
         name = "suspicious-package";
         greedy = true;
@@ -457,28 +412,12 @@
         name = "telegram";
         greedy = true;
       }
-      #{ # Only hudson
-      #  name = "tor-browser";
-      #  greedy = true;
-      #}
       {
         name = "transmit";
         greedy = true;
       }
-      #{ # Only hudson
-      #  name = "tunnelblick";
-      #  greedy = true;
-      #}
-      {
+      { # Versatile and reliable host-to-host sync
         name = "unison";
-        greedy = true;
-      }
-      #{ # Only hudson
-      #  name = "veracrypt";
-      #  greedy = true;
-      #}
-      { # @dbcicd, used as distinct browser for annoying kubectl oidc plugin login process
-        name = "vivaldi";
         greedy = true;
       }
       {
@@ -493,10 +432,6 @@
         name = "wireshark";
         greedy = true;
       }
-      #{ # Only hudson
-      #  name = "zoom";
-      #  greedy = true;
-      #}
     ];
   };
 }

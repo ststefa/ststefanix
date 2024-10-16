@@ -1,4 +1,4 @@
-{ username, ... }:
+{ username, hostname, useremail, ... }:
 
 {
   # import sub modules
@@ -7,7 +7,8 @@
     ./core.nix
     ./git.nix
     ./starship.nix
-    ./files.nix
+    ./files_all.nix
+    ./files_${hostname}.nix
   ];
 
   # Home Manager needs a bit of information about you and the
