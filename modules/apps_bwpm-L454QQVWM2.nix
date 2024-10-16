@@ -11,6 +11,7 @@
     };
 
     brews = [
+      "openshift-cli"
     ];
 
     casks = [

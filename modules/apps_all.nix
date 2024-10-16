@@ -223,21 +223,27 @@
     ];
 
     brews = [
+      "cliclick"
       #"curl" # Moved to nixpkg
       "docker" # cli part of docker. Try using nix app?
       #"imagemagick" # Moved to nixpkg
       #"openjdk@21" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk # Replaced with nixpkg
-      # "inotify-tools" # No aarch64-apple-darwin
+      #"inotify-tools" # No aarch64-apple-darwin
+      "ipinfo-cli"
       #"iproute2mac" # Moved to nixpkg darwin.iproute2mac
       "jfrog-cli" # CLI for Artifactory @dbcicd
       #"k3d" #using nix
       "kcl-lang/tap/kcl" # Tool to create an abstratction layer for k8s manifests # Available from nixpkg as "kcl-cli" but missing kcl-lsp
       "kcl-lsp" # kcl language server (for vscode)
+      "lz4"
+      "lzo"
       "mpdecimal"
       "emqx/mqttx/mqttx-cli" # https://mqttx.app
       #"openssl@3" # dependency of e.g. vault-cli
       "openssh"
+      "pandoc"
       "ruff" # fast python linter
+      "rustup-init"
       #"readline"
       "screen"
       "switchaudio-osx"
@@ -301,6 +307,10 @@
         greedy = true;
       }
       {
+        name = "discord";
+        greedy = true;
+      }
+      {
         name = "docker";
         greedy = true;
       }
@@ -338,6 +348,10 @@
       }
       {
         name = "little-snitch";
+        greedy = true;
+      }
+      {
+        name = "lynx";
         greedy = true;
       }
       {
@@ -392,6 +406,10 @@
         name = "sf-symbols";
         greedy = true;
       }
+      { # PDF viewer/editor
+        name = "skim";
+        greedy = true;
+      }
       {
         name = "slack";
         greedy = true;
@@ -430,6 +448,10 @@
       }
       {
         name = "wireshark";
+        greedy = true;
+      }
+      {
+        name = "zed";
         greedy = true;
       }
     ];
