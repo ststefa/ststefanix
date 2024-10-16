@@ -60,11 +60,11 @@
 
     mkDarwinConfig = { username, useremail, system, hostname }:
       let
-      specialArgs =
-      inputs
-      // {
-        inherit username useremail hostname;
-      };
+        specialArgs =
+          inputs
+          // {
+            inherit username useremail hostname;
+          };
       in
      darwin.lib.darwinSystem {
       inherit system specialArgs;
