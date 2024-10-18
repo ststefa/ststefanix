@@ -243,7 +243,7 @@
       "openssh"
       "pandoc"
       "ruff" # fast python linter
-      "rustup-init"
+      "rustup"
       #"readline"
       "screen"
       "switchaudio-osx"

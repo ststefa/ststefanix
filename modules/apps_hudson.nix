@@ -11,7 +11,7 @@
     };
 
     brews = [
-      "lxd" # CLI for lxd, https://ubuntu.com/lxd
+      "lxc" # CLI for lxd, https://ubuntu.com/lxd
     ];
 
     casks = [
