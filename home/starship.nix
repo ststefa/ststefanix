@@ -1,6 +1,6 @@
 { ... }: {
   programs.starship = {
-    enable = false; # Nice, but requires a two-line prompt
+    enable = false; # Nice, but sets a two-line prompt
 
     enableBashIntegration = true;
     enableZshIntegration = true;
