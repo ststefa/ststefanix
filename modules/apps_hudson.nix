@@ -3,6 +3,8 @@
   # host-specific apps that will be merged with other declared apps
 
   environment.systemPackages = with pkgs; [
+    esptool
+    hackrf
   ];
 
   homebrew = {
@@ -41,6 +43,14 @@
       }
       {
         name = "freecad";
+        greedy = true;
+      }
+      { # Pixel collab world
+        name = "gather";
+        greedy = true;
+      }
+      {
+        name = "gimp";
         greedy = true;
       }
       {

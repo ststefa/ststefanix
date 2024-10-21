@@ -34,14 +34,11 @@
     curl
     darwin.iproute2mac
     darwin.trash
-    delve # go debugger @dbcicd
     #diffoscope # takes too long to build on update
     diffutils
     #docker # does not include docker daemon
     docutils
     dutree
-    earthly # @dbcicd
-    esptool
     exiftool
     ffmpeg-headless
     figlet
@@ -67,7 +64,6 @@
     golangci-lint # @dbcicd
     golangci-lint-langserver # @dbcicd
     gopls # go language server
-    hackrf
     htop # Colored top
     imagemagick
     #inotify-tools #No aarch64-apple-darwin
@@ -83,37 +79,26 @@
     #kcl-cli # kcl-lsp not available, so using brew for all kcl
     krew
     kubectl
-    kubelogin-oidc # kubectl plugin for OIDC login @dbcicd
     kubernetes-helm
-    kubeval # @dbcicd #misses important errors
-    kubevirt # @dbcicd kubevirt cli (virtctl)
     kustomize
-    lefthook # git hook setup helper @dbcicd
     less
     lima
     llvm_18
     lsof
-    lzip # lzma compression used in tzdb @dbcicd
     mas # Mac Appstore cli
     minio-client
     #mqttx Not available for aarch64-apple-darwin
-    nats-server # NATS messaging server @dbcicd
-    nats-top # NATS messaging perf @dbcicd
-    natscli # NATS messaging client @dbcicd
     nixd # nix language server, used by vscode nix plugin
     nmap
     #nnn # terminal file manager, replaced by yazi
     nodejs
     oath-toolkit # Provides oathtool
     #openlens # not available for aarch64-darwin
-    openshift # openshift "oc" client
     #openssh # sometimes aborts sessions with "package too long" errors, esp. on apume. Using brew.
-    opentofu
     parallel
     pdfminer # PDF parser and analyzer
     pipx
     poetry
-    pre-commit # git precommit helper @dbcicd
     pstree
     psutils
     pv
@@ -147,7 +132,7 @@
     stern
     stress-ng
     tcpdump
-    temurin-bin-21
+    temurin-bin-21 # java
     #terraform #Takes too long to build, using brew
     tesseract4
     tflint
@@ -243,7 +228,7 @@
       "openssh"
       "pandoc"
       "ruff" # fast python linter
-      "rustup"
+      "rustup-init"
       #"readline"
       "screen"
       "switchaudio-osx"
@@ -320,14 +305,6 @@
       }
       #{ # Not better than webapp
       #  name = "figma";
-      #  greedy = true;
-      #}
-      #{ # Pixel collab world
-      #  name = "gather";
-      #  greedy = true;
-      #}
-      #{
-      #  name = "gimp";
       #  greedy = true;
       #}
       {
