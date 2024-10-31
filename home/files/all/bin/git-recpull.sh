@@ -34,5 +34,5 @@ if (( ${#BASE_DIRS[@]} == 0 )); then
 fi
 
 for BASE_DIR in "${BASE_DIRS[@]}" ; do
-    find . -type d -name .git -print0 | xargs -0 -I_ -P$(getconf _NPROCESSORS_ONLN) -n1 bash -c "cd _ || exit 1; cd ..; git pull"
+    find ${BASE_DIR} -type d -name .git -print0 | xargs -0 -I_ -P$(getconf _NPROCESSORS_ONLN) -n1 bash -c "cd _ || exit 1; cd ..; git pull"
 done
