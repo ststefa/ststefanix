@@ -5,29 +5,23 @@
     # Manage files in home dir. They will be symlinked to nix store.
     # Will not be overwritten if they exist. If undeclared, they will be removed.
     file = {
-      ".ansible.cfg".text =
+      ".test".text =
       ''
         # ATTENTION, managed by NIX
-        #Global ansible settings disabled. Be careful not to interfere with project settings!
-
-        [defaults]
-        host_key_checking = false
-        #force_color = 1
-        #timeout = 10
-        #
-        ## Use the YAML callback plugin for formatted error messages
-        stdout_callback = yaml
-        ## Use the stdout_callback when running ad-hoc commands.
-        bin_ansible_callbacks = stdout, stderr
-        ## silence discovery warnings
-        interpreter_python = auto_silent
-        ## ansible vault shared secret
-        ##vault_password_file = ~/.vault_pass
-        #
-        #[ssh_connection]
-        #retries = 1
-        #ssh_args = -C -o ControlMaster=auto -o ControlPersist=30s
       '';
+
+      ".ansible.cfg".source = ./files/all/.ansible.cfg;
+      ".hammerspoon".source = ./files/all/.hammerspoon; ".hammerspoon".recursive = true;
+      ".pypirc".source = ./files/all/.pypirc;
+      ".vimrc".source = ./files/all/.vimrc;
+      ".ssh".source = ./files/all/.ssh; ".ssh".recursive = true;
+      "bin".source = ./files/all/bin; "bin".recursive = true;
+      "keys".source = ./files/all/keys; "keys".recursive = false;
     };
   };
+
+  # Attempt to iterate over files/all/*
+  #mysrc = builtins.filterSource
+  #  (path: type: type != "directory" || baseNameOf path != ".svn")
+  #  ./test;
 }

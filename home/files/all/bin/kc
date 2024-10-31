@@ -1,0 +1,27 @@
+#!/bin/bash
+
+cd "${HOME}/.kube" || exit 1
+
+case $1 in
+    "")
+        LINKS_TO="$(basename "$(readlink -f config)")"
+        echo ${LINKS_TO%.*}
+        ;;
+    "-l")
+        for FILE in *kubeconfig ; do
+            echo ${FILE%.*}
+        done
+        ;;
+    "-h")
+        echo "Manage kubectl context"
+        echo "usage: $0 [-l | -h | <ctx>]"
+        echo "where:"
+        echo "  -l:    List available contexts"
+        echo "  -h:    This help"
+        echo "  <ctx>: Switch to this context"
+        ;;
+    *)
+        [[ -f $1.kubeconfig ]] || ( echo "No context with name $1. Try -l" ; exit 1 )
+        ln -fs $1.kubeconfig config
+        ;;
+esac

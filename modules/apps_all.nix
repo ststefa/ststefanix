@@ -192,12 +192,12 @@
       "HazeOver" = 430798174;
       "Kagi for Safari" = 1622835804;
       "Meeter" = 1510445899;
-      "Microsoft Remote Desktop" = 1295203466;
       "Msg Viewer Pro" = 1019539949;
       "OCRKit" = 410309628;
       "Strongbox" = 897283731;
       "WiFi Explorer" = 494803304;
       "WiFi Signal" = 525912054;
+      "Windows App" = 1295203466; # Formerly MS Remote Desktop
       "Xcode" = 497799835;
     };
 

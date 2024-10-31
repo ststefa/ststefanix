@@ -1,0 +1,139 @@
+#!/usr/bin/env bash
+
+# Obsidian helpers
+
+# shellcheck disable=SC2317
+
+cli_resetts() {
+    local FILE="${*}"
+    if [[ -z "${FILE}" ]] ; then
+        echo "Specify a FILE"
+        return 1
+    fi
+    if [[ -f "${FILE}" ]] ; then
+        OLD_BTIME="$(stat --printf "%w" "${FILE}" | cut -d"." -f1)"
+        OLD_MTIME="$(stat --printf "%y" "${FILE}" | cut -d"." -f1)"
+
+        # Set btime first because touch will only set btime+mtime if TS < btime
+        TS=$(grep "^en-created:" "${FILE}" | cut -d" " -f2)
+        if [[ -n "${TS}" ]] ; then
+            touch -t "${TS}" "${FILE}"
+            NEW_BTIME="$(stat --printf "%w" "${FILE}" | cut -d"." -f1)"
+            if [[ "${OLD_BTIME}" == "${NEW_BTIME}" ]] ; then
+                echo "Btime ${OLD_BTIME} unchanged"
+            else
+                echo "Changed btime from ${OLD_BTIME} to ${NEW_BTIME}"
+            fi
+        else
+            echo "${FILE} does not have an \"en-created\" tag"
+            false
+        fi
+
+        # Now set mtime. Note the touch invocation is identical but will not set btime because TS > btime
+        TS=$(grep "^en-lastupdate:" "${FILE}" | cut -d" " -f2)
+        if [[ -n "${TS}" ]] ; then
+            touch -t "${TS}" "${FILE}"
+            NEW_MTIME="$(stat --printf "%y" "${FILE}" | cut -d"." -f1)"
+            if [[ "${OLD_MTIME}" == "${NEW_MTIME}" ]] ; then
+                echo "Mtime ${OLD_MTIME} unchanged"
+            else
+                echo "Changed mtime from ${OLD_MTIME} to ${NEW_MTIME}"
+            fi
+        else
+            echo "${FILE} does not have an \"en-lastupdate\" tag"
+            false
+        fi
+    else
+        echo  "${FILE}: No such file"
+    fi
+}
+help_resetts() {
+    echo "<FILE>: Set btime/mtime of <FILE> to values of en-created/en-lastupdate tags"
+}
+
+cli_queryts() {
+    local FILE="${*}"
+    if [[ -z "${FILE}" ]] ; then
+        echo "Specify a FILE"
+        return 1
+    fi
+    if [[ -f "${FILE}" ]] ; then
+        # stat output: 2019-10-25 09:43:00.000000000. cut away after '.', tr-remove '- :'
+        FILE_BTIME="$(stat --printf "%w" "${FILE}" | cut -d"." -f1 | tr -d '\-\ :')" # e.g. 20191025094300
+        # strip last two characters (=seconds)
+        FILE_BTIME=${FILE_BTIME::-2}
+        FILE_MTIME="$(stat --printf "%y" "${FILE}" | cut -d"." -f1 | tr -d '\-\ :')"
+        FILE_MTIME=${FILE_MTIME::-2}
+
+        TS=$(grep "^en-created:" "${FILE}" | cut -d" " -f2)
+        if [[ -n "${TS}" ]] ; then
+            echo "btime: ${FILE_BTIME}, tag: ${TS}"
+        else
+            echo "${FILE} does not have an \"en-created\" tag"
+            false
+        fi
+
+        TS=$(grep "^en-lastupdate:" "${FILE}" | cut -d" " -f2)
+        if [[ -n "${TS}" ]] ; then
+            echo "mtime: ${FILE_MTIME}, tag: ${TS}"
+        else
+            echo "${FILE} does not have an \"en-lastupdate\" tag"
+            false
+        fi
+    else
+        echo  "${FILE}: No such file"
+    fi
+}
+help_queryts() {
+    echo "<FILE>: Compare btime/mtime of <FILE> with values of en-created/en-lastupdate tags"
+}
+
+# Dynamically collect list of cli functions, identified by regex.
+# The "cli_" prefix is stripped
+get_cli_funcs() {
+    set | grep '^cli_.*()' | sed 's/^cli_\([^ ]*\) .*$/\1/' | sort
+}
+
+func_exists() {
+    for F in "${FUNC_NAMES[@]}" ; do
+        if [[ "${F}" == "${1}" ]] ; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+# Invokes "cli_$1"
+invoke_cli_func() {
+    F="cli_${1}"
+    shift
+    "${F}" "${@}"
+    return $?
+}
+
+# The global list of all implemented cli functions
+FUNC_NAMES=($(get_cli_funcs)) || exit 1
+
+case "$1" in
+    -h|--help|"")
+        echo "Obsidian cli tools."
+        echo "List of commands:"
+        for CMD in ${FUNC_NAMES[*]} ; do
+            echo -n "${CMD} "
+            help_"${CMD}"
+        done
+        exit 1
+        ;;
+    -d|--debug)
+        LOGLEVEL=0
+        ;;
+    *)
+        if func_exists "${1}" ; then
+            invoke_cli_func "${@}"
+            exit $?
+        else
+            echo "Component \"${1}\" does not exist. Choose from \"${FUNC_NAMES[*]}\". Or use -h/--help for help." >&2
+            exit 1
+        fi
+        ;;
+esac
