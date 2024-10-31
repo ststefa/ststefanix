@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Manage kubectl context switching
+
 cd "${HOME}/.kube" || exit 1
 
 case $1 in
@@ -13,12 +15,14 @@ case $1 in
         done
         ;;
     "-h")
-        echo "Manage kubectl context"
-        echo "usage: $0 [-l | -h | <ctx>]"
-        echo "where:"
-        echo "  -l:    List available contexts"
-        echo "  -h:    This help"
-        echo "  <ctx>: Switch to this context"
+        cat <<EOF
+Manage kubectl context
+usage: $0 [-l | -h | <ctx>]
+where:
+  -l:    List available contexts
+  -h:    This help
+  <ctx>: Switch to this context
+EOF
         ;;
     *)
         [[ -f $1.kubeconfig ]] || ( echo "No context with name $1. Try -l" ; exit 1 )

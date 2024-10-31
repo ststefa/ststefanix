@@ -11,34 +11,34 @@
 # This was disabled because I use openssl ssh-add
 #ssh-add --apple-use-keychain ~/.ssh/id_rsa
 ssh-add ~/.ssh/id_rsa
-ssh-add ~/keys/arq2024
-ssh-add ~/keys/db/steinert.id_rsa
+#ssh-add ~/.ssh/arq2024
+ssh-add ~/.ssh/db/steinert.id_rsa
 
 
 ### T-Systems CH Keys
 # general
-#ssh-add --apple-use-keychain ~/keys/tsch/ssteine2.id_rsa
+#ssh-add --apple-use-keychain ~/.ssh/tsch/ssteine2.id_rsa
 # vcloud linux systems
-#ssh-add --apple-use-keychain ~/keys/tsch/tsch-appl_rsa
+#ssh-add --apple-use-keychain ~/.ssh/tsch/tsch-appl_rsa
 # Legacy keys
-#ssh-add --apple-use-keychain ~/keys/tsch/cacti_id_rsa
+#ssh-add --apple-use-keychain ~/.ssh/tsch/cacti_id_rsa
 # splunk 2017 systems
-#ssh-add --apple-use-keychain ~/keys/tsch/splunk-new_rsa
+#ssh-add --apple-use-keychain ~/.ssh/tsch/splunk-new_rsa
 # splunk otc systems
-#ssh-add --apple-use-keychain ~/keys/tsch/splunk-otc.id_rsa
+#ssh-add --apple-use-keychain ~/.ssh/tsch/splunk-otc.id_rsa
 
 ### Netlution / SAP
-#ssh-add --apple-use-keychain ~/keys/netlution/cgs
-#ssh-add --apple-use-keychain ~/keys/netlution/admansible
-#ssh-add --apple-use-keychain ~/keys/netlution/666ansible
-#ssh-add --apple-use-keychain ~/keys/netlution/c01ansible
-#ssh-add --apple-use-keychain ~/keys/netlution/777ansible
-#ssh-add --apple-use-keychain ~/keys/netlution/888ansible
-#ssh-add --apple-use-keychain ~/keys/netlution/stefan
+#ssh-add --apple-use-keychain ~/.ssh/netlution/cgs
+#ssh-add --apple-use-keychain ~/.ssh/netlution/admansible
+#ssh-add --apple-use-keychain ~/.ssh/netlution/666ansible
+#ssh-add --apple-use-keychain ~/.ssh/netlution/c01ansible
+#ssh-add --apple-use-keychain ~/.ssh/netlution/777ansible
+#ssh-add --apple-use-keychain ~/.ssh/netlution/888ansible
+#ssh-add --apple-use-keychain ~/.ssh/netlution/stefan
 
 ### German Edge Cloud GEC
-#ssh-add --apple-use-keychain ~/keys/gec/stefan_ed25519
-#ssh-add --apple-use-keychain ~/keys/gec/observability
+#ssh-add --apple-use-keychain ~/.ssh/gec/stefan_ed25519
+#ssh-add --apple-use-keychain ~/.ssh/gec/observability
 
 echo "List of active keys:"
 ssh-add -l

@@ -39,12 +39,12 @@ mux () {
 case "$1" in
     -h|--help|"")
         echo "Mux OBS recording <mp4-filename>.<ext> and screen recording (<mp4-filename>-window.<ext>) into highly optimized h265 <mp4-filename>.hevc.mp4 Requires OBS setup as specified in script comments."
-        echo "usage: ${0} <mp4-filename>.<ext>"
+        echo "Usage: ${0} <mp4-filename>.<ext>"
         exit 1
         ;;
     *)
         if mux "$@" ; then
-            echo "${FILE}.hevc.${EXT} created."
+            echo "${FILE}.hevc.mp4 created."
         else
             false
         fi
