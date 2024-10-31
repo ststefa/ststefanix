@@ -8,15 +8,18 @@
       ".test".text =
       ''
         # ATTENTION, managed by NIX
+        Just an xample
       '';
 
+      # Files
       ".ansible.cfg".source = ./files/all/.ansible.cfg;
-      ".hammerspoon".source = ./files/all/.hammerspoon; ".hammerspoon".recursive = true;
       ".pypirc".source = ./files/all/.pypirc;
       ".vimrc".source = ./files/all/.vimrc;
+
+      # dirs
+      ".hammerspoon".source = ./files/all/.hammerspoon; ".hammerspoon".recursive = true;
       ".ssh".source = ./files/all/.ssh; ".ssh".recursive = true;
       "bin".source = ./files/all/bin; "bin".recursive = true;
-      "keys".source = ./files/all/keys; "keys".recursive = false;
     };
   };
 
