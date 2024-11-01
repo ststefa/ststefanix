@@ -7,12 +7,13 @@
 #ssh-add --apple-load-keychain
 
 # personal general key. Add this one first because all servers have set MaxAuthTries=1
-# for security reasons. If this key is not offered first then auth will fail
-# This was disabled because I use openssl ssh-add
+# for security reasons. If this key is not offered first then auth will fail.
+# Disabled because I use openssl ssh-add
 #ssh-add --apple-use-keychain ~/.ssh/id_rsa
-ssh-add ~/.ssh/id_rsa
-#ssh-add ~/.ssh/arq2024
-ssh-add ~/.ssh/db/steinert.id_rsa
+# Re-enabled
+/usr/bin/ssh-add --apple-use-keychain ~/.ssh/id_rsa
+#/usr/bin/ssh-add --apple-use-keychain ~/.ssh/arq2024
+/usr/bin/ssh-add --apple-use-keychain ~/.ssh/db/steinert.id_rsa
 
 
 ### T-Systems CH Keys
