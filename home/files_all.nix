@@ -15,6 +15,7 @@
       ".ansible.cfg".source = ./files/all/.ansible.cfg;
       ".pypirc".source = ./files/all/.pypirc;
       ".vimrc".source = ./files/all/.vimrc;
+      "/Users/${username}/Library/Application Support/sops/age/keys.txt".source = ./files/all/age_keys.txt;
 
       # dirs
       ".hammerspoon".source = ./files/all/.hammerspoon; ".hammerspoon".recursive = true;
