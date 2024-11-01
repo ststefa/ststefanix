@@ -342,12 +342,49 @@ spoon.URLDispatcher.url_redir_decoders = {
 print("Redir decoders")
 print(hs.inspect(spoon.URLDispatcher.url_redir_decoders))
 
+-- Requires the net.url package in ~/.hammerspoon
+url = require "net.url"
+-- we need to know this for url handling. Subtract 3600 so that it's not too soon after lua init
+startTime = os.time() - 3600
+
 function dropUrl(url)
     print("URLDispatcher: Dropping " .. url)
 end
-function openUrl(url)
-    print("URLDispatcher: Opening " .. url)
-    hs.urlevent.openURLWithBundle(url, spoon.URLDispatcher.default_handler)
+function openUrl(urlString)
+    -- see https://github.com/golgote/neturl
+    u = url.parse(urlString)
+    print("URLDispatcher: Handling " .. u)
+    shouldOpen = true
+    now = os.time()
+
+    -- kubectl oidc plugin (localhost:8000)
+    if (u.host == 'localhost' and u.port == 8000) then
+        if (os.date("*t", now).hour < 8) or (os.date("*t", now).hour > 20) then
+            print('URLDispatcher: Out of working hours (' .. os.date("%H:%M", now) .. ')')
+            shouldOpen = false
+        else
+            if (os.date("*t", now).wday == 1) or (os.date("*t", now).wday == 7) then
+                print('URLDispatcher: Weekend')
+                shouldOpen = false
+            else
+                if ((now - startTime) < 1800) then
+                    print('URLDispatcher: Too soon (' .. (now - startTime) .. 's)')
+                    shouldOpen = false
+                else
+                    startTime = now
+                end
+            end
+        end
+    end
+
+    if shouldOpen then
+    --if true then
+        print("URLDispatcher: Opening")
+        hs.urlevent.openURLWithBundle(urlString, spoon.URLDispatcher.default_handler)
+    else
+        print("URLDispatcher: Dropping")
+    end
+
 end
 
 ---  A table containing a list of dispatch rules. Rules are evaluated in the
@@ -374,6 +411,7 @@ end
 ---  * Defaults to an empty table, which has the effect of having all URLs
 ---    dispatched to the `default_handler`.
 spoon.URLDispatcher.url_patterns = {
+    -- Example URL to always drop
     --{
     --    "^http://localhost:8000",
     --    nil,
