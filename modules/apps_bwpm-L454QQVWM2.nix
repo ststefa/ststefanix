@@ -30,6 +30,10 @@
     ];
 
     casks = [
+      { # Required for HVLE access
+        name = "amazon-workspaces";
+        greedy = true;
+      }
       { # Enable AWS session manager connections
         name = "session-manager-plugin";
         greedy = true;
