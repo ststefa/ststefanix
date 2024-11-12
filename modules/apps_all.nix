@@ -328,10 +328,6 @@
         greedy = true;
       }
       {
-        name = "lynx";
-        greedy = true;
-      }
-      {
         name = "macfuse";
         greedy = true;
       }
