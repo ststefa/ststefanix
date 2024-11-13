@@ -17,10 +17,11 @@
       ".vimrc".source = ./files/all/.vimrc;
       "/Users/${username}/Library/Application Support/sops/age/keys.txt".source = (./files/all + "/Library/Application Support/sops/age/age_keys.txt");
 
-      # dirs
+      # dirs. "recursive" causes links to be created on the deepest level instead of the highest
       ".hammerspoon".source = ./files/all/.hammerspoon; ".hammerspoon".recursive = true;
       ".ssh".source = ./files/all/.ssh; ".ssh".recursive = true;
       "bin".source = ./files/all/bin; "bin".recursive = true;
+      "workspace".source = ./files/all/workspace; "workspace".recursive = true;
     };
   };
 
