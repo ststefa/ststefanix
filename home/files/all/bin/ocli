@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# Obsidian helpers
+# Obsidian helpers. Dynamically collects commands by introspecting functions.
+# To add a function x, create two functions "cli_x" and "help_x"
 
 # shellcheck disable=SC2317
 
@@ -123,9 +124,6 @@ case "$1" in
             help_"${CMD}"
         done
         exit 1
-        ;;
-    -d|--debug)
-        LOGLEVEL=0
         ;;
     *)
         if func_exists "${1}" ; then
