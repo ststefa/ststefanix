@@ -2,9 +2,9 @@
 
 {
   home = {
-    # Manage files in home dir. They will be symlinked to nix store.
-    # Will not be overwritten if they exist. If undeclared, they will be removed.
+    # see ´files_all.nix` for doc
     file = {
+      #".config/pushover.conf".source = ./files/hudson/.config/pushover.conf;
       "bin/nex_exchange.sh".source = ./files/hudson/bin/nex_exchange.sh;
       "bin/nex_price.sh".source = ./files/hudson/bin/nex_price.sh;
       "bin/nex_show-order.sh".source = ./files/hudson/bin/nex_show-order.sh;

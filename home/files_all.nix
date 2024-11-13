@@ -15,7 +15,7 @@
       ".ansible.cfg".source = ./files/all/.ansible.cfg;
       ".pypirc".source = ./files/all/.pypirc;
       ".vimrc".source = ./files/all/.vimrc;
-      "/Users/${username}/Library/Application Support/sops/age/keys.txt".source = (./files/all + "/Library/Application Support/sops/age/age_keys.txt");
+      "Library/Application Support/sops/age/keys.txt".source = (./files/all + "/Library/Application Support/sops/age/age_keys.txt");
 
       # dirs. "recursive" causes links to be created on the deepest level instead of the highest
       ".hammerspoon".source = ./files/all/.hammerspoon; ".hammerspoon".recursive = true;
