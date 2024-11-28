@@ -1,13 +1,40 @@
 #!/bin/bash
 
 # Manage kubectl context switching
+#set -x
+
+get_filename() {
+    if [[ -f $1.kubeconfig ]] ;then
+        echo "${1}"
+    else
+        local KUBECONFIGS=( $( ls *.kubeconfig | grep $1) )
+        for (( i=0; i<${#KUBECONFIGS[@]}; i++ )) ; do
+            KUBECONFIGS[$i]=${KUBECONFIGS[$i]%.*}
+        done
+
+        case "${#KUBECONFIGS[@]}" in
+        0)
+            echo "No context matching \"${1}\". Try \"-l\"" >&2
+            return 1
+            ;;
+        1)
+            echo "Using context ${KUBECONFIGS[0]}" >&2
+            echo "${KUBECONFIGS[0]}"
+            ;;
+        *)
+            echo "Context not unique. \"$1\" matches ${KUBECONFIGS[*]}" >&2
+            return 1
+            ;;
+        esac
+    fi
+}
 
 cd "${HOME}/.kube" || exit 1
 
 case $1 in
     "")
-        LINKS_TO="$(basename "$(readlink -f config)")"
-        echo ${LINKS_TO%.*}
+        CURRENT_CONFIG="$(basename "$(readlink -f config)")"
+        echo ${CURRENT_CONFIG%.*}
         ;;
     "-l")
         for FILE in *kubeconfig ; do
@@ -16,16 +43,18 @@ case $1 in
         ;;
     "-h")
         cat <<EOF
-Manage kubectl context
-usage: $0 [-l | -h | <ctx>]
+Switch kubectl context. Each context is managed as a separate file in
+~/.kube/*kubeconfig. kc creates a symlink from the context file to
+~/.kube/config.
+usage: $(basename "${0}") [-l | -h | <ctx>]
 where:
   -l:    List available contexts
   -h:    This help
-  <ctx>: Switch to this context
+  <ctx>: Switch to this context. Can be any unique substring of the context
 EOF
         ;;
     *)
-        [[ -f $1.kubeconfig ]] || ( echo "No context with name $1. Try -l" ; exit 1 )
-        ln -fs $1.kubeconfig config
+        KCCONFIG=$(get_filename $1) || exit 1
+        ln -fs ${KCCONFIG}.kubeconfig config
         ;;
 esac
