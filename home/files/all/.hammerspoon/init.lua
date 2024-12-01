@@ -362,19 +362,18 @@ function openUrl(urlString)
         if (os.date("*t", now).hour < 8) or (os.date("*t", now).hour > 20) then
             print('URLDispatcher: Out of working hours (' .. os.date("%H:%M", now) .. ')')
             shouldOpen = false
+        elseif (os.date("*t", now).wday == 1) or (os.date("*t", now).wday == 7) then
+            print('URLDispatcher: Weekend')
+            shouldOpen = false
+        elseif ((now - startTime) < 1800) then
+            print('URLDispatcher: Too soon (' .. (now - startTime) .. 's)')
+            shouldOpen = false
         else
-            if (os.date("*t", now).wday == 1) or (os.date("*t", now).wday == 7) then
-                print('URLDispatcher: Weekend')
-                shouldOpen = false
-            else
-                if ((now - startTime) < 1800) then
-                    print('URLDispatcher: Too soon (' .. (now - startTime) .. 's)')
-                    shouldOpen = false
-                else
-                    startTime = now
-                end
-            end
+            startTime = now
         end
+    --- Deepl wants to open a feedback form upon deinstallation
+    elseif (u.host == 'www.deepl.com' and u.path == '/en/macos/feedback') then
+        shouldOpen = false
     end
 
     if shouldOpen then
