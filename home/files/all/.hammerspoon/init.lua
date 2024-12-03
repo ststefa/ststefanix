@@ -197,18 +197,18 @@ batteryWatcher = hs.battery.watcher.new(
                 if not activeTimer then
                     caffeinate()
                 else
-                    print("already caffeeinating")
+                    print("already caffeinating")
                 end
                 -- Warn about AC loss, now handled by iStatMenus
                 hs.alert.show("Lost AC power")
                 ]]--
             else
                 --[[
-                -- Not de-caffeeinating. Kills network connections in case lid is still closed while plugging in power
+                -- Not de-caffeinating. Kills network connections in case lid is still closed while plugging in power
                 if activeTimer then
                     activeTimer:fire()
                 else
-                    print("not caffeeinating, nothing to change")
+                    print("not caffeinating, nothing to change")
                 end
                 ]]--
             end
@@ -229,12 +229,12 @@ pmWatcher=hs.caffeinate.watcher.new(
 
         --if (event == 1 or event == 3) then
         --    if (is_sleeping == false) then
-        --        print("disable caffeeination")
+        --        print("disable caffeination")
         --        is_sleeping=true
         --    end
         --elseif (event == 0 or event == 4) then
         --    if (is_sleeping == true) then
-        --        print("enable caffeeination")
+        --        print("enable caffeination")
         --        is_sleeping=false
         --    end
         --end
@@ -266,7 +266,7 @@ function caffeinate()
                 hs.alert.show("De-caffeinated")
                 print("De-caffeinated")
             end)
-            print("de-caffeination timser set")
+            print("de-caffeination timer set")
         else
             hs.alert.show("Could not caffeinate, see hammerspoon console")
             print("Could not caffeinate")
@@ -280,7 +280,7 @@ function caffeinate()
         activeTimer:fire()
     else
         if (is_sleeping == true) then
-            print("not caffeeinating, lid closed")
+            print("not caffeinating, lid closed")
         else
             -- https://superuser.com/questions/1018140/keep-macbook-running-with-lid-closed-for-specified-duration/1018150
             run_command('/usr/bin/sudo', {"/usr/bin/pmset", "-b", "sleep", "0"})
@@ -372,7 +372,7 @@ function openUrl(urlString)
             startTime = now
         end
     --- Deepl wants to open a feedback form upon deinstallation
-    elseif (u.host == 'www.deepl.com' and u.path == '/en/macos/feedback') then
+    elseif (u.host == 'www.deepl.com' and string.find(u.path, '/macos/feedback')) then
         shouldOpen = false
     end
 

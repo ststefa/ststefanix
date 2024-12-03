@@ -80,5 +80,27 @@
 				}
 			}
 		]
+	},
+	"settings": {
+		"cSpell.words": [
+			"caffeinate",
+			"caffeinating",
+			"caffeination",
+			"choosyosx",
+			"deepl",
+			"deinstallation",
+			"disablesleep",
+			"distributednotifications",
+			"msteams",
+			"nixpkgs",
+			"NOPASSWD",
+			"pathwatcher",
+			"pkgs",
+			"pmset",
+			"redir",
+			"urlevent",
+			"wday",
+			"Zarvox"
+		]
 	}
 }
