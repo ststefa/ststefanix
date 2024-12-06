@@ -38,7 +38,7 @@ alias apply := apply-flake
 history:
   nix profile history --profile /nix/var/nix/profiles/system
 
-# Wipe profile history older than 7d and do a nix garbage-collect
+# Wipe profile history older than x and do a nix garbage-collect
 gc:
   sudo nix profile wipe-history --profile /nix/var/nix/profiles/system  --older-than 30d
   sudo nix store gc --debug

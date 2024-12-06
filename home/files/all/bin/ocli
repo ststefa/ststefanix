@@ -119,7 +119,7 @@ case "$1" in
     -h|--help|"")
         echo "Obsidian cli tools."
         echo "List of commands:"
-        for CMD in ${FUNC_NAMES[*]} ; do
+        for CMD in "${FUNC_NAMES[@]}" ; do
             echo -n "${CMD} "
             help_"${CMD}"
         done

@@ -31,7 +31,7 @@
         fi
         echo "''${CWD}"
     }
-    # Using seperate config files instead of contexts
+    # Using separate config files instead of contexts
     parse_k8s_ctx() {
         local CONTEXT
         CONTEXT="$(kc)"
@@ -83,10 +83,10 @@
     PATH=''${PATH}:''${HOME}/bin
 
     ## rust bin (created by homebrew rustup-init
-    PATH=''${PATH}:$HOME/.cargo/bin
+    PATH=''${PATH}:''${HOME}/.cargo/bin
 
     ## kubectl krew binaries
-    PATH=''${PATH}:$HOME/.krew/bin
+    PATH=''${PATH}:''${HOME}/.krew/bin
 
     ## pipx wrappers
     PATH=''${PATH}:~/.local/bin

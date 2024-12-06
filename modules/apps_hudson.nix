@@ -30,6 +30,10 @@
         greedy = true;
       }
       {
+        name = "google-chrome";
+        greedy = true;
+      }
+      {
         name = "element";
         greedy = true;
       }
@@ -61,10 +65,10 @@
         name = "openscad";
         greedy = true;
       }
-      #{. Outdated 2024-10-12. Installed from github
-      #  name = "orcaslicer";
-      #  greedy = true;
-      #}
+      {
+        name = "orcaslicer";
+        greedy = true;
+      }
       { # Extended app for Apple Fotos libraries
         name = "powerphotos";
         greedy = true;

@@ -232,7 +232,7 @@
       #"readline"
       "screen"
       "switchaudio-osx"
-      "terraform"
+      #"terraform" # deprecated
       "uv" # python package manager
       "vault-cli"
     ];
