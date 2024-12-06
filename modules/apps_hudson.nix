@@ -4,7 +4,12 @@
 
   environment.systemPackages = with pkgs; [
     esptool
+    gnuradio
     hackrf
+    soapyaudio
+    soapyhackrf
+    soapysdr
+    xterm # required for gnuradio
   ];
 
   homebrew = {
