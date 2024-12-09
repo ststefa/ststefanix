@@ -4,12 +4,6 @@
 
   environment.systemPackages = with pkgs; [
     esptool
-    gnuradio
-    hackrf
-    soapyaudio
-    soapyhackrf
-    soapysdr
-    xterm # required for gnuradio
   ];
 
   homebrew = {
@@ -18,7 +12,12 @@
     };
 
     brews = [
+      "ghostscript"
+      "gnuradio"
+      "hackrf"
       "lxc" # CLI for lxd, https://ubuntu.com/lxd
+      "soapyhackrf"
+      "soapysdr"
     ];
 
     casks = [

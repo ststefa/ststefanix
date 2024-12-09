@@ -150,6 +150,7 @@
     watchexec
     wget
     #which # Non-standard version, does not support "-s"
+    xterm
     xz
     yapf
     yazi # terminal file manager
@@ -201,7 +202,9 @@
       "Xcode" = 497799835;
     };
 
+    # Taps /must/ be declared here if brews are installed from them
     taps = [
+      "hashicorp/tap"
       "homebrew/services"
       "kcl-lang/tap"
       "emqx/mqttx"
@@ -213,6 +216,7 @@
       "docker" # cli part of docker. Try using nix app?
       #"imagemagick" # Moved to nixpkg
       #"openjdk@21" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk # Replaced with nixpkg
+      "hashicorp/tap/vault"
       #"inotify-tools" # No aarch64-apple-darwin
       "ipinfo-cli"
       #"iproute2mac" # Moved to nixpkg darwin.iproute2mac
@@ -232,9 +236,9 @@
       #"readline"
       "screen"
       "switchaudio-osx"
-      #"terraform" # deprecated
-      "uv" # python package manager
-      "vault-cli"
+      #"terraform" # deprecated in homebrew
+      "uv" # python package manager written in Rust
+      #"vault-cli" # This is "Jackrabbit FileVault"
     ];
 
     #caskArgs = { # Error: "The option `homebrew.caskArgs.greedy' does not exist."
