@@ -24,6 +24,7 @@
 
     brews = [
       "earthly"
+      "jfrog-cli" # CLI for Artifactory
       "mkcert"
       "openshift-cli"
       "socket_vmnet"
