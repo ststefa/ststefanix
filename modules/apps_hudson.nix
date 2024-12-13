@@ -16,6 +16,7 @@
       "gnuradio"
       "hackrf"
       "lxc" # CLI for lxd, https://ubuntu.com/lxd
+      "minicom" # used for serial device access
       "soapyhackrf"
       "soapysdr"
     ];

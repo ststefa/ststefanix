@@ -188,6 +188,9 @@
     LANG = "en_US.UTF-8";
     LC_ALL = "en_US.UTF-8";
 
+    # k9s editor
+    KUBE_EDITOR="code -w";
+
     HISTTIMEFORMAT = "%F %T ";
     HISTCONTROL = "ignoreboth";
     # Write .bash_history immediately (i.e. with each prompt). Performance critical.

@@ -27,7 +27,7 @@
     bc
     bottom
     #caddy # golang config server
-    cmakeMinimal
+    #cmakeMinimal # using brew for compiler-related
     colima
     coreutils
     cowsay
@@ -37,10 +37,11 @@
     #diffoscope # takes too long to build on update
     diffutils
     #docker # does not include docker daemon
-    docutils
+    #docutils #using brew for all py-related
+    doxygen # required to build gr-osmosdr
     dutree
     exiftool
-    ffmpeg-headless
+    #ffmpeg-full # does not provide libavformat.dylib which is required for audacity, using brew
     figlet
     file
     findutils # GNU find, locate, updatedb, xargs
@@ -48,7 +49,7 @@
     fswatch
     fzf
     gawk
-    gcc
+    #gcc # using brew for compiler-related
     git
     git-crypt
     git-agecrypt
@@ -92,6 +93,7 @@
     nmap
     #nnn # terminal file manager, replaced by yazi
     nodejs
+    nodePackages.cspell
     oath-toolkit # Provides oathtool
     #openlens # not available for aarch64-darwin
     #openssh # sometimes aborts sessions with "package too long" errors, esp. on apume. Using brew.
@@ -102,20 +104,22 @@
     pstree
     psutils
     pv
-    python311
-    python311Packages.coverage
-    python311Packages.debugpy
+    # Using python from brew because
+    # - gnuradio cannot compile grosmosdr (missing python libs)
+    #python311
+    #python311Packages.coverage
+    #python311Packages.debugpy
     # python311Packages.docutils #build error in unstable
-    python311Packages.jsonpatch
-    python311Packages.keyring
-    python311Packages.pip
-    python311Packages.pylint
-    python311Packages.pytest
-    python311Packages.restructuredtext-lint
+    #python311Packages.jsonpatch
+    #python311Packages.keyring
+    #python311Packages.pip
+    #python311Packages.pylint
+    #python311Packages.pytest
+    #python311Packages.restructuredtext-lint
     #python311Packages.rstcheck # python3.11-rstcheck-core-1.0.3.drv tests fail
     #python311Packages.sphinx #build error in unstable
-    python311Packages.virtualenv
-    python311Packages.wheel
+    #python311Packages.virtualenv
+    #python311Packages.wheel
     qemu_kvm
     ripgrep
     #rstcheck # python3.11-rstcheck-core-1.0.3.drv tests fail
@@ -132,7 +136,7 @@
     stern
     stress-ng
     tcpdump
-    temurin-bin-21 # java
+    #temurin-bin-21 # java
     #terraform #Takes too long to build, using brew
     tesseract4
     tflint
@@ -212,17 +216,21 @@
 
     brews = [
       "cliclick"
+      "cmake"
       #"curl" # Moved to nixpkg
       "docker" # cli part of docker. Try using nix app?
+      "docutils"
+      "doxygen"
+      "ffmpeg"
+      "gcc"
       #"imagemagick" # Moved to nixpkg
-      #"openjdk@21" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk # Replaced with nixpkg
+      "openjdk@21" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk # Replaced with nixpkg
       "hashicorp/tap/vault"
       #"inotify-tools" # No aarch64-apple-darwin
       "ipinfo-cli"
       #"iproute2mac" # Moved to nixpkg darwin.iproute2mac
-      "jfrog-cli" # CLI for Artifactory @dbcicd
       #"k3d" #using nix
-      "kcl-lang/tap/kcl" # Tool to create an abstratction layer for k8s manifests # Available from nixpkg as "kcl-cli" but missing kcl-lsp
+      "kcl-lang/tap/kcl" # Tool to create an abstraction layer for k8s manifests # Available from nixpkg as "kcl-cli" but missing kcl-lsp
       "kcl-lsp" # kcl language server (for vscode)
       "lz4"
       "lzo"
@@ -231,6 +239,8 @@
       #"openssl@3" # dependency of e.g. vault-cli
       "openssh"
       "pandoc"
+      "pipx"
+      "python@3.13"
       "ruff" # fast python linter
       "rustup"
       #"readline"

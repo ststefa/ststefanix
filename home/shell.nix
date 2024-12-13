@@ -97,9 +97,6 @@
     # shellcheck source=/dev/null
     #. ~/.iterm2_shell_integration."$(basename "''${SHELL}")"
 
-    # k9s editor
-    export KUBE_EDITOR="code -w"
-
     # AWS autocomplete
     #complete -C aws_completer aws
     # OpenStack autocomplete, takes several seconds
