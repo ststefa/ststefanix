@@ -224,7 +224,7 @@
       "ffmpeg"
       "gcc"
       #"imagemagick" # Moved to nixpkg
-      "openjdk@21" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk to attach Apple wrappers or add /opt/homebrew/opt/openjdk@21/bin to PATH
+      "openjdk@23" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk to attach Apple wrappers or add /opt/homebrew/opt/openjdk/bin to PATH
       "hashicorp/tap/vault"
       #"inotify-tools" # No aarch64-apple-darwin
       "ipinfo-cli"
