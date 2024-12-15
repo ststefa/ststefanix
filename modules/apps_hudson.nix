@@ -13,8 +13,10 @@
 
     brews = [
       "ghostscript"
+      "glib"
       "gnuradio"
       "hackrf"
+      "jpeg-turbo"
       "lxc" # CLI for lxd, https://ubuntu.com/lxd
       "minicom" # used for serial device access
       "soapyhackrf"
