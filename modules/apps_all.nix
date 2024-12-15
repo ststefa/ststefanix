@@ -32,7 +32,7 @@
     coreutils
     cowsay
     curl
-    darwin.iproute2mac
+    iproute2mac
     darwin.trash
     #diffoscope # takes too long to build on update
     diffutils

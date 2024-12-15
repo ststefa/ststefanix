@@ -216,17 +216,13 @@
       font-awesome
 
       # nerdfonts
-      # https://github.com/NixOS/nixpkgs/blob/nixos-24.05/pkgs/data/fonts/nerdfonts/shas.nix
-      (nerdfonts.override {
-        fonts = [
-          # symbols icon only
-          "NerdFontsSymbolsOnly"
-          # Characters
-          "FiraCode"
-          "JetBrainsMono"
-          "Iosevka"
-        ];
-      })
+      # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/data/fonts/nerd-fonts/manifests/fonts.json
+      nerd-fonts.bigblue-terminal
+      nerd-fonts.fira-code
+      nerd-fonts.geist-mono
+      nerd-fonts.iosevka
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.symbols-only
     ];
   };
 }
