@@ -88,7 +88,7 @@
     };
 
   in {
-    # A seperate Mac config for any system
+    # A separate Mac config for any system
     ## Main private Mac
     darwinConfigurations.hudson = mkDarwinConfig {
       username = "steinert";
