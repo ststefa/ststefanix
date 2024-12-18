@@ -154,6 +154,7 @@ function applicationWatcher(appName, eventType, appObject)
     if (eventType ~= hs.application.watcher.activated) and (eventType ~= hs.application.watcher.deactivated) then
         print(string.format("APP Event: %s %s", appName, eventNames[eventType]))
     end
+--[[ Disable automatic device switching for OBS. Too confusing
     if (appName == "OBS Studio") then
         print(string.format("APP Event %s: %s", appName, eventNames[eventType]))
         if (eventType == hs.application.watcher.launched) then
@@ -176,6 +177,7 @@ function applicationWatcher(appName, eventType, appObject)
             hs.alert.show("OBS removed from audio path",hs.alert.defaultStyle,hs.screen.mainScreen(),7)
         end
     end
+]]--
 end
 appWatcher = hs.application.watcher.new(applicationWatcher)
 appWatcher:start()
