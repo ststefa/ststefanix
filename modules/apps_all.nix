@@ -223,6 +223,8 @@
     ];
 
     brews = [
+      "binutils"
+      "ca-certificates"
       "cliclick"
       "cmake"
       #"curl" # Moved to nixpkg
@@ -231,6 +233,7 @@
       "doxygen"
       "ffmpeg"
       "gcc"
+      "graphviz"
       #"imagemagick" # Moved to nixpkg
       "openjdk@23" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk to attach Apple wrappers or add /opt/homebrew/opt/openjdk/bin to PATH
       "hashicorp/tap/vault"
@@ -240,6 +243,7 @@
       #"k3d" #using nix
       "kcl-lang/tap/kcl" # Tool to create an abstraction layer for k8s manifests # Available from nixpkg as "kcl-cli" but missing kcl-lsp
       "kcl-lsp" # kcl language server (for vscode)
+      "lynx"
       "lz4"
       "lzo"
       "mpdecimal"
@@ -248,6 +252,7 @@
       "openssh"
       "pandoc"
       "pipx"
+      "pkgconf"
       "python@3.13"
       "ruff" # fast python linter
       "rustup"

@@ -26,6 +26,7 @@
       "lxc" # CLI for lxd, https://ubuntu.com/lxd
       "minicom" # used for serial device access
       "soapyhackrf"
+      "soapyrtlsdr"
       "soapysdr"
     ];
 
@@ -44,6 +45,10 @@
       }
       {
         name = "google-chrome";
+        greedy = true;
+      }
+      { # SDR GUI App
+        name = "gqrx";
         greedy = true;
       }
       {
