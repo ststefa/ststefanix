@@ -223,7 +223,9 @@
     ];
 
     brews = [
+      "bash-completion@2"
       "binutils"
+      "boost"
       "ca-certificates"
       "cliclick"
       "cmake"
@@ -235,6 +237,7 @@
       "gcc"
       "graphviz"
       #"imagemagick" # Moved to nixpkg
+      "jfrog-cli" # CLI for Artifactory
       "openjdk@23" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk to attach Apple wrappers or add /opt/homebrew/opt/openjdk/bin to PATH
       "hashicorp/tap/vault"
       #"inotify-tools" # No aarch64-apple-darwin
