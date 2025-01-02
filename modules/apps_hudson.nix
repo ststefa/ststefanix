@@ -44,6 +44,10 @@
         greedy = true;
       }
       {
+        name = "dymo-connect";
+        greedy = true;
+      }
+      {
         name = "google-chrome";
         greedy = true;
       }
