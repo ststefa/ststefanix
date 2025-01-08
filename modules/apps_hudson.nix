@@ -18,6 +18,7 @@
     };
 
     brews = [
+      "arduino-cli"
       "ghostscript"
       "glib"
       "gnuradio"
@@ -31,6 +32,10 @@
     ];
 
     casks = [
+      {
+        name = "arduino-ide";
+        greedy = true;
+      }
       {
         name = "audacity";
         greedy = true;
