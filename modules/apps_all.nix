@@ -437,6 +437,10 @@
         name = "telegram";
         greedy = true;
       }
+      #{ # Too slow
+      #  name = "theiaide";
+      #  greedy = true;
+      #}
       {
         name = "transmit";
         greedy = true;
