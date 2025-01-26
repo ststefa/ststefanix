@@ -161,7 +161,7 @@ esac
 
 if (( RC > 0 )) ; then
     echo "There were errors, sending notification."
-    pushover.sh -t "update.sh" "Update problems (rc=${RC}). Please review /tmp/local.daemon.update.log (hint: "grep Finished /tmp/local.daemon.update.log") and rerun manually."
+    pushover.sh -t "update.sh" "Update problems (rc=${RC}). Please review /var/log/local.daemon.update.log (hint: "grep Finished /var/log/local.daemon.update.log") and rerun manually."
 fi
 
 exit ${RC}
