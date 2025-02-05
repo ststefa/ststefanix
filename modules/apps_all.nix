@@ -124,6 +124,7 @@
     ripgrep
     #rstcheck # python3.11-rstcheck-core-1.0.3.drv tests fail
     ruby
+    ruby-lsp # language server, used by vscode extension
     #ruff # not up to date, use brew
     #rustdesk # not up to date, use brew
     #rustup cleanup on hudson required first
