@@ -58,6 +58,7 @@
     ...
   }: let
 
+    # This function allows the creation of multiple similar configs for different systems. The config is then chosen by specifying it in the nix invocation using the hostname. See Justfile. The variables allow to describe host-specfic features, like e.g. packages.
     mkDarwinConfig = { username, useremail, system, hostname }:
       let
         specialArgs =

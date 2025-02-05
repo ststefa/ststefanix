@@ -32,8 +32,8 @@
     coreutils
     cowsay
     curl
-    iproute2mac
-    darwin.trash
+    iproute2mac # some features of iproute2 for MacOS
+    darwin.trash # cli tool that mimics rm but uses the system trashcan
     #diffoscope # takes too long to build on update
     diffutils
     #docker # does not include docker daemon
@@ -74,7 +74,7 @@
     jinja2-cli
     jq
     just
-    k3d #not up to date, use cask #using unstable
+    k3d #up to date in unstable
     #k3s
     k9s
     #kcl-cli # kcl-lsp not available, so using brew for all kcl
@@ -129,7 +129,7 @@
     #rustdesk # not up to date, use brew
     #rustup cleanup on hudson required first
     shellcheck
-    sipcalc
+    sipcalc # nice cli for subnet calculation
     socat
     sops
     sphinx
