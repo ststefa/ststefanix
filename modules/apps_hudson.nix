@@ -18,7 +18,6 @@
     };
 
     brews = [
-      "aarch64-unknown-linux-gnu" # toolchain for rust cross-compilation
       "arduino-cli"
       "ghostscript"
       "glib"
@@ -26,13 +25,14 @@
       "hackrf"
       "jpeg-turbo"
       "lxc" # CLI for lxd, https://ubuntu.com/lxd
+      "messense/macos-cross-toolchains/aarch64-unknown-linux-gnu" # toolchain for rust cross-compilation, linux arm
+      "messense/macos-cross-toolchains/arm-unknown-linux-gnueabihf" # toolchain for rust cross-compilation, raspberry
+      "messense/macos-cross-toolchains/x86_64-unknown-linux-gnu" # toolchain for rust cross-compilation, linux amd64
+      "messense/macos-cross-toolchains/x86_64-unknown-linux-musl" # toolchain for rust cross-compilation, linux amd64
       "minicom" # used for serial device access
       "soapyhackrf"
       "soapyrtlsdr"
       "soapysdr"
-      "x86_64-unknown-linux-gnu" # toolchain for rust cross-compilation
-      "x86_64-unknown-linux-musl" # toolchain for rust cross-compilation
-
     ];
 
     casks = [
