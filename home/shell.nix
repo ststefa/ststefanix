@@ -72,12 +72,13 @@
     #PATH="/opt/homebrew/opt/lsof/bin:$PATH"
     #PATH="/opt/homebrew/opt/openjdk/bin:$PATH" # handled through MacOS wrapper, does not need to be on PATH
     PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+    PATH="/opt/homebrew/lib/ruby/gems/3.4.0/bin/:$PATH" # gems installed by current ruby version. Must be changed in case of ruby updates!
     #PATH="/opt/homebrew/opt/unzip/bin:$PATH"
     #PATH="/opt/homebrew/opt/man-db/libexec/bin:$PATH"
     ### add all the gnubin paths
-    #for GPATH in /opt/homebrew/opt/*/libexec/gnubin ; do
-    #    PATH="''${GPATH}:''${PATH}"
-    #done
+    for GPATH in /opt/homebrew/opt/*/libexec/gnubin ; do
+        PATH="''${GPATH}:''${PATH}"
+    done
 
     ## personal bin
     PATH=''${PATH}:''${HOME}/bin
