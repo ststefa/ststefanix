@@ -57,15 +57,22 @@ update_python() {
 }
 
 update_pipx() {
+    which pipx
     pipx upgrade-all
 }
 
 update_helm() {
+    which helm
     helm repo update
 }
 
 update_rust() {
     ~/.cargo/bin/rustup update
+}
+
+update_ruby() {
+    which gem
+    gem update
 }
 
 update_appstore() {
