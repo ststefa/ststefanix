@@ -105,6 +105,10 @@
         greedy = true;
       }
       {
+        name = "puppetlabs/puppet/pdk";
+        greedy = true;
+      }
+      {
         name = "shotcut";
         greedy = true;
       }
