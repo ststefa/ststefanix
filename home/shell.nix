@@ -66,12 +66,12 @@
 
     ## Prefer homebrew tools. This might impact installers and other mechanisms which build on apple specifics
     PATH="/opt/homebrew/bin:$PATH"
-    ### Add some homebrew keg-only paths
+    ### Add some homebrew keg-only paths. These disabled ones are managed by nix
     #PATH="/opt/homebrew/opt/binutils/bin:$PATH"
     #PATH="/opt/homebrew/opt/curl/bin:$PATH"
     #PATH="/opt/homebrew/opt/lsof/bin:$PATH"
-    #PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-    #PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+    #PATH="/opt/homebrew/opt/openjdk/bin:$PATH" # handled through MacOS wrapper, does not need to be on PATH
+    PATH="/opt/homebrew/opt/ruby/bin:$PATH"
     #PATH="/opt/homebrew/opt/unzip/bin:$PATH"
     #PATH="/opt/homebrew/opt/man-db/libexec/bin:$PATH"
     ### add all the gnubin paths

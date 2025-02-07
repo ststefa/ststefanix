@@ -123,8 +123,8 @@
     qemu_kvm
     ripgrep
     #rstcheck # python3.11-rstcheck-core-1.0.3.drv tests fail
-    ruby
-    ruby-lsp # language server, used by vscode extension
+    #ruby # does somehow mess up with installing gems
+    #ruby-lsp # language server used by vscode ruby extension. Does not work due to version mismatch in prism lib
     #ruff # not up to date, use brew
     #rustdesk # not up to date, use brew
     #rustup cleanup on hudson required first
@@ -215,12 +215,14 @@
       "Xcode" = 497799835;
     };
 
-    # Taps /must/ be declared here if brews are installed from them
+    # Taps /must/ be declared here if brews are installed from them. Also for brews installed in host-specific apps!
     taps = [
       "hashicorp/tap"
       "homebrew/services"
       "kcl-lang/tap"
       "emqx/mqttx"
+      "messense/macos-cross-toolchains"
+      "puppetlabs/puppet"
     ];
 
     brews = [
@@ -239,7 +241,7 @@
       "graphviz"
       #"imagemagick" # Moved to nixpkg
       "jfrog-cli" # CLI for Artifactory
-      "openjdk@23" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk to attach Apple wrappers or add /opt/homebrew/opt/openjdk/bin to PATH
+      "openjdk@23" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk to attach Apple wrappers. Or add /opt/homebrew/opt/openjdk/bin to PATH to have it invoked directly.
       "hashicorp/tap/vault"
       #"inotify-tools" # No aarch64-apple-darwin
       "ipinfo-cli"
@@ -258,6 +260,7 @@
       "pipx"
       "pkgconf"
       "python@3.13"
+      "ruby"
       "ruff" # fast python linter
       "rustup"
       #"readline"
@@ -274,10 +277,7 @@
 
     casks = [
       #"raycast" # (HotKey: alt/option + space)search, caculate and run scripts(with many plugins)
-      {
-        name = "aldente";
-        greedy = true;
-      }
+      { name = "aldente"; greedy = true; }
       {
         name = "alfred";
         greedy = true;
