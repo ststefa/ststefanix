@@ -26,12 +26,16 @@ build-debug:
 
 # Update this flake
 update-flake:
-  nix flake update
+  sudo littlesnitch rulegroup --enable update
+  -nix flake update
+  sudo littlesnitch rulegroup --disable update
 alias update := update-flake
 
 # Re-apply flake (requires prior build)
 apply-flake:
-  darwin-rebuild switch --flake .#{{HOSTNAME}}
+  sudo littlesnitch rulegroup --enable update
+  -darwin-rebuild switch --flake .#{{HOSTNAME}}
+  sudo littlesnitch rulegroup --disable update
 alias apply := apply-flake
 
 # Show profile history
