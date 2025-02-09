@@ -278,194 +278,53 @@
     casks = [
       #"raycast" # (HotKey: alt/option + space)search, caculate and run scripts(with many plugins)
       { name = "aldente"; greedy = true; }
-      {
-        name = "alfred";
-        greedy = true;
-      }
-      {
-        name = "apparency";
-        greedy = true;
-      }
-      {
-        name = "bartender";
-        greedy = true;
-      }
-      {
-        name = "betterdisplay";
-        greedy = true;
-      }
-      {
-        name = "betterzip";
-        greedy = true;
-      }
-      {
-        name = "camo-studio";
-        greedy = true;
-      }
-      {
-        name = "chatgpt";
-        greedy = true;
-      }
-      {
-        name = "choosy";
-        greedy = true;
-      }
-      #{ # Cannot be opened by MacOS 2024-07-31)
-      #  name = "chromium";
-      #  greedy = true;
-      #}
-      {
-        name = "core-tunnel";
-        greedy = true;
-      }
-      {
-        name = "db-browser-for-sqlite";
-        greedy = true;
-      }
-      {
-        name = "deepl";
-        greedy = true;
-      }
-      {
-        name = "discord";
-        greedy = true;
-      }
-      {
-        name = "docker";
-        greedy = true;
-      }
-      {
-        name = "elgato-control-center";
-        greedy = true;
-      }
-      #{ # Not better than webapp
-      #  name = "figma";
-      #  greedy = true;
-      #}
-      {
-        name = "hammerspoon";
-        greedy = true;
-      }
-      {
-        name = "istat-menus";
-        greedy = true;
-      }
-      {
-        name = "iterm2";
-        greedy = true;
-      }
-      {
-        name = "launchcontrol";
-        greedy = true;
-      }
-      {
-        name = "little-snitch";
-        greedy = true;
-      }
-      {
-        name = "macfuse";
-        greedy = true;
-      }
-      #{ # Not better than webapp
-      #  name = "miro";
-      #  greedy = true;
-      #}
-      #{ # This is the (useless) GUI App. Use mqttx-cli above instead
-      #  name = "mqttx";
-      #  greedy = true;
-      #}
-      {
-        name = "obsidian";
-        greedy = true;
-      }
-      {
-        name = "openlens";
-        greedy = true;
-      }
-      {
-        name = "orion";
-        greedy = true;
-      }
-      {
-        name = "paletro";
-        greedy = true;
-      }
-      {
-        name = "qlmarkdown";
-        greedy = true;
-      }
-      {
-        name = "qlstephen";
-        greedy = true;
-      }
-      {
-        name = "quicklook-csv";
-        greedy = true;
-      }
-      {
-        name = "quicklook-json";
-        greedy = true;
-      }
-      #{ # Not allowed on DB Mac
-      #  name = "rustdesk";
-      #  greedy = true;
-      #}
-      {
-        name = "sf-symbols";
-        greedy = true;
-      }
-      { # PDF viewer/editor
-        name = "skim";
-        greedy = true;
-      }
-      {
-        name = "slack";
-        greedy = true;
-      }
-      #{ # requires /usr/bin/java which is only available on BWP (reason unknown)
-      #  name = "squirrelsql";
-      #  greedy = true;
-      #}
-      {
-        name = "suspicious-package";
-        greedy = true;
-      }
-      { # Prefpane to configure default apps for filename extension and Uri schemes
-        name = "swiftdefaultappsprefpane";
-        greedy = true;
-      }
-      {
-        name = "telegram";
-        greedy = true;
-      }
-      #{ # Too slow
-      #  name = "theiaide";
-      #  greedy = true;
-      #}
-      {
-        name = "transmit";
-        greedy = true;
-      }
-      { # Versatile and reliable host-to-host sync
-        name = "unison";
-        greedy = true;
-      }
-      {
-        name = "visual-studio-code";
-        greedy = true;
-      }
-      {
-        name = "vlc";
-        greedy = true;
-      }
-      {
-        name = "wireshark";
-        greedy = true;
-      }
-      {
-        name = "zed";
-        greedy = true;
-      }
+      { name = "alfred"; greedy = true; }
+      { name = "apparency"; greedy = true; }
+      { name = "bartender"; greedy = true; }
+      { name = "betterdisplay"; greedy = true; }
+      { name = "betterzip"; greedy = true; }
+      { name = "camo-studio"; greedy = true; }
+      { name = "chatgpt"; greedy = true; }
+      { name = "choosy"; greedy = true; }
+      #{ name = "chromium"; greedy = true; } # Cannot be opened by MacOS 2024-07-31)
+      { name = "core-tunnel"; greedy = true; }
+      { name = "db-browser-for-sqlite"; greedy = true; }
+      { name = "deepl"; greedy = true; }
+      { name = "discord"; greedy = true; }
+      { name = "docker"; greedy = true; }
+      { name = "elgato-control-center"; greedy = true; }
+      #{ name = "figma"; greedy = true; } # Not better than webapp
+      { name = "hammerspoon"; greedy = true; }
+      { name = "istat-menus"; greedy = true; }
+      { name = "iterm2"; greedy = true; }
+      { name = "launchcontrol"; greedy = true; }
+      { name = "little-snitch"; greedy = true; }
+      { name = "macfuse"; greedy = true; }
+      #{ name = "miro"; greedy = true; } # Not better than webapp
+      #{ name = "mqttx"; greedy = true; } # This is the (useless) GUI App. Use mqttx-cli above instead
+      { name = "obsidian"; greedy = true; }
+      { name = "openlens"; greedy = true; }
+      { name = "orion"; greedy = true; }
+      { name = "paletro"; greedy = true; }
+      { name = "qlmarkdown"; greedy = true; }
+      { name = "qlstephen"; greedy = true; }
+      { name = "quicklook-csv"; greedy = true; }
+      { name = "quicklook-json"; greedy = true; }
+      #{ name = "rustdesk"; greedy = true; } # Not allowed on DB Mac
+      { name = "sf-symbols"; greedy = true; }
+      { name = "skim"; greedy = true; } # PDF viewer/editor
+      { name = "slack"; greedy = true; }
+      #{ name = "squirrelsql"; greedy = true; } # requires /usr/bin/java which is only available on BWP (reason unknown)
+      { name = "suspicious-package"; greedy = true; }
+      { name = "swiftdefaultappsprefpane"; greedy = true; } # Prefpane to configure default apps for filename extension and Uri schemes
+      { name = "telegram"; greedy = true; }
+      #{ name = "theiaide"; greedy = true; } # Too slow
+      { name = "transmit"; greedy = true; }
+      { name = "unison"; greedy = true; } # Versatile and reliable host-to-host sync
+      { name = "visual-studio-code"; greedy = true; }
+      { name = "vlc"; greedy = true; }
+      { name = "wireshark"; greedy = true; }
+      { name = "zed"; greedy = true; }
     ];
   };
 }

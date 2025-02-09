@@ -36,122 +36,35 @@
     ];
 
     casks = [
-      {
-        name = "arduino-ide";
-        greedy = true;
-      }
-      {
-        name = "audacity";
-        greedy = true;
-      }
-      {
-        name = "blender";
-        greedy = true;
-      }
-      {
-        name = "calibre";
-        greedy = true;
-      }
-      {
-        name = "dymo-connect";
-        greedy = true;
-      }
-      {
-        name = "google-chrome";
-        greedy = true;
-      }
-      { # SDR GUI App
-        name = "gqrx";
-        greedy = true;
-      }
-      {
-        name = "element";
-        greedy = true;
-      }
-      {
-        name = "elgato-camera-hub";
-        greedy = true;
-      }
-      {
-        name = "elgato-stream-deck";
-        greedy = true;
-      }
-      {
-        name = "freecad";
-        greedy = true;
-      }
-      { # Pixel collab world
-        name = "gather";
-        greedy = true;
-      }
-      {
-        name = "gimp";
-        greedy = true;
-      }
-      {
-        name = "handbrake";
-        greedy = true;
-      }
-      {
-        name = "openscad";
-        greedy = true;
-      }
-      {
-        name = "orcaslicer";
-        greedy = true;
-      }
-      { # Extended app for Apple Fotos libraries
-        name = "powerphotos";
-        greedy = true;
-      }
-      {
-        name = "puppetlabs/puppet/pdk";
-        greedy = true;
-      }
-      {
-        name = "shotcut";
-        greedy = true;
-      }
-      {
-        name = "signal";
-        greedy = true;
-      }
-      {
-        name = "snapmaker-luban";
-        greedy = true;
-      }
-      {
-        name = "spotify";
-        greedy = true;
-      }
-      {
-        name = "subler";
-        greedy = true;
-      }
-      {
-        name = "tor-browser";
-        greedy = true;
-      }
-      {
-        name = "transmission";
-        greedy = true;
-      }
-      {
-        name = "tunnelblick";
-        greedy = true;
-      }
-      {
-        name = "veracrypt";
-        greedy = true;
-      }
-      {
-        name = "xquartz";
-        greedy = true;
-      }
-      {
-        name = "zoom";
-        greedy = true;
-      }
+      { name = "arduino-ide"; greedy = true; }
+      { name = "audacity"; greedy = true; }
+      { name = "blender"; greedy = true; }
+      { name = "calibre"; greedy = true; }
+      { name = "dymo-connect"; greedy = true; }
+      { name = "google-chrome"; greedy = true; }
+      { name = "gqrx"; greedy = true; } # SDR GUI App
+      { name = "element"; greedy = true; }
+      { name = "elgato-camera-hub"; greedy = true; }
+      { name = "elgato-stream-deck"; greedy = true; }
+      { name = "freecad"; greedy = true; }
+      { name = "gather"; greedy = true; } # Pixel collab world
+      { name = "gimp"; greedy = true; }
+      { name = "handbrake"; greedy = true; }
+      { name = "openscad"; greedy = true; }
+      { name = "orcaslicer"; greedy = true; }
+      { name = "powerphotos"; greedy = true; } # Extended app for Apple Fotos libraries
+      { name = "puppetlabs/puppet/pdk"; greedy = true; }
+      { name = "shotcut"; greedy = true; }
+      { name = "signal"; greedy = true; }
+      { name = "snapmaker-luban"; greedy = true; }
+      { name = "spotify"; greedy = true; }
+      { name = "subler"; greedy = true; }
+      { name = "tor-browser"; greedy = true; }
+      { name = "transmission"; greedy = true; }
+      { name = "tunnelblick"; greedy = true; }
+      { name = "veracrypt"; greedy = true; }
+      { name = "xquartz"; greedy = true; }
+      { name = "zoom"; greedy = true; }
     ];
   };
 }
