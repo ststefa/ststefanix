@@ -11,41 +11,41 @@ cli_resetts() {
         echo "Specify a FILE"
         return 1
     fi
-    if [[ -f "${FILE}" ]] ; then
-        OLD_BTIME="$(stat --printf "%w" "${FILE}" | cut -d"." -f1)"
-        OLD_MTIME="$(stat --printf "%y" "${FILE}" | cut -d"." -f1)"
+    if ! [[ -f "${FILE}" ]] ; then
+        echo  "${FILE}: No such file"
+        return 1
+    fi
+    OLD_BTIME="$(stat --printf "%w" "${FILE}" | cut -d"." -f1)"
+    OLD_MTIME="$(stat --printf "%y" "${FILE}" | cut -d"." -f1)"
 
-        # Set btime first because touch will only set btime+mtime if TS < btime
-        TS=$(grep "^en-created:" "${FILE}" | cut -d" " -f2)
-        if [[ -n "${TS}" ]] ; then
-            touch -t "${TS}" "${FILE}"
-            NEW_BTIME="$(stat --printf "%w" "${FILE}" | cut -d"." -f1)"
-            if [[ "${OLD_BTIME}" == "${NEW_BTIME}" ]] ; then
-                echo "Btime ${OLD_BTIME} unchanged"
-            else
-                echo "Changed btime from ${OLD_BTIME} to ${NEW_BTIME}"
-            fi
+    # Set btime first because touch will only set btime+mtime if TS < btime
+    TS=$(grep "^en-created:" "${FILE}" | cut -d" " -f2)
+    if [[ -n "${TS}" ]] ; then
+        touch -t "${TS}" "${FILE}"
+        NEW_BTIME="$(stat --printf "%w" "${FILE}" | cut -d"." -f1)"
+        if [[ "${OLD_BTIME}" == "${NEW_BTIME}" ]] ; then
+            echo "Btime ${OLD_BTIME} unchanged"
         else
-            echo "${FILE} does not have an \"en-created\" tag"
-            false
-        fi
-
-        # Now set mtime. Note the touch invocation is identical but will not set btime because TS > btime
-        TS=$(grep "^en-lastupdate:" "${FILE}" | cut -d" " -f2)
-        if [[ -n "${TS}" ]] ; then
-            touch -t "${TS}" "${FILE}"
-            NEW_MTIME="$(stat --printf "%y" "${FILE}" | cut -d"." -f1)"
-            if [[ "${OLD_MTIME}" == "${NEW_MTIME}" ]] ; then
-                echo "Mtime ${OLD_MTIME} unchanged"
-            else
-                echo "Changed mtime from ${OLD_MTIME} to ${NEW_MTIME}"
-            fi
-        else
-            echo "${FILE} does not have an \"en-lastupdate\" tag"
-            false
+            echo "Changed btime from ${OLD_BTIME} to ${NEW_BTIME}"
         fi
     else
-        echo  "${FILE}: No such file"
+        echo "${FILE} does not have an \"en-created\" tag"
+        false
+    fi
+
+    # Now set mtime. Note the touch invocation is identical but will not set btime because TS > btime
+    TS=$(grep "^en-lastupdate:" "${FILE}" | cut -d" " -f2)
+    if [[ -n "${TS}" ]] ; then
+        touch -t "${TS}" "${FILE}"
+        NEW_MTIME="$(stat --printf "%y" "${FILE}" | cut -d"." -f1)"
+        if [[ "${OLD_MTIME}" == "${NEW_MTIME}" ]] ; then
+            echo "Mtime ${OLD_MTIME} unchanged"
+        else
+            echo "Changed mtime from ${OLD_MTIME} to ${NEW_MTIME}"
+        fi
+    else
+        echo "${FILE} does not have an \"en-lastupdate\" tag"
+        false
     fi
 }
 help_resetts() {
@@ -58,35 +58,100 @@ cli_queryts() {
         echo "Specify a FILE"
         return 1
     fi
-    if [[ -f "${FILE}" ]] ; then
-        # stat output: 2019-10-25 09:43:00.000000000. cut away after '.', tr-remove '- :'
-        FILE_BTIME="$(stat --printf "%w" "${FILE}" | cut -d"." -f1 | tr -d '\-\ :')" # e.g. 20191025094300
-        # strip last two characters (=seconds)
-        FILE_BTIME=${FILE_BTIME::-2}
-        FILE_MTIME="$(stat --printf "%y" "${FILE}" | cut -d"." -f1 | tr -d '\-\ :')"
-        FILE_MTIME=${FILE_MTIME::-2}
-
-        TS=$(grep "^en-created:" "${FILE}" | cut -d" " -f2)
-        if [[ -n "${TS}" ]] ; then
-            echo "btime: ${FILE_BTIME}, tag: ${TS}"
-        else
-            echo "${FILE} does not have an \"en-created\" tag"
-            false
-        fi
-
-        TS=$(grep "^en-lastupdate:" "${FILE}" | cut -d" " -f2)
-        if [[ -n "${TS}" ]] ; then
-            echo "mtime: ${FILE_MTIME}, tag: ${TS}"
-        else
-            echo "${FILE} does not have an \"en-lastupdate\" tag"
-            false
-        fi
-    else
+    if ! [[ -f "${FILE}" ]] ; then
         echo  "${FILE}: No such file"
+        return 1
+    fi
+    # stat output: 2019-10-25 09:43:00.000000000. cut away after '.', tr-remove '- :'
+    FILE_BTIME="$(stat --printf "%w" "${FILE}" | cut -d"." -f1 | tr -d '\-\ :')" # e.g. 20191025094300
+    # strip last two characters (=seconds)
+    FILE_BTIME=${FILE_BTIME::-2}
+    FILE_MTIME="$(stat --printf "%y" "${FILE}" | cut -d"." -f1 | tr -d '\-\ :')"
+    FILE_MTIME=${FILE_MTIME::-2}
+
+    TS=$(grep "^en-created:" "${FILE}" | cut -d" " -f2)
+    if [[ -n "${TS}" ]] ; then
+        echo "btime: ${FILE_BTIME}, tag: ${TS}"
+    else
+        echo "${FILE} does not have an \"en-created\" tag"
+        false
+    fi
+
+    TS=$(grep "^en-lastupdate:" "${FILE}" | cut -d" " -f2)
+    if [[ -n "${TS}" ]] ; then
+        echo "mtime: ${FILE_MTIME}, tag: ${TS}"
+    else
+        echo "${FILE} does not have an \"en-lastupdate\" tag"
+        false
     fi
 }
 help_queryts() {
     echo "<FILE>: Compare btime/mtime of <FILE> with values of en-created/en-lastupdate tags"
+}
+
+cli_addts() {
+    local FILE="${*}"
+    if [[ -z "${FILE}" ]] ; then
+        echo "Specify a FILE"
+        return 1
+    fi
+    if ! [[ -f "${FILE}" ]] ; then
+        echo  "${FILE}: No such file"
+        return 1
+    fi
+    if [[ $(head -n1 "${FILE}") == "---" ]] ; then
+        echo "${FILE}: Already starts with frontmatter (\"---\"). Remove frontmatter to re-add"
+        return 1
+    fi
+    local BTIME="$(stat --printf "%w" "${FILE}" | cut -d"." -f1)" # e.g. 2022-01-06 07:55:49
+    BTIME="$(echo "${BTIME}" | sed -e 's/[-: ]//g')" # e.g. 20220106075549
+    BTIME="$(echo ${BTIME::-2})" # e.g. 202201060755
+    local MTIME="$(stat --printf "%y" "${FILE}" | cut -d"." -f1)"
+    MTIME="$(echo "${MTIME}" | sed -e 's/[-: ]//g')"
+    MTIME="$(echo ${MTIME::-2})"
+
+    TEMPFILE=$(mktemp)
+    cat > "${TEMPFILE}" << EOF
+---
+en-created: ${BTIME}
+en-lastupdate: ${MTIME}
+---
+EOF
+    cat "${FILE}" >> "${TEMPFILE}"
+    mv "${TEMPFILE}" "${FILE}"
+    # Set btime first because touch will only set btime+mtime if TS < btime
+    touch -t "${BTIME}" "${FILE}"
+    touch -t "${MTIME}" "${FILE}"
+}
+help_addts() {
+    echo "<FILE>: Add en-created/en-lastupdate tags to <File> (if they do not exist already)"
+}
+
+cli_updatets() {
+    local FILE="${*}"
+    if [[ -z "${FILE}" ]] ; then
+        echo "Specify a FILE"
+        return 1
+    fi
+    if ! [[ -f "${FILE}" ]] ; then
+        echo  "${FILE}: No such file"
+        return 1
+    fi
+    local MTIME="$(stat --printf "%y" "${FILE}" | cut -d"." -f1)"
+    MTIME="$(echo "${MTIME}" | sed -e 's/[-: ]//g')" # e.g. 20220106075549
+    MTIME="$(echo ${MTIME::-2})" # e.g. 202201060755
+
+    TS=$(grep "^en-lastupdate:" "${FILE}" | cut -d" " -f2)
+    if [[ -n "${TS}" ]] ; then
+        sed -i "s/^en-lastupdate:.*/en-lastupdate: ${MTIME}/g" "${FILE}"
+    else
+        echo "${FILE} does not have an \"en-lastupdate\" tag"
+        false
+    fi
+    touch -t "${MTIME}" "${FILE}"
+}
+help_updatets() {
+    echo "<FILE>: Set \"en-lastupdate\" tag to file modification date"
 }
 
 # Dynamically collect list of cli functions, identified by regex.
@@ -117,7 +182,7 @@ FUNC_NAMES=($(get_cli_funcs)) || exit 1
 
 case "$1" in
     -h|--help|"")
-        echo "Obsidian cli tools."
+        echo "Obsidian cli commands."
         echo "List of commands:"
         for CMD in "${FUNC_NAMES[@]}" ; do
             echo -n "${CMD} "
@@ -130,7 +195,7 @@ case "$1" in
             invoke_cli_func "${@}"
             exit $?
         else
-            echo "Component \"${1}\" does not exist. Choose from \"${FUNC_NAMES[*]}\". Or use -h/--help for help." >&2
+            echo "Command \"${1}\" does not exist. Choose from \"${FUNC_NAMES[*]}\". Or use -h/--help for help." >&2
             exit 1
         fi
         ;;
