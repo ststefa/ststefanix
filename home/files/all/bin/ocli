@@ -8,11 +8,11 @@
 cli_resetts() {
     local FILE="${*}"
     if [[ -z "${FILE}" ]] ; then
-        echo "Specify a FILE"
+        echo "Specify a FILE" >&2
         return 1
     fi
     if ! [[ -f "${FILE}" ]] ; then
-        echo  "${FILE}: No such file"
+        echo  "${FILE}: No such file" >&2
         return 1
     fi
     OLD_BTIME="$(stat --printf "%w" "${FILE}" | cut -d"." -f1)"
@@ -29,7 +29,7 @@ cli_resetts() {
             echo "Changed btime from ${OLD_BTIME} to ${NEW_BTIME}"
         fi
     else
-        echo "${FILE} does not have an \"en-created\" tag"
+        echo "${FILE} does not have an \"en-created\" tag" >&2
         false
     fi
 
@@ -44,7 +44,7 @@ cli_resetts() {
             echo "Changed mtime from ${OLD_MTIME} to ${NEW_MTIME}"
         fi
     else
-        echo "${FILE} does not have an \"en-lastupdate\" tag"
+        echo "${FILE} does not have an \"en-lastupdate\" tag" >&2
         false
     fi
 }
@@ -55,11 +55,11 @@ help_resetts() {
 cli_queryts() {
     local FILE="${*}"
     if [[ -z "${FILE}" ]] ; then
-        echo "Specify a FILE"
+        echo "Specify a FILE" >&2
         return 1
     fi
     if ! [[ -f "${FILE}" ]] ; then
-        echo  "${FILE}: No such file"
+        echo  "${FILE}: No such file" >&2
         return 1
     fi
     # stat output: 2019-10-25 09:43:00.000000000. cut away after '.', tr-remove '- :'
@@ -73,7 +73,7 @@ cli_queryts() {
     if [[ -n "${TS}" ]] ; then
         echo "btime: ${FILE_BTIME}, tag: ${TS}"
     else
-        echo "${FILE} does not have an \"en-created\" tag"
+        echo "${FILE} does not have an \"en-created\" tag" >&2
         false
     fi
 
@@ -81,7 +81,7 @@ cli_queryts() {
     if [[ -n "${TS}" ]] ; then
         echo "mtime: ${FILE_MTIME}, tag: ${TS}"
     else
-        echo "${FILE} does not have an \"en-lastupdate\" tag"
+        echo "${FILE} does not have an \"en-lastupdate\" tag" >&2
         false
     fi
 }
@@ -92,15 +92,15 @@ help_queryts() {
 cli_addts() {
     local FILE="${*}"
     if [[ -z "${FILE}" ]] ; then
-        echo "Specify a FILE"
+        echo "Specify a FILE" >&2
         return 1
     fi
     if ! [[ -f "${FILE}" ]] ; then
-        echo  "${FILE}: No such file"
+        echo  "${FILE}: No such file" >&2
         return 1
     fi
     if [[ $(head -n1 "${FILE}") == "---" ]] ; then
-        echo "${FILE}: Already starts with frontmatter (\"---\"). Remove frontmatter to re-add"
+        echo "${FILE}: Already starts with frontmatter (\"---\"). Remove frontmatter to re-add" >&2
         return 1
     fi
     local BTIME="$(stat --printf "%w" "${FILE}" | cut -d"." -f1)" # e.g. 2022-01-06 07:55:49
@@ -130,11 +130,11 @@ help_addts() {
 cli_updatets() {
     local FILE="${*}"
     if [[ -z "${FILE}" ]] ; then
-        echo "Specify a FILE"
+        echo "Specify a FILE" >&2
         return 1
     fi
     if ! [[ -f "${FILE}" ]] ; then
-        echo  "${FILE}: No such file"
+        echo  "${FILE}: No such file" >&2
         return 1
     fi
     local MTIME="$(stat --printf "%y" "${FILE}" | cut -d"." -f1)"
@@ -144,11 +144,11 @@ cli_updatets() {
     TS=$(grep "^en-lastupdate:" "${FILE}" | cut -d" " -f2)
     if [[ -n "${TS}" ]] ; then
         sed -i "s/^en-lastupdate:.*/en-lastupdate: ${MTIME}/g" "${FILE}"
+        touch -t "${MTIME}" "${FILE}"
     else
-        echo "${FILE} does not have an \"en-lastupdate\" tag"
-        false
+        echo "${FILE} does not have an \"en-lastupdate\" tag" >&2
+        return 1
     fi
-    touch -t "${MTIME}" "${FILE}"
 }
 help_updatets() {
     echo "<FILE>: Set \"en-lastupdate\" tag to file modification date"
@@ -188,7 +188,7 @@ case "$1" in
             echo -n "${CMD} "
             help_"${CMD}"
         done
-        exit 1
+        exit 0
         ;;
     *)
         if func_exists "${1}" ; then
