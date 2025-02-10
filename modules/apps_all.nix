@@ -295,6 +295,7 @@
       { name = "elgato-control-center"; greedy = true; }
       #{ name = "figma"; greedy = true; } # Not better than webapp
       { name = "hammerspoon"; greedy = true; }
+      { name = "imazing"; greedy = true; }
       { name = "istat-menus"; greedy = true; }
       { name = "iterm2"; greedy = true; }
       { name = "launchcontrol"; greedy = true; }
