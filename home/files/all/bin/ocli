@@ -122,6 +122,7 @@ EOF
     # Set btime first because touch will only set btime+mtime if TS < btime
     touch -t "${BTIME}" "${FILE}"
     touch -t "${MTIME}" "${FILE}"
+    echo "Added frontmatter with en-created/en-lastupdate tags to ${FILE}"
 }
 help_addts() {
     echo "<FILE>: Add en-created/en-lastupdate tags to <File> (if they do not exist already)"
@@ -145,6 +146,7 @@ cli_updatets() {
     if [[ -n "${TS}" ]] ; then
         sed -i "s/^en-lastupdate:.*/en-lastupdate: ${MTIME}/g" "${FILE}"
         touch -t "${MTIME}" "${FILE}"
+        echo "en-lastupdate tag changed to ${MTIME} in ${FILE}"
     else
         echo "${FILE} does not have an \"en-lastupdate\" tag" >&2
         return 1
