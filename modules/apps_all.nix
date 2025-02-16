@@ -254,6 +254,7 @@
       "lzo"
       "mpdecimal"
       "emqx/mqttx/mqttx-cli" # https://mqttx.app
+      "ollama"
       #"openssl@3" # dependency of e.g. vault-cli
       "openssh"
       "pandoc"
