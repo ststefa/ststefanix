@@ -45,7 +45,7 @@ history:
 # Wipe profile history older than x and do a nix garbage-collect
 gc:
   sudo nix profile wipe-history --profile /nix/var/nix/profiles/system  --older-than 30d
-  sudo nix store gc --debug
+  sudo nix store gc
 
 # Remove build output
 clean:
