@@ -302,6 +302,7 @@
       { name = "launchcontrol"; greedy = true; }
       { name = "little-snitch"; greedy = true; }
       { name = "macfuse"; greedy = true; }
+      { name = "microsoft-teams"; greedy = true; }
       #{ name = "miro"; greedy = true; } # Not better than webapp
       #{ name = "mqttx"; greedy = true; } # This is the (useless) GUI App. Use mqttx-cli above instead
       { name = "obsidian"; greedy = true; }
