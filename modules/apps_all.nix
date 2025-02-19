@@ -277,7 +277,7 @@
     #};
 
     casks = [
-      #"raycast" # (HotKey: alt/option + space)search, caculate and run scripts(with many plugins)
+      #"raycast" # (HotKey: alt/option + space)search, calculate and run scripts(with many plugins)
       { name = "aldente"; greedy = true; }
       { name = "alfred"; greedy = true; }
       { name = "apparency"; greedy = true; }
@@ -293,6 +293,7 @@
       { name = "deepl"; greedy = true; }
       { name = "discord"; greedy = true; }
       { name = "docker"; greedy = true; }
+      { name = "downie"; greedy = true; } # Video Downloader, works together with permute
       { name = "elgato-control-center"; greedy = true; }
       #{ name = "figma"; greedy = true; } # Not better than webapp
       { name = "hammerspoon"; greedy = true; }
@@ -309,6 +310,7 @@
       { name = "openlens"; greedy = true; }
       { name = "orion"; greedy = true; }
       { name = "paletro"; greedy = true; }
+      { name = "permute"; greedy = true; } # Video converter, works together with downie
       { name = "qlmarkdown"; greedy = true; }
       { name = "qlstephen"; greedy = true; }
       { name = "quicklook-csv"; greedy = true; }
