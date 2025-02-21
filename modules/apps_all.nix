@@ -239,6 +239,7 @@
       "ffmpeg"
       "gcc"
       "graphviz"
+      "harfbuzz"
       #"imagemagick" # Moved to nixpkg
       "jfrog-cli" # CLI for Artifactory
       "openjdk@23" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk to attach Apple wrappers. Or add /opt/homebrew/opt/openjdk/bin to PATH to have it invoked directly.
@@ -249,6 +250,7 @@
       #"k3d" #using nix
       "kcl-lang/tap/kcl" # Tool to create an abstraction layer for k8s manifests # Available from nixpkg as "kcl-cli" but missing kcl-lsp
       "kcl-lsp" # kcl language server (for vscode)
+      "libpng"
       "lynx"
       "lz4"
       "lzo"
@@ -270,6 +272,7 @@
       #"terraform" # deprecated in homebrew
       "uv" # python package manager written in Rust
       #"vault-cli" # This is "Jackrabbit FileVault"
+      "zstd"
     ];
 
     #caskArgs = { # Error: "The option `homebrew.caskArgs.greedy' does not exist."
