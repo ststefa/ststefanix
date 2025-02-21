@@ -68,6 +68,7 @@ update_helm() {
 
 update_rust() {
     ~/.cargo/bin/rustup update
+    ~/.cargo/bin/cargo install-update -a
 }
 
 update_ruby() {
