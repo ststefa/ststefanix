@@ -215,7 +215,7 @@
       "Xcode" = 497799835;
     };
 
-    # Taps /must/ be declared here if brews are installed from them. Also for brews installed in host-specific apps!
+    # Taps *must* be declared here if brews are installed from them. Also for brews installed in host-specific apps!
     taps = [
       "hashicorp/tap"
       "homebrew/services"
@@ -238,6 +238,7 @@
       "doxygen"
       "ffmpeg"
       "gcc"
+      "gossip" # A GUI client for nostr. This is a GUI app, but its not a cask. Start it by executing `gossip` in the terminal.
       "graphviz"
       "harfbuzz"
       #"imagemagick" # Moved to nixpkg
@@ -250,6 +251,7 @@
       #"k3d" #using nix
       "kcl-lang/tap/kcl" # Tool to create an abstraction layer for k8s manifests # Available from nixpkg as "kcl-cli" but missing kcl-lsp
       "kcl-lsp" # kcl language server (for vscode)
+      "libheif"
       "libpng"
       "lynx"
       "lz4"
