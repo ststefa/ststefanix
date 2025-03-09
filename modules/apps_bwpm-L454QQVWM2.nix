@@ -32,7 +32,7 @@
     casks = [
       { name = "amazon-workspaces"; greedy = true; } # Required for HVLE access
       { name = "session-manager-plugin"; greedy = true; } # Enable AWS session manager connections
-      { name = "vivaldi"; greedy = true; } # Used as distinct browser for annoying kubectl OIDC plugin login process
+      { name = "vivaldi"; greedy = true; } # Used as distinct browser for annoying kubectl OIDC plugin login process. Use in conjunction with Choosy.app
     ];
   };
 }
