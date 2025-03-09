@@ -230,6 +230,7 @@
       "binutils"
       "boost"
       "ca-certificates"
+      "cairo" # dependency of e.g. ffmpeg, ghostscript, gnuradio
       "cliclick"
       "cmake"
       #"curl" # Moved to nixpkg
@@ -252,7 +253,9 @@
       "kcl-lang/tap/kcl" # Tool to create an abstraction layer for k8s manifests # Available from nixpkg as "kcl-cli" but missing kcl-lsp
       "kcl-lsp" # kcl language server (for vscode)
       "libheif"
+      "libidn2" # dependency of e.g. ffmpeg, gnutls, wget
       "libpng"
+      "libx11"
       "lynx"
       "lz4"
       "lzo"
