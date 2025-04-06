@@ -84,7 +84,7 @@
     kustomize
     less
     lima
-    llvm_18
+    #llvm_18 #not found anymore
     lsof
     mas # Mac Appstore cli
     minio-client
@@ -244,6 +244,8 @@
       "harfbuzz"
       #"imagemagick" # Moved to nixpkg
       "jfrog-cli" # CLI for Artifactory
+      "llvm" #
+      "lld" # LLVM linker
       "openjdk@23" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk to attach Apple wrappers. Or add /opt/homebrew/opt/openjdk/bin to PATH to have it invoked directly.
       "hashicorp/tap/vault"
       #"inotify-tools" # No aarch64-apple-darwin
