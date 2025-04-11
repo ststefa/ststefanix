@@ -1,12 +1,21 @@
-
 { pkgs, lib, ... }:
 
 {
   # enable flakes globally
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  # Blanket permission for unfree packages
+  #nixpkgs.config.allowUnfree = true;
+  # Allow packages explicitly instead of blanket permission
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
+    builtins.elem (lib.getName pkg) [
+      "terraform"
+      "vault"
+    ];
 
   # Obsoleted with update on 2025-03-09
   ## Auto upgrade nix package and the daemon service.
