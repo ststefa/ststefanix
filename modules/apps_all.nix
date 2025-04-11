@@ -34,7 +34,7 @@
     curl
     iproute2mac # some features of iproute2 for MacOS
     darwin.trash # cli tool that mimics rm but uses the system trashcan
-    #diffoscope # takes too long to build on update
+    #diffoscope # takes long to bui
     diffutils
     #docker # does not include docker daemon
     #docutils #using brew for all py-related
@@ -90,6 +90,7 @@
     minio-client
     #mqttx Not available for aarch64-apple-darwin
     nixd # nix language server, used by vscode nix plugin
+    nixfmt-rfc-style # NIX default dormatter
     nmap
     #nnn # terminal file manager, replaced by yazi
     nodejs
@@ -97,6 +98,7 @@
     oath-toolkit # Provides oathtool
     #openlens # not available for aarch64-darwin
     #openssh # sometimes aborts sessions with "package too long" errors, esp. on apume. Using brew.
+    opentofu
     parallel
     pdfminer # PDF parser and analyzer
     pipx
@@ -138,7 +140,7 @@
     stress-ng
     tcpdump
     #temurin-bin-21 # java
-    #terraform #Takes too long to build, using brew
+    terraform #Takes long to build
     tesseract4
     tflint
     tldr
@@ -149,7 +151,7 @@
     unzip
     upx # Executable file compressor. Nice for golang ;)
     #uv # python package manager written in rust, not up to date, use brew
-    #vault # Hashicorp vault cli @dbcicd #Takes too long to build, using brew
+    vault # Hashicorp vault cli #Takes long to build
     vendir
     # vscode # Shell integration always resolves symlinks, leading to broken Dock icons and Automator Actions, using brew instead
     watchexec

@@ -13,7 +13,6 @@
     nats-server # NATS messaging server
     nats-top # NATS messaging perf
     natscli # NATS messaging client
-    opentofu # OSS fork of terraform
     pre-commit # git precommit helper
   ];
 
@@ -26,7 +25,7 @@
       "earthly"
       "mkcert"
       "openshift-cli"
-      "socket_vmnet"
+      "socket_vmnet" # Required for libvirt tests/qemu
     ];
 
     casks = [
