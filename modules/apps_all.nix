@@ -187,35 +187,36 @@
     # You need to install all these Apps manually first so that your apple account have records for them.
     # otherwise Apple Store will refuse to install them.
     # For details, see https://github.com/mas-cli/mas
-    masApps = {
-      "Affinity Designer 2" = 1616831348;
-      "Affinity Photo 2" = 1616822987;
-      "Affinity Publisher 2" = 1606941598;
-      "Amphetamine" = 937984704;
-      "ColorSlurp" = 1287239339;
-      "Consent-O-Matic" = 1606897889;
-      #"Core Tunnel" = 1354318707; # Appstore version cannot do advanced things, see https://community.codinn.com/t/core-tunnel-difference-between-codinn-store-and-app-store-versions/4590 . Using cask instead.
-      "djay Pro" = 450527929;
-      "EasyFind" = 411673888;
-      "Free Ruler" = 1483172210;
-      "Gapplin" = 768053424;
-      "HazeOver" = 430798174;
-      "com.kagimacOS.Kagi-Search" = 1622835804;
-      "Keynote" = 409183694;
-      "Meeter" = 1510445899;
-      "Mona" = 1659154653;
-      "Msg Viewer Pro" = 1019539949;
-      "Numbers" = 409203825;
-      "OCRKit" = 410309628;
-      "Pages" = 409201541;
-      "Sandkorn" = 1377973524;
-      "Strongbox" = 897283731;
-      "VisualDesigner" = 1193683552;
-      "WiFi Explorer" = 494803304;
-      "WiFi Signal" = 525912054;
-      "Windows App" = 1295203466; # Formerly MS Remote Desktop
-      "Xcode" = 497799835;
-    };
+    # On 2025-04-11, the behaviour of mas changed and installed apps are no longer found leading to reinstall on every nix invocation. Disabling it for now
+    #masApps = {
+    #  "Affinity Designer 2" = 1616831348;
+    #  "Affinity Photo 2" = 1616822987;
+    #  "Affinity Publisher 2" = 1606941598;
+    #  "Amphetamine" = 937984704;
+    #  "ColorSlurp" = 1287239339;
+    #  "Consent-O-Matic" = 1606897889;
+    #  #"Core Tunnel" = 1354318707; # Appstore version cannot do advanced things, see https://community.codinn.com/t/core-tunnel-difference-between-codinn-store-and-app-store-versions/4590 . Using cask instead.
+    #  "djay Pro" = 450527929;
+    #  "EasyFind" = 411673888;
+    #  "Free Ruler" = 1483172210;
+    #  "Gapplin" = 768053424;
+    #  "HazeOver" = 430798174;
+    #  "com.kagimacOS.Kagi-Search" = 1622835804;
+    #  "Keynote" = 409183694;
+    #  "Meeter" = 1510445899;
+    #  "Mona" = 1659154653;
+    #  "Msg Viewer Pro" = 1019539949;
+    #  "Numbers" = 409203825;
+    #  "OCRKit" = 410309628;
+    #  "Pages" = 409201541;
+    #  "Sandkorn" = 1377973524;
+    #  "Strongbox" = 897283731;
+    #  "VisualDesigner" = 1193683552;
+    #  "WiFi Explorer" = 494803304;
+    #  "WiFi Signal" = 525912054;
+    #  "Windows App" = 1295203466; # Formerly MS Remote Desktop
+    #  "Xcode" = 497799835;
+    #};
 
     # Taps *must* be declared here if brews are installed from them. Also for brews installed in host-specific apps!
     taps = [

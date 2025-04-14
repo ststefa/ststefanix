@@ -4,18 +4,20 @@
 
   environment.systemPackages = with pkgs; [
     esptool
+    hcloud # Hetzner CLI
   ];
 
   homebrew = {
 
-    masApps = {
-      "AusweisApp" = 948660805;
-      "BitPay" = 1440200291;
-      "Bitcoin Expert" = 1237809495;
-      "GarageBand" = 682658836;
-      "iMovie" = 408981434;
-      "Telefon" = 406825478;
-    };
+    # See apps_all.nix why this is disabled
+    #masApps = {
+    #  "AusweisApp" = 948660805;
+    #  "BitPay" = 1440200291;
+    #  "Bitcoin Expert" = 1237809495;
+    #  "GarageBand" = 682658836;
+    #  "iMovie" = 408981434;
+    #  "Telefon" = 406825478;
+    #};
 
     brews = [
       "arduino-cli"
