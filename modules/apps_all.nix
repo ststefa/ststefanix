@@ -29,6 +29,7 @@
     #caddy # golang config server
     #cmakeMinimal # using brew for compiler-related
     colima
+    colmena # NixOS deployment tool, https://github.com/zhaofengli/colmena
     coreutils
     cowsay
     curl
@@ -69,7 +70,7 @@
     imagemagick
     #inotify-tools #No aarch64-apple-darwin
     iperf
-    # jdk21_headless # does not provide bin, use temurin instead
+    #jdk21_headless # does not provide bin, use temurin instead
     #jfrog-cli # Artifactory cli @dbcicd #Outdated on unstable
     jinja2-cli
     jq
@@ -98,7 +99,7 @@
     oath-toolkit # Provides oathtool
     #openlens # not available for aarch64-darwin
     #openssh # sometimes aborts sessions with "package too long" errors, esp. on apume. Using brew.
-    opentofu
+    opentofu # OSS fork of terraform
     parallel
     pdfminer # PDF parser and analyzer
     pipx
@@ -140,7 +141,7 @@
     stress-ng
     tcpdump
     #temurin-bin-21 # java
-    terraform #Takes long to build
+    terraform # Unfree, takes long to build
     tesseract4
     tflint
     tldr
@@ -151,7 +152,7 @@
     unzip
     upx # Executable file compressor. Nice for golang ;)
     #uv # python package manager written in rust, not up to date, use brew
-    vault # Hashicorp vault cli #Takes long to build
+    vault # Hashicorp vault cli # Unfree, Takes long to build
     vendir
     # vscode # Shell integration always resolves symlinks, leading to broken Dock icons and Automator Actions, using brew instead
     watchexec
@@ -187,7 +188,7 @@
     # You need to install all these Apps manually first so that your apple account have records for them.
     # otherwise Apple Store will refuse to install them.
     # For details, see https://github.com/mas-cli/mas
-    # On 2025-04-11, the behaviour of mas changed and installed apps are no longer found leading to reinstall on every nix invocation. Disabling it for now
+    # On 2025-04-11, the behaviour of mas changed and installed apps are no longer found leading to reinstall on every nix invocation. Probably some changes in Apples APIs. Disabling it for now
     #masApps = {
     #  "Affinity Designer 2" = 1616831348;
     #  "Affinity Photo 2" = 1616822987;
