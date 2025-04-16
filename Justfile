@@ -8,21 +8,17 @@ default:
 
 # Build and activate nix-darwin (run once)
 build:
-  nix build .#darwinConfigurations.{{HOSTNAME}}.system \
-    --extra-experimental-features 'nix-command flakes'
+  nix build --extra-experimental-features 'nix-command flakes' \
+    .#darwinConfigurations.{{HOSTNAME}}.system
   ./result/sw/bin/darwin-rebuild switch --flake .#{{HOSTNAME}}
 
 # Build and activate nix-darwin with debug output (run once)
 build-debug:
-  nix build .#darwinConfigurations.{{HOSTNAME}}.system --show-trace --verbose \
-    --extra-experimental-features 'nix-command flakes'
+  nix build --extra-experimental-features 'nix-command flakes' \
+    .#darwinConfigurations.{{HOSTNAME}}.system --show-trace --verbose
   ./result/sw/bin/darwin-rebuild switch --flake .#{{HOSTNAME}} --show-trace --verbose
 
-############################################################################
-#
-#  nix related commands
-#
-############################################################################
+# Everyday tasks
 
 # Update this flake
 update-flake:
@@ -31,7 +27,7 @@ update-flake:
   sudo littlesnitch rulegroup --disable update
 alias update := update-flake
 
-# Re-apply flake (requires prior build)
+# Re-apply flake after build has been run once
 apply-flake:
   sudo littlesnitch rulegroup --enable update
   -darwin-rebuild switch --flake .#{{HOSTNAME}}
@@ -45,7 +41,7 @@ history:
 # Wipe profile history older than x and do a nix garbage-collect
 gc:
   sudo nix profile wipe-history --profile /nix/var/nix/profiles/system  --older-than 30d
-  sudo nix store gc
+  nix store gc
 
 # Remove build output
 clean:
