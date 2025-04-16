@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: ststefa 2025 $
+# $Id: 2025-04-16 ststefa $
 # Wait for a system to reboot and be reachable over ssh again
 
 TARGET=${1}
