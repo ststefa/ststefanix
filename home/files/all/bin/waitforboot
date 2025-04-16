@@ -8,19 +8,20 @@ ssh_connect() {
     ssh -o UserKnownHostsFile=/dev/null -o ConnectTimeout=2 ${1} date >> /dev/null 2>&1
 }
 
-if ! ssh_connect ${TARGET} ; then
-    echo ${TARGET} not reachable
+if ! ssh_connect "${TARGET}" ; then
+    echo "${TARGET} not reachable"
     exit 1
 fi
 
-echo Waiting for ${TARGET} to be gone
+echo "Waiting for ${TARGET} to be gone"
 
-while ssh_connect ${TARGET} ; do
+while ssh_connect "${TARGET}" ; do
     sleep 5;
 done
 
-echo ${TARGET} unreachable, system booting
-while ! ssh_connect ${TARGET} ; do
+echo "${TARGET} unreachable, system booting"
+
+while ! ssh_connect "${TARGET}" ; do
     sleep 0
 done
-echo ${TARGET} reachable
+echo "${TARGET} reachable"
