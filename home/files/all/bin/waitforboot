@@ -1,0 +1,26 @@
+#!/bin/bash
+# $Id: ststefa 2025 $
+# Wait for a system to reboot and be reachable over ssh again
+
+TARGET=${1}
+
+ssh_connect() {
+    ssh -o UserKnownHostsFile=/dev/null -o ConnectTimeout=2 ${1} date >> /dev/null 2>&1
+}
+
+if ! ssh_connect ${TARGET} ; then
+    echo ${TARGET} not reachable
+    exit 1
+fi
+
+echo Waiting for ${TARGET} to be gone
+
+while ssh_connect ${TARGET} ; do
+    sleep 5;
+done
+
+echo ${TARGET} unreachable, system booting
+while ! ssh_connect ${TARGET} ; do
+    sleep 0
+done
+echo ${TARGET} reachable
