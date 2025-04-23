@@ -50,62 +50,73 @@
   # parameters in `outputs` are defined in `inputs` and can be referenced by their names.
   # However, `self` is an exception, this special parameter points to the `outputs` itself (self-reference)
   # The `@` syntax here is used to alias the attribute set of the inputs's parameter, making it convenient to use inside the function.
-  outputs = inputs @ {
-    self,
-    nixpkgs,
-    darwin,
-    home-manager,
-    ...
-  }: let
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      darwin,
+      home-manager,
+      ...
+    }:
+    let
 
-    # This function allows the creation of multiple similar configs for different systems. The config is then chosen by specifying it in the nix invocation using the hostname. See Justfile. The variables allow to describe host-specfic features, like e.g. packages.
-    mkDarwinConfig = { username, useremail, system, hostname }:
-      let
-        specialArgs =
-          inputs
-          // {
-            inherit username useremail hostname;
-          };
-      in
-     darwin.lib.darwinSystem {
-      inherit system specialArgs;
-      modules = [
-        ./modules/nix-core.nix
-        ./modules/system.nix
-        ./modules/apps_all.nix
-        ./modules/apps_${hostname}.nix
-        ./modules/host-users.nix
-
-        # home manager
-        home-manager.darwinModules.home-manager
+      # This function allows the creation of multiple similar configs for different systems. The config is then chosen by specifying it in the nix invocation using the hostname. See Justfile. The variables allow to describe host-specfic features, like e.g. packages.
+      mkDarwinConfig =
         {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = specialArgs;
-          home-manager.users.${username} = import ./home;
-          home-manager.backupFileExtension = "nixbak";
-        }
-      ];
-    };
+          username,
+          useremail,
+          system,
+          hostname,
+          cores,
+          ...
+        }:
+        let
+          specialArgs = inputs // {
+            inherit username useremail hostname cores;
+          };
+        in
+        darwin.lib.darwinSystem {
+          inherit system specialArgs;
+          modules = [
+            ./modules/nix-core.nix
+            ./modules/system.nix
+            ./modules/apps_all.nix
+            ./modules/apps_${hostname}.nix
+            ./modules/host-users.nix
 
-  in {
-    # A separate Mac config for any system
-    ## Main private Mac
-    darwinConfigurations.hudson = mkDarwinConfig {
-      username = "steinert";
-      useremail = "ststefa@heldenzeit.net";
-      system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
-      hostname = "hudson";
-    };
-    ## DB CICD Mac
-    darwinConfigurations.bwpm-L454QQVWM2 = mkDarwinConfig {
-      username = "stefansteinert";
-      useremail = "stefan.steinert-extern@deutschebahn.com";
-      system = "aarch64-darwin";
-      hostname = "bwpm-L454QQVWM2";
-    };
+            # home manager
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = specialArgs;
+              home-manager.users.${username} = import ./home;
+              home-manager.backupFileExtension = "nixbak";
+            }
+          ];
+        };
 
-    # nix code formatter, not required for now and interfering
-    #formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
-  };
+    in
+    {
+      # A separate Mac config for any system
+      ## Main private Mac
+      darwinConfigurations.hudson = mkDarwinConfig {
+        username = "steinert";
+        useremail = "ststefa@heldenzeit.net";
+        system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
+        hostname = "hudson";
+        cores = 10;
+      };
+      ## DB CICD Mac
+      darwinConfigurations.bwpm-L454QQVWM2 = mkDarwinConfig {
+        username = "stefansteinert";
+        useremail = "stefan.steinert-extern@deutschebahn.com";
+        system = "aarch64-darwin";
+        hostname = "bwpm-L454QQVWM2";
+        cores = 8;
+      };
+
+      # nix code formatter, not required for now and interfering
+      #formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
+    };
 }

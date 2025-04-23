@@ -1,11 +1,34 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  cores,
+  ...
+}:
 
 {
-  # enable flakes globally
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix.package = pkgs.nix;
+
+  # do garbage collection weekly to keep disk usage low
+  nix.gc = {
+    automatic = lib.mkDefault true;
+    options = lib.mkDefault "--delete-older-than 30d";
+  };
+
+  nix.settings = {
+    # Disable auto-optimise-store because of this issue:
+    #   https://github.com/NixOS/nix/issues/7273
+    # "error: cannot link '/nix/store/.tmp-link-xxxxx-xxxxx' to '/nix/store/.links/xxxx': File exists"
+    auto-optimise-store = false;
+
+    # Set build core explicitly because some tools use it to calculate parallelism
+    cores = cores;
+
+    # enable flakes globally
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+  };
 
   # Blanket permission for unfree packages
   #nixpkgs.config.allowUnfree = true;
@@ -62,19 +85,4 @@
       #};
     })
   ];
-
-  nix.package = pkgs.nix;
-
-  # do garbage collection weekly to keep disk usage low
-  nix.gc = {
-    automatic = lib.mkDefault true;
-    options = lib.mkDefault "--delete-older-than 30d";
-  };
-
-  # Disable auto-optimise-store because of this issue:
-  #   https://github.com/NixOS/nix/issues/7273
-  # "error: cannot link '/nix/store/.tmp-link-xxxxx-xxxxx' to '/nix/store/.links/xxxx': File exists"
-  nix.settings = {
-    auto-optimise-store = false;
-  };
 }
