@@ -95,6 +95,7 @@
     kubectl
     kubernetes-helm
     kustomize
+    lefthook # git hook setup helper
     less
     lima
     #llvm_18 #not found anymore
@@ -149,6 +150,7 @@
     sops
     sphinx
     sqlite
+    sslscan
     stern
     stress-ng
     tcpdump

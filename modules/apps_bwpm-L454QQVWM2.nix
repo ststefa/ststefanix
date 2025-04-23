@@ -8,7 +8,6 @@
     kubelogin-oidc # kubectl plugin for OIDC login
     kubeval # misses important errors
     kubevirt # kubevirt cli (virtctl)
-    lefthook # git hook setup helper
     lzip # lzma compression used in tzdb
     nats-server # NATS messaging server
     nats-top # NATS messaging perf
