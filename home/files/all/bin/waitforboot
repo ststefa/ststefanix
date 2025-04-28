@@ -14,6 +14,7 @@ SSH="ssh -o UserKnownHostsFile=/dev/null -o ConnectTimeout=5 -o ForwardAgent=no 
 
 ssh_connect() {
     ${SSH} "${TARGET}" true >/dev/null 2>&1
+    return $?
 }
 
 is_ip() {
@@ -29,7 +30,7 @@ if ! is_ip "${TARGET}"; then
     RETRIES=0
     while true; do
         ((RETRIES++))
-        if ! host "${TARGET}" > /dev/null 2>&1; then
+        if host "${TARGET}" > /dev/null 2>&1; then
             echo "dns-resolvable after ${SECONDS}s"
             break
         fi
