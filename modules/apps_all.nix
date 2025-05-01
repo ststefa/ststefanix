@@ -244,28 +244,32 @@
     ];
 
     brews = [
+      "at-spi2-core" # Protocol definitions and daemon for D-Bus at-spi
       "bash-completion@2"
       "binutils"
       "boost"
       "ca-certificates"
       "cairo" # dependency of e.g. ffmpeg, ghostscript, gnuradio
+      "certifi" # Mozilla CA bundle for Python
       "cliclick"
       "cmake"
       #"curl" # Moved to nixpkg
       "docker" # cli part of docker. Try using nix app?
       "docutils"
-      "doxygen"
+      "doxygen" # Generate documentation for several programming languages
+      "emqx/mqttx/mqttx-cli" # https://mqttx.app
       "ffmpeg"
       "gcc"
       "gossip" # A GUI client for nostr. This is a GUI app, but its not a cask. Start it by executing `gossip` in the terminal.
       "graphviz"
-      "harfbuzz"
+      "harfbuzz" # OpenType text shaping engine
+      "hashicorp/tap/vault"
       #"imagemagick" # Moved to nixpkg
       "jfrog-cli" # CLI for Artifactory
       "llvm" #
       "lld" # LLVM linker
       "openjdk@23" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk to attach Apple wrappers. Or add /opt/homebrew/opt/openjdk/bin to PATH to have it invoked directly.
-      "hashicorp/tap/vault"
+      "openssl@3" # Cryptography and SSL/TLS Toolkit
       #"inotify-tools" # No aarch64-apple-darwin
       "ipinfo-cli"
       #"iproute2mac" # Moved to nixpkg darwin.iproute2mac
@@ -279,13 +283,16 @@
       "lynx"
       "lz4"
       "lzo"
-      "mpdecimal"
-      "emqx/mqttx/mqttx-cli" # https://mqttx.app
+      "mas" # Mac appstore cli
+      "mingw-w64" # Minimalist GNU for Windows and GCC cross-compilers
+      "mpdecimal" # Library for decimal floating point arithmetic
+      "netpbm" # Image manipulation
       "ollama"
       #"openssl@3" # dependency of e.g. vault-cli
       "openssh"
-      "pandoc"
+      "pandoc" # Swiss-army knife of markup format conversion
       "pipx"
+      "pixman" # pixel manipulation, dependency
       "pkgconf"
       "python@3.13"
       "ruby"
@@ -293,11 +300,14 @@
       "rustup"
       #"readline"
       "screen"
-      "switchaudio-osx"
+      "sdl2" # Low-level access to audio, keyboard, mouse, joystick, and graphics
+      "switchaudio-osx" # macOS audio source cli (SwitchAudioSource)
       #"terraform" # deprecated in homebrew
+      "unbound" # DNS resolver
       "uv" # python package manager written in Rust
       #"vault-cli" # This is "Jackrabbit FileVault"
-      "zstd"
+      "yt-dlp" # audio/video downloader
+      "zstd" # Zstandard is a real-time compression algorithm
     ];
 
     #caskArgs = { # Error: "The option `homebrew.caskArgs.greedy' does not exist."
