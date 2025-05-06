@@ -12,6 +12,11 @@ update_locate() {
     sudo gupdatedb 2>/dev/null
 }
 
+update_appstore() {
+    mas outdated
+    mas upgrade
+}
+
 update_brew() {
     local local_rc=0
 
@@ -66,6 +71,11 @@ update_helm() {
     helm repo update
 }
 
+update_krew() {
+    which krew
+    krew upgrade
+}
+
 update_rust() {
     ~/.cargo/bin/rustup update
     ~/.cargo/bin/cargo install-update -a
@@ -74,11 +84,6 @@ update_rust() {
 update_ruby() {
     which gem
     gem update
-}
-
-update_appstore() {
-    mas outdated
-    mas upgrade
 }
 
 log() {
