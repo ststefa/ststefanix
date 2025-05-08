@@ -363,10 +363,10 @@ function openUrl(urlString)
     if (u.host == 'localhost' and u.port == 8000) then
         if (os.date("*t", now).hour < 8) or (os.date("*t", now).hour > 20) then
             print('URLDispatcher: Out of working hours (' .. os.date("%H:%M", now) .. ')')
-            shouldOpen = false
+            --shouldOpen = false
         elseif (os.date("*t", now).wday == 1) or (os.date("*t", now).wday == 7) then
             print('URLDispatcher: Weekend')
-            shouldOpen = false
+            --shouldOpen = false
         elseif ((now - startTime) < 1800) then
             print('URLDispatcher: Too soon (' .. (now - startTime) .. 's)')
             shouldOpen = false
