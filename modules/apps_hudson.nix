@@ -51,6 +51,7 @@
       { name = "gather"; greedy = true; } # Pixel collab world
       { name = "gimp"; greedy = true; }
       { name = "handbrake"; greedy = true; }
+      { name = "libreoffice"; greedy = true; }
       { name = "obs"; greedy = true; }
       { name = "openscad"; greedy = true; }
       { name = "orcaslicer"; greedy = true; }
