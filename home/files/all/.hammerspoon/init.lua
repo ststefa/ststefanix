@@ -352,6 +352,7 @@ startTime = os.time() - 3600
 function dropUrl(url)
     print("URLDispatcher: Dropping " .. url)
 end
+
 function openUrl(urlString)
     -- see https://github.com/golgote/neturl
     u = url.parse(urlString)
@@ -364,10 +365,12 @@ function openUrl(urlString)
         if (os.date("*t", now).hour < 8) or (os.date("*t", now).hour > 20) then
             print('URLDispatcher: Out of working hours (' .. os.date("%H:%M", now) .. ')')
             --shouldOpen = false
-        elseif (os.date("*t", now).wday == 1) or (os.date("*t", now).wday == 7) then
+        end
+        if (os.date("*t", now).wday == 1) or (os.date("*t", now).wday == 7) then
             print('URLDispatcher: Weekend')
             --shouldOpen = false
-        elseif ((now - startTime) < 1800) then
+        end
+        if ((now - startTime) < 1800) then
             print('URLDispatcher: Too soon (' .. (now - startTime) .. 's)')
             shouldOpen = false
         else
@@ -379,7 +382,6 @@ function openUrl(urlString)
     end
 
     if shouldOpen then
-    --if true then
         print("URLDispatcher: Opening")
         hs.urlevent.openURLWithBundle(urlString, spoon.URLDispatcher.default_handler)
     else
