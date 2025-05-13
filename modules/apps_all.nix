@@ -252,7 +252,7 @@
       "cairo" # dependency of e.g. ffmpeg, ghostscript, gnuradio
       "certifi" # Mozilla CA bundle for Python
       "cliclick"
-      "cmake"
+      "cmake" # Cross-platform make
       "cpu_features" # Cross platform C99 library to get cpu features at runtime
       #"curl" # Moved to nixpkg
       "docker" # cli part of docker. Try using nix app?
@@ -267,12 +267,14 @@
       "graphviz"
       "harfbuzz" # OpenType text shaping engine
       "hashicorp/tap/vault"
+      "hwloc" # Portable abstraction of the hierarchical topology of modern architectures
       #"imagemagick" # Moved to nixpkg
       "jfrog-cli" # CLI for Artifactory
       "kubeseal" # Client for k8s sealred secrets
       "libde265" # Open h.265 video codec
       "llvm" #
       "lld" # LLVM linker
+      "m4" # Macro processing language
       "openjdk@23" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk to attach Apple wrappers. Or add /opt/homebrew/opt/openjdk/bin to PATH to have it invoked directly.
       "openssl@3" # Cryptography and SSL/TLS Toolkit
       #"inotify-tools" # No aarch64-apple-darwin
