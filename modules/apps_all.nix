@@ -78,6 +78,7 @@
     golangci-lint-langserver # @dbcicd
     gopls # go language server
     htop # Colored top
+    httpie # User-friendly cURL replacement
     imagemagick
     #inotify-tools #No aarch64-apple-darwin
     iperf
@@ -109,6 +110,7 @@
     nodejs
     nodePackages.cspell
     oath-toolkit # Provides oathtool
+    oha # HTTP load generator with tui animation
     #openlens # not available for aarch64-darwin
     #openssh # sometimes aborts sessions with "package too long" errors, esp. on apume. Using brew.
     opentofu # OSS fork of terraform
@@ -171,6 +173,7 @@
     watchexec
     wget
     #which # Non-standard version, does not support "-s"
+    xh # httpie clone written in Rust. Faster startup
     xterm
     xz
     yapf
@@ -261,7 +264,7 @@
       "emqx/mqttx/mqttx-cli" # https://mqttx.app
       "ffmpeg"
       "fmt" # ormatting library for C++
-      "gcc"
+      "gcc" # GNU compiler collection
       "gettext" # GNU internationalization (i18n) and localization (l10n) library
       "gossip" # A GUI client for nostr. This is a GUI app, but its not a cask. Start it by executing `gossip` in the terminal.
       "graphviz"
@@ -275,7 +278,8 @@
       "llvm" #
       "lld" # LLVM linker
       "m4" # Macro processing language
-      "openjdk@23" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk to attach Apple wrappers. Or add /opt/homebrew/opt/openjdk/bin to PATH to have it invoked directly.
+      "mbedtls" # Cryptographic & SSL/TLS library
+      "openjdk" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk to attach Apple wrappers. Or add /opt/homebrew/opt/openjdk/bin to PATH to have it invoked directly.
       "openssl@3" # Cryptography and SSL/TLS Toolkit
       #"inotify-tools" # No aarch64-apple-darwin
       "ipinfo-cli"
@@ -283,6 +287,7 @@
       #"k3d" #using nix
       "kcl-lang/tap/kcl" # Tool to create an abstraction layer for k8s manifests # Available from nixpkg as "kcl-cli" but missing kcl-lsp
       "kcl-lsp" # kcl language server (for vscode)
+      "libarchive" # Multi-format archive and compression library
       "libheif"
       "libidn2" # dependency of e.g. ffmpeg, gnutls, wget
       "libpng"
@@ -295,6 +300,7 @@
       "mpdecimal" # Library for decimal floating point arithmetic
       "netpbm" # Image manipulation
       "ollama"
+      "openldap" # dep. of lighttpd
       #"openssl@3" # dependency of e.g. vault-cli
       "openssh"
       "pandoc" # Swiss-army knife of markup format conversion
@@ -302,6 +308,8 @@
       "pixman" # pixel manipulation, dependency
       "pkgconf"
       "python@3.13"
+      "rav1e" # AV1 video encoder, req. by ffmprg
+      "rpds-py" # Python bindings to Rust's persistent data structures
       "ruby"
       "ruff" # fast python linter
       "rustup"
@@ -310,6 +318,7 @@
       "sdl2" # Low-level access to audio, keyboard, mouse, joystick, and graphics
       "switchaudio-osx" # macOS audio source cli (SwitchAudioSource)
       #"terraform" # deprecated in homebrew
+      "tesseract" # req. by ffmpeg and ghostscript
       "unbound" # DNS resolver
       "uv" # python package manager written in Rust
       #"vault-cli" # This is "Jackrabbit FileVault"
