@@ -1,19 +1,14 @@
 {
-
-  ##################################################################################################################
-  #
+  #####
   # This was derived by @ststefa from github.com:ryan4yin/nix-darwin-kickstarter.git/rich-demo
-  #
-  ##################################################################################################################
+  #####
 
   description = "Nix for macOS configuration";
 
-  ##################################################################################################################
-  #
+  #####
   # Want to know Nix in details? Looking for a beginner-friendly tutorial?
   # Check out https://github.com/ryan4yin/nixos-and-flakes-book !
-  #
-  ##################################################################################################################
+  #####
 
   # the nixConfig here only affects the flake itself, not the system configuration!
   nixConfig = {
@@ -60,7 +55,7 @@
     }:
     let
 
-      # This function allows the creation of multiple similar configs for different systems. The config is then chosen by specifying it in the nix invocation using the hostname. See Justfile. The variables allow to describe host-specfic features, like e.g. packages.
+      # This function allows the creation of multiple similar configs for different systems. The config is then chosen by specifying it in the nix invocation using the hostname. See Justfile. The variables allow to describe host-specific features, like e.g. packages.
       mkDarwinConfig =
         {
           username,
