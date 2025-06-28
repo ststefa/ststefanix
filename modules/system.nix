@@ -13,13 +13,20 @@
 {
 
   system = {
+
+    # Required since 25.05 because all activation now takes place as root by default. Unless the primaryUser is set, then it will use that.
+    primaryUser = username;
+
+/* Disables tap-to-click for unkown reason
     # activationScripts are executed every time you boot the system or run `nixos-rebuild` / `darwin-rebuild`.
-    activationScripts.postUserActivation.text = ''
+    activationScripts.script.text = ''
+      #!/bin/bash
       # activateSettings -u will reload the settings from the database and apply them to the current session,
       # so we do not need to logout and login again to make the changes take effect.
+      echo "Active settings in session ..."
       /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
     '';
-
+*/
     stateVersion = 4;
 
     defaults = {
@@ -55,7 +62,6 @@
       # ststefa: Removed because it disables three-finger-gestures
       # resume at https://github.com/yannbertrand/macos-defaults/blob/main/docs/trackpad/trackpadthreefingerdrag.md
       #trackpad = {
-      #  # tap - 轻触触摸板, click - 点击触摸板
       #  Clicking = true;  # enable tap to click(轻触触摸板相当于点击)
       #  TrackpadRightClick = true;  # enable two finger right click
       #  TrackpadThreeFingerDrag = true;  # enable three finger drag
@@ -103,6 +109,12 @@
           # Add a context menu item for showing the Web Inspector in web views
           WebKitDeveloperExtras = true;
         };
+        "com.apple.AdLib" = {
+          allowApplePersonalizedAdvertising = false;
+        };
+        "com.apple.AppleMultitouchTrackpad" = {
+          Clicking = 0;
+        };
         "com.apple.finder" = {
           ShowExternalHardDrivesOnDesktop = true;
           ShowHardDrivesOnDesktop = true;
@@ -136,9 +148,6 @@
           #location = "~/Desktop";
           #type = "png";
         };
-        "com.apple.AdLib" = {
-          allowApplePersonalizedAdvertising = false;
-        };
         # Prevent Photos from opening automatically when devices are plugged in
         "com.apple.ImageCapture".disableHotPlug = true;
       };
@@ -153,7 +162,7 @@
     # the most important thing is to remap option key to alt key globally,
     # but it's not supported by macOS yet.
     keyboard = {
-      enableKeyMapping = true;  # enable key mapping so that we can use `option` as `control`
+      #enableKeyMapping = true;  # enable key mapping so that we can use `option` as `control`
 
       # NOTE: do NOT support remap capslock to both control and escape at the same time
       #remapCapsLockToControl = false;  # remap caps lock to control, useful for emac users
@@ -163,7 +172,7 @@
       # so it matches common keyboard layout: `ctrl | command | alt`
       #
       # disabled, caused only problems!
-      swapLeftCommandAndLeftAlt = false;
+      #swapLeftCommandAndLeftAlt = false;
     };
   };
 
@@ -197,7 +206,6 @@
     PROMPT_COMMAND = "history -a";
 
     # Golang settings
-    # disabled, using homebrew
     GOPATH = "/Users/${username}/tech/go";
     GOBIN = "/Users/${username}/bin";
     GOTOOLDIR = "/Users/${username}/bin";

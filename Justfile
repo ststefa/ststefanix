@@ -30,7 +30,8 @@ alias update := update-flake
 # Re-apply flake after build has been run once
 apply-flake:
   sudo littlesnitch rulegroup --enable update
-  -darwin-rebuild switch --flake .#{{HOSTNAME}}
+  # must be run as root since 2025, see https://github.com/nix-darwin/nix-darwin/issues/1457
+  -sudo darwin-rebuild switch --flake .#{{HOSTNAME}}
   sudo littlesnitch rulegroup --disable update
 alias apply := apply-flake
 
