@@ -119,22 +119,14 @@ func_exists() {
     return 1
 }
 
-# Invokes $1 in a verbose "set -x" context
-invoke_func() {
-    local local_rc=0
-    set -x
-    "${1}" ; (( local_rc += $? ))
-    { set +x; } 2>/dev/null
-    return ${local_rc}
-}
-
-# Invokes $1 and wraps it in logging and time measurement
+# Invokes "update_${1}" and wraps it in logging and time measurement
 invoke_update_func() {
-    local local_rc=0
+    local_rc=0
     local timer=${SECONDS}
     log "Start updating ${1}"
-    invoke_func "update_${1}"
-    (( local_rc += $? ))
+    set -x
+    "update_${1}" ; (( local_rc += $? ))
+    { set +x; } 2>/dev/null
     log "Finished updating ${1} in $(( SECONDS - timer ))s, rc=${local_rc}"
     return ${local_rc}
 }
@@ -148,7 +140,7 @@ RC=0
 case "$1" in
     -h|--help|"")
         echo "Update components of the local system."
-        echo "Use arguments -a/--all to update everything or use one of \"${FUNC_NAMES[*]}\" to update just that specific component."
+        echo "Use arguments -a/--all to update everything or use one or more of \"${FUNC_NAMES[*]}\" to update just that specific component."
         exit 1
         ;;
     -a|--all)
@@ -162,13 +154,15 @@ case "$1" in
         log "Finished full system update in $(( SECONDS - TIMER ))s, rc=${RC}"
         ;;
     *)
-        if func_exists "${1}" ; then
-            invoke_update_func "${1}"
-            (( RC += $? ))
-        else
-            echo "Component \"${1}\" does not exist. Choose one of these: ${FUNC_NAMES[*]}. Or use -h/--help for help." >&2
-            exit 1
-        fi
+        for FUNC in "$@" ; do
+            if func_exists "${FUNC}" ; then
+                invoke_update_func "${FUNC}"
+                (( RC += $? ))
+            else
+                echo "Component \"${FUNC}\" does not exist. Choose one or more of these: ${FUNC_NAMES[*]}. Or use -h/--help for help." >&2
+                exit 1
+            fi
+        done
         ;;
 esac
 
