@@ -238,12 +238,12 @@
 
     # Taps *must* be declared here if brews are installed from them. Also for brews installed in host-specific apps!
     taps = [
-      "hashicorp/tap"
-      "homebrew/services"
-      "kcl-lang/tap"
       "emqx/mqttx"
+      "hashicorp/tap"
+      "kcl-lang/tap"
       "messense/macos-cross-toolchains"
       "puppetlabs/puppet"
+      #"homebrew/services" # deprecated
     ];
 
     brews = [
@@ -274,13 +274,17 @@
       #"imagemagick" # Moved to nixpkg
       "jfrog-cli" # CLI for Artifactory
       "kubeseal" # Client for k8s sealred secrets
+      "libnghttp2" # HTTP/2 C Library
       "libde265" # Open h.265 video codec
+      "libssh" # C library SSHv1/SSHv2 client and server protocols
       "llvm" #
       "lld" # LLVM linker
       "m4" # Macro processing language
       "mbedtls" # Cryptographic & SSL/TLS library
+      "nettle" # Low-level cryptographic library
       "openjdk" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk to attach Apple wrappers. Or add /opt/homebrew/opt/openjdk/bin to PATH to have it invoked directly.
       "openssl@3" # Cryptography and SSL/TLS Toolkit
+      "pango" # Framework for layout and rendering of i18n text
       #"inotify-tools" # No aarch64-apple-darwin
       "ipinfo-cli"
       #"iproute2mac" # Moved to nixpkg darwin.iproute2mac
@@ -323,6 +327,7 @@
       "uv" # python package manager written in Rust
       #"vault-cli" # This is "Jackrabbit FileVault"
       "yt-dlp" # audio/video downloader
+      "z3" # High-performance theorem prover
       "zstd" # Zstandard is a real-time compression algorithm
     ];
 
@@ -346,7 +351,7 @@
       { name = "db-browser-for-sqlite"; greedy = true; }
       { name = "deepl"; greedy = true; }
       { name = "discord"; greedy = true; }
-      { name = "docker"; greedy = true; }
+      { name = "docker-desktop"; greedy = true; }
       { name = "downie"; greedy = true; } # Video downloader, works together with permute
       { name = "elgato-control-center"; greedy = true; }
       #{ name = "figma"; greedy = true; } # Not better than webapp
@@ -382,7 +387,7 @@
       { name = "unison"; greedy = true; } # Versatile and reliable host-to-host sync
       { name = "visual-studio-code"; greedy = true; }
       { name = "vlc"; greedy = true; } # Universal video player
-      { name = "wireshark"; greedy = true; } # Analyze network data
+      { name = "wireshark-app"; greedy = true; } # Analyze network data
       { name = "zed"; greedy = true; }
     ];
   };
