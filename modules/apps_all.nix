@@ -138,6 +138,7 @@
     #python311Packages.virtualenv
     #python311Packages.wheel
     qemu_kvm
+    redis # client and server
     ripgrep
     #rstcheck # python3.11-rstcheck-core-1.0.3.drv tests fail
     #ruby # does somehow mess up with installing gems
@@ -184,7 +185,7 @@
     zstd
   ];
 
-  # TODO To make this works, homebrew needs to be installed manually, see https://brew.sh
+  # TODO To make this work, homebrew needs to be installed manually, see https://brew.sh
   #
   # The apps installed by homebrew are not managed by nix, and not reproducible!
   # But on macOS, homebrew has a much larger selection of apps than nixpkgs, especially for GUI apps!
@@ -331,64 +332,65 @@
       "zstd" # Zstandard is a real-time compression algorithm
     ];
 
-    #caskArgs = { # Error: "The option `homebrew.caskArgs.greedy' does not exist."
-    #  greedy = true;
-    #};
+    # This makes cask updates greedy by default. To disable it for a specific cask, set `greedy = false` for it:
+    # { name = "foocask"; greedy = false; }
+    greedyCasks = true;
 
     casks = [
       #"raycast" # (HotKey: alt/option + space)search, calculate and run scripts(with many plugins)
-      { name = "aldente"; greedy = true; } # Save the battery of your Macbook
-      { name = "alfred"; greedy = true; }
-      { name = "apparency"; greedy = true; } # Analyze app signatures
-      { name = "bartender"; greedy = true; } # Manage menubar items
-      { name = "betterdisplay"; greedy = true; }
-      { name = "betterzip"; greedy = true; }
-      { name = "camo-studio"; greedy = true; }
-      { name = "chatgpt"; greedy = true; }
-      { name = "choosy"; greedy = true; } # Customize URL opening behaviour
-      #{ name = "chromium"; greedy = true; } # Cannot be opened by MacOS 2024-07-31)
-      { name = "core-tunnel"; greedy = true; } # Comprehensive ssh tunnel GUI
-      { name = "db-browser-for-sqlite"; greedy = true; }
-      { name = "deepl"; greedy = true; }
-      { name = "discord"; greedy = true; }
-      { name = "docker-desktop"; greedy = true; }
-      { name = "downie"; greedy = true; } # Video downloader, works together with permute
-      { name = "elgato-control-center"; greedy = true; }
-      #{ name = "figma"; greedy = true; } # Not better than webapp
-      { name = "hammerspoon"; greedy = true; } # Tap into the MacOS event system
-      { name = "imazing"; greedy = true; } # IOS backup tool
-      { name = "istat-menus"; greedy = true; }
-      { name = "iterm2"; greedy = true; }
-      { name = "launchcontrol"; greedy = true; }
-      { name = "little-snitch"; greedy = true; }
-      { name = "macfuse"; greedy = true; }
-      { name = "microsoft-teams"; greedy = true; }
-      #{ name = "miro"; greedy = true; } # Not better than webapp
-      #{ name = "mqttx"; greedy = true; } # This is the (useless) GUI App. Use mqttx-cli above instead
-      { name = "obsidian"; greedy = true; }
-      { name = "openlens"; greedy = true; } # GUI for kubernetes
-      { name = "orion"; greedy = true; } # Web browser
-      { name = "paletro"; greedy = true; } # Use App menus with the keyboard
-      { name = "permute"; greedy = true; } # Video converter, works together with downie
-      { name = "qlmarkdown"; greedy = true; } # QuickLook plugin for markdown
-      { name = "qlstephen"; greedy = true; } # QuickLook plugin for multiple file types
-      { name = "quicklook-csv"; greedy = true; } # QuickLook plugin for csv
-      { name = "quicklook-json"; greedy = true; } # QuickLook plugin for json
-      #{ name = "rustdesk"; greedy = true; } # Not allowed on DB Mac
-      { name = "sf-symbols"; greedy = true; } # A nicely curated set of symbols by Apple
-      { name = "skim"; greedy = true; } # PDF viewer/editor
-      { name = "slack"; greedy = true; }
-      #{ name = "squirrelsql"; greedy = true; } # requires /usr/bin/java which is only available on BWP (reason unknown)
-      { name = "suspicious-package"; greedy = true; } # Analyze pkg files
-      { name = "swiftdefaultappsprefpane"; greedy = true; } # Prefpane to configure default apps for filename extension and Uri schemes
-      { name = "telegram"; greedy = true; }
-      #{ name = "theiaide"; greedy = true; } # Too slow on startup
-      { name = "transmit"; greedy = true; } # MacOS FTP app
-      { name = "unison"; greedy = true; } # Versatile and reliable host-to-host sync
-      { name = "visual-studio-code"; greedy = true; }
-      { name = "vlc"; greedy = true; } # Universal video player
-      { name = "wireshark-app"; greedy = true; } # Analyze network data
-      { name = "zed"; greedy = true; }
+      { name = "aldente"; } # Save the battery of your Macbook
+      { name = "alfred"; }
+      { name = "apparency"; } # Analyze app signatures
+      { name = "bartender"; } # Manage menubar items
+      { name = "betterdisplay"; }
+      { name = "betterzip"; }
+      { name = "camo-studio"; }
+      { name = "chatgpt"; }
+      { name = "choosy"; } # Customize URL opening behaviour
+      #{ name = "chromium"; } # Cannot be opened by MacOS 2024-07-31)
+      { name = "context"; } # Model Context Protocol (MCP) debugger
+      { name = "core-tunnel"; } # Comprehensive ssh tunnel GUI
+      { name = "db-browser-for-sqlite"; }
+      { name = "deepl"; }
+      { name = "discord"; }
+      { name = "docker-desktop"; }
+      { name = "downie"; } # Video downloader, works together with permute
+      { name = "elgato-control-center"; }
+      #{ name = "figma"; } # Not better than webapp
+      { name = "hammerspoon"; } # Tap into the MacOS event system
+      { name = "imazing"; } # IOS backup tool
+      { name = "istat-menus"; }
+      { name = "iterm2"; }
+      { name = "launchcontrol"; }
+      { name = "little-snitch"; }
+      { name = "macfuse"; }
+      { name = "microsoft-teams"; }
+      #{ name = "miro"; } # Not better than webapp
+      #{ name = "mqttx"; } # This is the (useless) GUI App. Use mqttx-cli above instead
+      { name = "obsidian"; }
+      { name = "openlens"; } # GUI for kubernetes
+      { name = "orion"; } # Web browser
+      { name = "paletro"; } # Use App menus with the keyboard
+      { name = "permute"; } # Video converter, works together with downie
+      { name = "qlmarkdown"; } # QuickLook plugin for markdown
+      { name = "qlstephen"; } # QuickLook plugin for multiple file types
+      { name = "quicklook-csv"; } # QuickLook plugin for csv
+      { name = "quicklook-json"; } # QuickLook plugin for json
+      #{ name = "rustdesk"; } # Not allowed on DB Mac
+      { name = "sf-symbols"; } # A nicely curated set of symbols by Apple
+      { name = "skim"; } # PDF viewer/editor
+      { name = "slack"; }
+      #{ name = "squirrelsql"; } # requires /usr/bin/java which is only available on BWP (reason unknown)
+      { name = "suspicious-package"; } # Analyze pkg files
+      { name = "swiftdefaultappsprefpane"; } # Prefpane to configure default apps for filename extension and Uri schemes
+      { name = "telegram"; }
+      #{ name = "theiaide"; } # Too slow on startup
+      { name = "transmit"; } # MacOS FTP app
+      { name = "unison"; } # Versatile and reliable host-to-host sync
+      { name = "visual-studio-code"; }
+      { name = "vlc"; } # Universal video player
+      { name = "wireshark-app"; } # Analyze network data
+      { name = "zed"; }
     ];
   };
 }
