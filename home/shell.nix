@@ -158,11 +158,10 @@
 
   home.shellAliases = {
     k = "kubectl";
-
-    # ststefa
     ls = "ls --color=auto";
     ll = "ls -l";
-    la = "ll -A";
+    la = "ll -a";
+    grep = "grep --color=auto";
     # make vscode accept <file>:<line> arg
     code = "code -g";
 
