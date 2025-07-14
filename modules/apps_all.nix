@@ -249,6 +249,7 @@
 
     brews = [
       "at-spi2-core" # Protocol definitions and daemon for D-Bus at-spi
+      "bash"
       "bash-completion@2"
       "binutils"
       "boost"
@@ -282,6 +283,7 @@
       "lld" # LLVM linker
       "m4" # Macro processing language
       "mbedtls" # Cryptographic & SSL/TLS library
+      "mdp" # Command-line based markdown presentation tool
       "nettle" # Low-level cryptographic library
       "openjdk" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk to attach Apple wrappers. Or add /opt/homebrew/opt/openjdk/bin to PATH to have it invoked directly.
       "openssl@3" # Cryptography and SSL/TLS Toolkit
@@ -305,7 +307,8 @@
       "mpdecimal" # Library for decimal floating point arithmetic
       "netpbm" # Image manipulation
       "ollama"
-      "openldap" # dep. of lighttpd
+      "openldap" # dependency of lighttpd
+      "open-mpi" # High performance message passing library, dependency of fftw, gnuradio, hackrf and soapyhackrf
       #"openssl@3" # dependency of e.g. vault-cli
       "openssh"
       "pandoc" # Swiss-army knife of markup format conversion
@@ -314,6 +317,7 @@
       "pkgconf"
       "python@3.13"
       "rav1e" # AV1 video encoder, req. by ffmprg
+      "readline" # Library for command-line editing
       "rpds-py" # Python bindings to Rust's persistent data structures
       "ruby"
       "ruff" # fast python linter
