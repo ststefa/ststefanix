@@ -336,14 +336,14 @@
       "zstd" # Zstandard is a real-time compression algorithm
     ];
 
-    # This makes cask updates greedy by default. To disable it for a specific cask, set `greedy = false` for it:
+    # This makes cask updates greedy by default. To disable it for a specific cask, set `greedy = false` for it, e.g.:
     # { name = "foocask"; greedy = false; }
     greedyCasks = true;
 
     casks = [
       #"raycast" # (HotKey: alt/option + space)search, calculate and run scripts(with many plugins)
       { name = "aldente"; } # Save the battery of your Macbook
-      { name = "alfred"; }
+      { name = "alfred"; } # App launcher with many plugins
       { name = "apparency"; } # Analyze app signatures
       { name = "bartender"; } # Manage menubar items
       { name = "betterdisplay"; }
