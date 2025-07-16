@@ -40,13 +40,6 @@
       "vault"
     ];
 
-  # Obsoleted with update on 2025-03-09
-  ## Auto upgrade nix package and the daemon service.
-  #services.nix-daemon.enable = true;
-  ## Use this instead of services.nix-daemon.enable if you
-  ## don't wan't the daemon service to be managed for you.
-  ## nix.useDaemon = true;
-
   # add overlays to make updated derivations of existing modules
   nixpkgs.overlays = [
     (final: prev: {

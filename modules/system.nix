@@ -113,7 +113,8 @@
           allowApplePersonalizedAdvertising = false;
         };
         "com.apple.AppleMultitouchTrackpad" = {
-          Clicking = 0;
+          # Should activate tap-to-click. Verified defaults ok but still does not work.
+          Clicking = 1;
         };
         "com.apple.finder" = {
           ShowExternalHardDrivesOnDesktop = true;
@@ -154,7 +155,7 @@
 
       loginwindow = {
         GuestEnabled = false;  # disable guest user
-        SHOWFULLNAME = true;  # show full name in login window
+        SHOWFULLNAME = false;  # show user list instead of full name in login window
       };
     };
 

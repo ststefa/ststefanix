@@ -8,14 +8,12 @@ default:
 
 # Build and activate nix-darwin (run once)
 build:
-  nix build --extra-experimental-features 'nix-command flakes' \
-    .#darwinConfigurations.{{HOSTNAME}}.system
+  nix build --extra-experimental-features 'nix-command flakes' .#darwinConfigurations.{{HOSTNAME}}.system
   ./result/sw/bin/darwin-rebuild switch --flake .#{{HOSTNAME}}
 
 # Build and activate nix-darwin with debug output (run once)
 build-debug:
-  nix build --extra-experimental-features 'nix-command flakes' \
-    .#darwinConfigurations.{{HOSTNAME}}.system --show-trace --verbose
+  nix build --extra-experimental-features 'nix-command flakes' .#darwinConfigurations.{{HOSTNAME}}.system --show-trace --verbose
   ./result/sw/bin/darwin-rebuild switch --flake .#{{HOSTNAME}} --show-trace --verbose
 
 # Everyday tasks
