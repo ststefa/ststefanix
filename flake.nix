@@ -75,6 +75,7 @@
           modules = [
             ./modules/nix-core.nix
             ./modules/system.nix
+            ./modules/sysconf.nix
             ./modules/apps_all.nix
             ./modules/apps_${hostname}.nix
             ./modules/host-users.nix

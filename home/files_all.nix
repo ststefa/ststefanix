@@ -7,7 +7,7 @@
     file = {
       ".test".text =
       ''
-        # ATTENTION, managed by NIX
+        # ATTENTION! Managed by Nix
         Just an example
         username:  ${username}
         useremail: ${useremail}
@@ -16,11 +16,12 @@
 
       # Files
       ".ansible.cfg".source = ./files/all/.ansible.cfg;
+      ".curlrc".source = ./files/all/.curlrc;
       ".pypirc".source = ./files/all/.pypirc;
       ".vimrc".source = ./files/all/.vimrc;
       "Library/Application Support/sops/age/keys.txt".source = (./files/all + "/Library/Application Support/sops/age/age_keys.txt");
 
-      # dirs. "recursive" causes links to be created on the deepest level instead of the highest. This allows to mix dir contents with unmanaged content
+      # Directories. "recursive" causes links to be created on the deepest level instead of the highest. This allows to mix dir contents with unmanaged content
       ".hammerspoon".source = ./files/all/.hammerspoon; ".hammerspoon".recursive = true;
       ".ssh".source = ./files/all/.ssh; ".ssh".recursive = true;
       "bin".source = ./files/all/bin; "bin".recursive = true;
