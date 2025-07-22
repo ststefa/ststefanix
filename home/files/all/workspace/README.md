@@ -9,6 +9,7 @@ The workspace has a global venv for things which are related to the vscode ide i
 Create it, activate and install:
 
 ```sh
+$ cd <here>
 $ python -m venv --prompt wsenv .venv
 $ . .venv/bin/activate
 (wsenv) $ pip install --upgrade pip

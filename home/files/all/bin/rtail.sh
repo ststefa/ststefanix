@@ -1,5 +1,5 @@
 #!/bin/bash
-# ATTENTION! File managed by Puppet. Changes will be overwritten.
+# ATTENTION! Managed by Nix
 
 # tail files recursively
 

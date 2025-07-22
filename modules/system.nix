@@ -17,7 +17,7 @@
     # Required since 25.05 because all activation now takes place as root by default. Unless the primaryUser is set, then it will use that.
     primaryUser = username;
 
-/* Disables tap-to-click for unkown reason
+    /* Disables tap-to-click for unkown reason
     # activationScripts are executed every time you boot the system or run `nixos-rebuild` / `darwin-rebuild`.
     activationScripts.script.text = ''
       #!/bin/bash
@@ -26,7 +26,7 @@
       echo "Active settings in session ..."
       /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
     '';
-*/
+    */
     stateVersion = 4;
 
     defaults = {
@@ -177,7 +177,7 @@
     };
   };
 
-  # Add ability to used TouchID for sudo authentication
+  # Enable TouchID for sudo authentication
   security.pam.services.sudo_local.touchIdAuth = true;
 
   # Create /etc/zshrc that loads the nix-darwin environment.
@@ -210,6 +210,9 @@
     GOPATH = "/Users/${username}/tech/go";
     GOBIN = "/Users/${username}/bin";
     GOTOOLDIR = "/Users/${username}/bin";
+
+    # Vault defaults
+    VAULT_ADDR = "https://vault.heldenzeit.net";
   };
 
   # Set your time zone.
