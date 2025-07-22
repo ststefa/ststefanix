@@ -361,6 +361,7 @@
       { name = "downie"; } # Video downloader, works together with permute
       { name = "elgato-control-center"; }
       #{ name = "figma"; } # Not better than webapp
+      { name = "headlamp"; } # Kubernetes dashboard
       { name = "hammerspoon"; } # Tap into the MacOS event system
       { name = "imazing"; } # IOS backup tool
       { name = "istat-menus"; }
