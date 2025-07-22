@@ -9,17 +9,6 @@
   #
   ##########################################################################
 
-  # Generate a file containing installed packages
-  # Generates a separate file for every invocation which will be removed as part of nix gc
-  # find and compare them using `ls -l /nix/store/*nix-packages`
-  environment.etc."nix-packages".text =
-  let
-    packages = builtins.map (p: "${p.name}") args.config.environment.systemPackages;
-    sortedUnique = builtins.sort builtins.lessThan (pkgs.lib.lists.unique packages);
-    formatted = builtins.concatStringsSep "\n" sortedUnique;
-  in
-    formatted;
-
   # Install packages from nix's official package repository.
   #
   # The packages installed here are available to all users, and are reproducible across machines, and are rollbackable.
@@ -27,19 +16,19 @@
   #
   # Related Discussion: https://discourse.nixos.org/t/darwin-again/29331
   environment.systemPackages = with pkgs; [
-    age
+    age # A simple and secure file encryption tool
     ansible
     argocd
     argocd-autopilot
-    asciinema
+    asciinema # terminal session recorder
     awscli2
     azure-cli
     bat
-    bc
+    bc # Basic calculator
     bottom
     #caddy # golang config server
     #cmakeMinimal # using brew for compiler-related
-    colima
+    colima # Docker on macOS with Lima
     colmena # NixOS deployment tool, https://github.com/zhaofengli/colmena
     coreutils
     cowsay
@@ -51,10 +40,10 @@
     #docker # does not include docker daemon
     #docutils #using brew for all py-related
     doxygen # required to build gr-osmosdr
-    dutree
+    dutree # Display directory tree with git status
     exiftool
     #ffmpeg-full # does not provide libavformat.dylib which is required for audacity, using brew
-    figlet
+    figlet # ASCII art
     file
     findutils # GNU find, locate, updatedb, xargs
     fortune
@@ -87,17 +76,17 @@
     jinja2-cli
     jq
     just
-    k3d #up to date in unstable
+    k3d # up to date in unstable
     #k3s
     k9s
     #kcl-cli # kcl-lsp not available, so using brew for all kcl
-    krew
+    krew # kubectl plugin manager
     kubectl
     kubernetes-helm
     kustomize
     lefthook # git hook setup helper
     less
-    lima
+    lima # Linux virtual machines on macOS
     #llvm_18 #not found anymore
     lsof
     mas # Mac Appstore cli
@@ -117,7 +106,7 @@
     parallel
     pdfminer # PDF parser and analyzer
     pipx
-    poetry
+    poetry # python package manager
     pstree
     psutils
     pv
@@ -177,7 +166,7 @@
     xh # httpie clone written in Rust. Faster startup
     xterm
     xz
-    yapf
+    #yapf # using ruff instead
     yazi # terminal file manager
     yq
     zellij # terminal multiplexer a la tmux with programmable layouts, nice for shell demos
@@ -256,12 +245,12 @@
       "ca-certificates"
       "cairo" # dependency of e.g. ffmpeg, ghostscript, gnuradio
       "certifi" # Mozilla CA bundle for Python
-      "cliclick"
+      "cliclick" # Command line interface for macOS mouse and keyboard events
       "cmake" # Cross-platform make
       "cpu_features" # Cross platform C99 library to get cpu features at runtime
       #"curl" # Moved to nixpkg
       "docker" # cli part of docker. Try using nix app?
-      "docutils"
+      "docutils" # Python text processing system for reStructuredText
       "doxygen" # Generate documentation for several programming languages
       "emqx/mqttx/mqttx-cli" # https://mqttx.app
       "ffmpeg"
@@ -269,7 +258,7 @@
       "gcc" # GNU compiler collection
       "gettext" # GNU internationalization (i18n) and localization (l10n) library
       "gossip" # A GUI client for nostr. This is a GUI app, but its not a cask. Start it by executing `gossip` in the terminal.
-      "graphviz"
+      "graphviz" # Graph visualization tools
       "harfbuzz" # OpenType text shaping engine
       "hashicorp/tap/vault"
       "hwloc" # Portable abstraction of the hierarchical topology of modern architectures
@@ -279,7 +268,7 @@
       "libnghttp2" # HTTP/2 C Library
       "libde265" # Open h.265 video codec
       "libssh" # C library SSHv1/SSHv2 client and server protocols
-      "llvm" #
+      "llvm"
       "lld" # LLVM linker
       "m4" # Macro processing language
       "mbedtls" # Cryptographic & SSL/TLS library
@@ -337,7 +326,7 @@
     ];
 
     # This makes cask updates greedy by default. To disable it for a specific cask, set `greedy = false` for it, e.g.:
-    # { name = "foocask"; greedy = false; }
+    # { name = "fooapp"; greedy = false; }
     greedyCasks = true;
 
     casks = [
@@ -361,7 +350,7 @@
       { name = "downie"; } # Video downloader, works together with permute
       { name = "elgato-control-center"; }
       #{ name = "figma"; } # Not better than webapp
-      { name = "headlamp"; } # Kubernetes dashboard
+      { name = "headlamp"; } # Kubernetes dashboard. Must be manually signed using `xattr -dr com.apple.quarantine /Applications/Headlamp.app`
       { name = "hammerspoon"; } # Tap into the MacOS event system
       { name = "imazing"; } # IOS backup tool
       { name = "istat-menus"; }
@@ -381,7 +370,7 @@
       { name = "qlstephen"; } # QuickLook plugin for multiple file types
       { name = "quicklook-csv"; } # QuickLook plugin for csv
       { name = "quicklook-json"; } # QuickLook plugin for json
-      #{ name = "rustdesk"; } # Not allowed on DB Mac
+      #{ name = "rustdesk"; } # VNC-like remote desktop tool
       { name = "sf-symbols"; } # A nicely curated set of symbols by Apple
       { name = "skim"; } # PDF viewer/editor
       { name = "slack"; }
