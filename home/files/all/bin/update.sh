@@ -20,6 +20,8 @@ update_appstore() {
 update_brew() {
     local local_rc=0
 
+    export HOMEBREW_CURLRC=~/.curlrc
+    export HOMEBREW_CURL_RETRIES=2
     echo "Capturing installed package list"
     brew list --versions > $(roll_file ~/backup/brew_packages.txt)
     brew tap > $(roll_file ~/backup/brew_taps.txt)
@@ -131,6 +133,11 @@ invoke_update_func() {
     return ${local_rc}
 }
 
+close_firewall() {
+    echo "Closing firewall"
+    sudo littlesnitch rulegroup --disable update
+}
+
 # The global list of all implemented update functions
 FUNC_NAMES=($(get_update_funcs)) || exit 1
 
@@ -143,32 +150,42 @@ case "$1" in
         echo "Use arguments -a/--all to update everything or use one or more of \"${FUNC_NAMES[*]}\" to update just that specific component."
         exit 1
         ;;
-    -a|--all)
-        log "----- Starting full system update -----"
-        echo "PATH=${PATH}"
-        TIMER=${SECONDS}
-        for FUNC in "${FUNC_NAMES[@]}" ; do
-            invoke_update_func "${FUNC}"
-            (( RC += $? ))
-        done
-        log "Finished full system update in $(( SECONDS - TIMER ))s, rc=${RC}"
-        ;;
     *)
-        for FUNC in "$@" ; do
+        if [[ $1 == '-a' ]] || [[ $1 == '--all' ]] ; then
+            COMPONENTS="${FUNC_NAMES[*]}"
+        else
+            COMPONENTS="$*"
+        fi
+        log "----- Starting update of $* -----"
+        echo "PATH=${PATH}"
+        echo "id: $(id)"
+        echo "Opening firewall"
+        trap close_firewall exit
+        sudo littlesnitch rulegroup --enable update || exit 1
+        TIMER=${SECONDS}
+        COMPONENT_COUNT=0
+        for FUNC in ${COMPONENTS} ; do
             if func_exists "${FUNC}" ; then
+                (( COMPONENT_COUNT += 1 ))
                 invoke_update_func "${FUNC}"
                 (( RC += $? ))
             else
                 echo "Component \"${FUNC}\" does not exist. Choose one or more of these: ${FUNC_NAMES[*]}. Or use -h/--help for help." >&2
-                exit 1
+                (( RC += 1 ))
             fi
         done
+        log "Finished update of $* in $(( SECONDS - TIMER ))s, rc=${RC}"
         ;;
 esac
 
-if (( RC > 0 )) ; then
-    echo "There were errors, sending notification."
-    pushover.sh -t "update.sh" "Update problems (rc=${RC}). Please review /var/log/local.daemon.update.log (hint: "grep Finished /var/log/local.daemon.update.log") and rerun manually."
+if (( COMPONENT_COUNT > 0 )) ; then
+    if (( RC > 0 )) ; then
+        echo "There were errors in some updates, sending notification."
+        pushover.sh -t "update.sh" "Update problems (rc=${RC}). Please review /var/log/local.daemon.update.log (hint: "grep Finished /var/log/local.daemon.update.log") and rerun manually."
+    fi
+else
+    echo "Nothing updated."
+    RC=1
 fi
 
-exit ${RC}
+exit "${RC}"
