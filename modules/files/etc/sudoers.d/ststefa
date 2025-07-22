@@ -24,9 +24,12 @@ steinert ALL=(ALL) NOPASSWD: /usr/sbin/tcpdump
 # update locate db in ~/bin/update.sh
 steinert ALL=(ALL) NOPASSWD: /opt/homebrew/bin/gupdatedb
 
-# open littlesnitch for ujpdates
+# Open firewall for scripted updates
 steinert ALL=(ALL) NOPASSWD: /usr/local/bin/littlesnitch rulegroup --enable update
 steinert ALL=(ALL) NOPASSWD: /usr/local/bin/littlesnitch rulegroup --disable update
+
+# Invoke a Nix rebuild
+steinert ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/darwin-rebuild switch --flake *
 
 # homebrew casks might require sudo, called in in ~/bin/update.sh
 # obsolete, invoking brew as root not supported, too dangerous
