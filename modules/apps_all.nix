@@ -105,7 +105,7 @@
     opentofu # OSS fork of terraform
     parallel
     pdfminer # PDF parser and analyzer
-    pipx
+    # pipx # disabled in favor of "uv tool"
     poetry # python package manager
     pstree
     psutils
@@ -347,7 +347,7 @@
       { name = "deepl"; }
       { name = "discord"; }
       { name = "docker-desktop"; }
-      { name = "downie"; } # Video downloader, works together with permute
+      #{ name = "downie"; } # Video downloader, works together with permute
       { name = "elgato-control-center"; }
       #{ name = "figma"; } # Not better than webapp
       { name = "headlamp"; } # Kubernetes dashboard. Must be manually signed using `xattr -dr com.apple.quarantine /Applications/Headlamp.app`
@@ -365,7 +365,7 @@
       { name = "openlens"; } # GUI for kubernetes
       { name = "orion"; } # Web browser
       { name = "paletro"; } # Use App menus with the keyboard
-      { name = "permute"; } # Video converter, works together with downie
+      #{ name = "permute"; } # Video converter, works together with downie
       { name = "qlmarkdown"; } # QuickLook plugin for markdown
       { name = "qlstephen"; } # QuickLook plugin for multiple file types
       { name = "quicklook-csv"; } # QuickLook plugin for csv

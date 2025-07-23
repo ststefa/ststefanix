@@ -63,18 +63,20 @@ update_python() {
     return "${local_rc}"
 }
 
-update_pipx() {
-    which pipx
-    pipx upgrade-all
+update_uv() {
+    command -v uv
+    for TOOL in ~/.local/share/uv/tools/* ; do
+        uv tool upgrade "$(basename "${TOOL}")"
+    done
 }
 
 update_helm() {
-    which helm
+    command -v helm
     helm repo update
 }
 
 update_krew() {
-    which krew
+    command -v krew
     krew upgrade
 }
 
@@ -84,7 +86,7 @@ update_rust() {
 }
 
 update_ruby() {
-    which gem
+    command -v gem
     gem update
 }
 
