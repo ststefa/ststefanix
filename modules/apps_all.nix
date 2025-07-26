@@ -301,7 +301,7 @@
       #"openssl@3" # dependency of e.g. vault-cli
       "openssh"
       "pandoc" # Swiss-army knife of markup format conversion
-      "pipx"
+      # "pipx" # using uv instead
       "pixman" # pixel manipulation, dependency
       "pkgconf"
       "python@3.13"
@@ -330,7 +330,7 @@
     greedyCasks = true;
 
     casks = [
-      #"raycast" # (HotKey: alt/option + space)search, calculate and run scripts(with many plugins)
+      #"raycast" # Like Alfred
       { name = "aldente"; } # Save the battery of your Macbook
       { name = "alfred"; } # App launcher with many plugins
       { name = "apparency"; } # Analyze app signatures
@@ -347,7 +347,7 @@
       { name = "deepl"; }
       { name = "discord"; }
       { name = "docker-desktop"; }
-      #{ name = "downie"; } # Video downloader, works together with permute
+      { name = "downie"; } # Video downloader, works together with permute
       { name = "elgato-control-center"; }
       #{ name = "figma"; } # Not better than webapp
       { name = "headlamp"; } # Kubernetes dashboard. Must be manually signed using `xattr -dr com.apple.quarantine /Applications/Headlamp.app`
@@ -365,7 +365,7 @@
       { name = "openlens"; } # GUI for kubernetes
       { name = "orion"; } # Web browser
       { name = "paletro"; } # Use App menus with the keyboard
-      #{ name = "permute"; } # Video converter, works together with downie
+      { name = "permute"; } # Video converter, works together with downie
       { name = "qlmarkdown"; } # QuickLook plugin for markdown
       { name = "qlstephen"; } # QuickLook plugin for multiple file types
       { name = "quicklook-csv"; } # QuickLook plugin for csv
