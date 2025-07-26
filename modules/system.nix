@@ -207,12 +207,15 @@
     PROMPT_COMMAND = "history -a";
 
     # Golang settings
-    GOPATH = "/Users/${username}/tech/go";
-    GOBIN = "/Users/${username}/bin";
-    GOTOOLDIR = "/Users/${username}/bin";
+    GOPATH = if pkgs.stdenv.isDarwin then "/Users/${username}/tech/go" else "/home/${username}/tech/go";
+    GOBIN = if pkgs.stdenv.isDarwin then "/Users/${username}/bin" else "/home/${username}/bin";
+    GOTOOLDIR = if pkgs.stdenv.isDarwin then "/Users/${username}/bin" else "/home/${username}/bin";
 
     # Vault defaults
     VAULT_ADDR = "https://vault.heldenzeit.net";
+
+    # move ruff cache to central location
+    RUFF_CACHE_DIR = if pkgs.stdenv.isDarwin then "/Users/${username}/.cache/ruff" else "/home/${username}/.cache/ruff";
   };
 
   # Set your time zone.

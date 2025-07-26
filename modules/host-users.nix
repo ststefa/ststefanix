@@ -1,6 +1,7 @@
 {
   username,
   hostname,
+  pkgs,
   ...
 } @ args:
 #############################################################
@@ -15,7 +16,7 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users."${username}" = {
-    home = "/Users/${username}";
+    home = if pkgs.stdenv.isDarwin then "/Users/${username}" else "/home/${username}";
     description = username;
   };
 
