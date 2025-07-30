@@ -238,11 +238,11 @@
 
     brews = [
       "at-spi2-core" # Protocol definitions and daemon for D-Bus at-spi
-      "bash"
-      "bash-completion@2"
-      "binutils"
-      "boost"
-      "ca-certificates"
+      "bash" # The almighty GNU Bourne Again SHell
+      "bash-completion@2" # Bash completion scripts
+      "binutils" # GNU binary utilities
+      "boost" # C++ libraries
+      "ca-certificates" # Mozilla CA bundle
       "cairo" # dependency of e.g. ffmpeg, ghostscript, gnuradio
       "certifi" # Mozilla CA bundle for Python
       "cliclick" # Command line interface for macOS mouse and keyboard events
@@ -253,8 +253,8 @@
       "docutils" # Python text processing system for reStructuredText
       "doxygen" # Generate documentation for several programming languages
       "emqx/mqttx/mqttx-cli" # https://mqttx.app
-      "ffmpeg"
-      "fmt" # ormatting library for C++
+      "ffmpeg" # Audio/Video processing library
+      "fmt" # Formatting library for C++
       "gcc" # GNU compiler collection
       "gettext" # GNU internationalization (i18n) and localization (l10n) library
       "gossip" # A GUI client for nostr. This is a GUI app, but its not a cask. Start it by executing `gossip` in the terminal.
@@ -268,7 +268,7 @@
       "libnghttp2" # HTTP/2 C Library
       "libde265" # Open h.265 video codec
       "libssh" # C library SSHv1/SSHv2 client and server protocols
-      "llvm"
+      "llvm" # LLVM compiler infrastructure
       "lld" # LLVM linker
       "m4" # Macro processing language
       "mbedtls" # Cryptographic & SSL/TLS library
@@ -278,7 +278,7 @@
       "openssl@3" # Cryptography and SSL/TLS Toolkit
       "pango" # Framework for layout and rendering of i18n text
       #"inotify-tools" # No aarch64-apple-darwin
-      "ipinfo-cli"
+      "ipinfo-cli" # Command-line interface for IPinfo.io
       #"iproute2mac" # Moved to nixpkg darwin.iproute2mac
       #"k3d" #using nix
       "kcl-lang/tap/kcl" # Tool to create an abstraction layer for k8s manifests # Available from nixpkg as "kcl-cli" but missing kcl-lsp
@@ -287,30 +287,30 @@
       "libheif"
       "libidn2" # dependency of e.g. ffmpeg, gnutls, wget
       "libpng"
-      "libx11"
-      "lynx"
+      "libx11" # X11 client-side library
+      "lynx" # Text-based web browser
       "lz4"
       "lzo"
       "mas" # Mac appstore cli
       "mingw-w64" # Minimalist GNU for Windows and GCC cross-compilers
       "mpdecimal" # Library for decimal floating point arithmetic
       "netpbm" # Image manipulation
-      "ollama"
+      "ollama" # Command-line tool for running large language models
       "openldap" # dependency of lighttpd
       "open-mpi" # High performance message passing library, dependency of fftw, gnuradio, hackrf and soapyhackrf
       #"openssl@3" # dependency of e.g. vault-cli
-      "openssh"
+      "openssh" # OpenSSH client and server
       "pandoc" # Swiss-army knife of markup format conversion
       # "pipx" # using uv instead
       "pixman" # pixel manipulation, dependency
-      "pkgconf"
-      "python@3.13"
-      "rav1e" # AV1 video encoder, req. by ffmprg
+      "pkgconf" # Helper tool for compiler and linker flags
+      "python@3.13" # Required by several dependencies. Otherwise would be better managed by uv
+      "rav1e" # AV1 video encoder, req. by ffmpeg
       "readline" # Library for command-line editing
       "rpds-py" # Python bindings to Rust's persistent data structures
       "ruby"
-      "ruff" # fast python linter
-      "rustup"
+      #"ruff" # fast python linter. Disabled, managed by uv
+      "rustup" # Rust toolchain manager
       #"readline"
       "screen"
       "sdl2" # Low-level access to audio, keyboard, mouse, joystick, and graphics
@@ -337,7 +337,7 @@
       { name = "bartender"; } # Manage menubar items
       { name = "betterdisplay"; }
       { name = "betterzip"; }
-      { name = "camo-studio"; }
+      { name = "camo-studio"; } #
       { name = "chatgpt"; }
       { name = "choosy"; } # Customize URL opening behaviour
       #{ name = "chromium"; } # Cannot be opened by MacOS 2024-07-31)
