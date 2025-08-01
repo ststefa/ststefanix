@@ -45,28 +45,37 @@ ss() {
     udp_flag=false
     listen_flag=false
     numeric_flag=false
-    # No getopt on vanilla MacOS :-(
+    # No getopt on vanilla MacOS :-(. Do it by hand.
     for arg in "$@"; do
-        if [[ "${arg}" == --* ]]; then
-        echo "Unsupported long option: ${arg}" >&2
-        return 1
-        elif [[ "${arg}" == -* ]]; then
-        chars="${arg#-}"
-        for (( i=0; i<${#chars}; i++ )); do
-            c="${chars:$i:1}"
-            case "${c}" in
-            t) tcp_flag=true ;;
-            u) udp_flag=true ;;
-            l) listen_flag=true ;;
-            n) numeric_flag=true ;;
-            p) ;;  # for compat, processes always show with lsof
-            e) ;;  # for compat, ignore
-            *) echo "Unsupported option: -${c}" >&2; return 1 ;;
-            esac
-        done
+        if [[ "${arg}" == -* ]]; then
+            chars="${arg#-}"
+            for (( i=0; i<${#chars}; i++ )); do
+                c="${chars:$i:1}"
+                case "${c}" in
+                t) tcp_flag=true ;;
+                u) udp_flag=true ;;
+                l) listen_flag=true ;;
+                p) ;;  # for compat, processes always show with lsof
+                e) ;;  # for compat, ignore
+                n) numeric_flag=true ;;
+                h)
+                    echo "Simulate the Linux ss command (which displays network sockets) using lsof." >&2
+                    echo "usage: ss -(t,u,l,p,e,n)" >&2
+                    echo "where:" >&2
+                    echo "t: Show TCP sockets (default)" >&2
+                    echo "u: Show UDP sockets" >&2
+                    echo "l: Show only listening sockets" >&2
+                    echo "p: Show process using socket (always on, ignored)" >&2
+                    echo "e: Show detailed socket information (always on, ignored)" >&2
+                    echo "n: Do not resolve service names (faster)" >&2
+                    return
+                    ;;
+                *) echo "Unsupported option: -${c}, try -h" >&2; return 1 ;;
+                esac
+            done
         else
-        echo "Unsupported argument: ${arg}" >&2
-        return 1
+            echo "Unsupported argument: ${arg}" >&2
+            return 1
         fi
     done
     if ! ${tcp_flag} && ! ${udp_flag}; then
