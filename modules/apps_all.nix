@@ -205,7 +205,7 @@
       "Consent-O-Matic" = 1606897889;
       #"Core Tunnel" = 1354318707; # Appstore version cannot do advanced things, see https://community.codinn.com/t/core-tunnel-difference-between-codinn-store-and-app-store-versions/4590 . Using cask instead.
       "djay Pro" = 450527929;
-      "EasyFind" = 411673888;
+      #"EasyFind" = 6739447813; # No longer available on appstore
       "Free Ruler" = 1483172210;
       "Gapplin" = 768053424;
       "HazeOver" = 430798174;
