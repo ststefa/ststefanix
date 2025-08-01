@@ -16,6 +16,7 @@
 
       # Files
       ".ansible.cfg".source = ./files/all/.ansible.cfg;
+      ".bash_functions".source = ./files/all/.bash_functions;
       ".curlrc".source = ./files/all/.curlrc;
       ".pypirc".source = ./files/all/.pypirc;
       ".vimrc".source = ./files/all/.vimrc;

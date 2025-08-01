@@ -10,44 +10,9 @@
     enable = true;
     enableCompletion = true;
     bashrcExtra = ''
-      # functions used for shell prompt
-      parse_git_branch() {
-          local BRANCH
-          BRANCH="$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
-          if (( ''${#BRANCH} > 8 )) ; then
-              BRANCH="''${BRANCH:0:3}..''${BRANCH: -3}"
-          fi
-          echo "''${BRANCH}"
-      }
-      parse_cwd() {
-          if [[ $(pwd) == "''${HOME}" ]] ; then
-              CWD="~"
-          else
-              local CWD
-              CWD="$(basename "$(pwd)")"
-              if (( ''${#CWD} > 12 )) ; then
-                  CWD="''${CWD:0:5}..''${CWD: -5}"
-              fi
-          fi
-          echo "''${CWD}"
-      }
-      # Using separate config files instead of contexts
-      parse_k8s_ctx() {
-          local CONTEXT
-          CONTEXT="$(kc)"
-          if (( ''${#CONTEXT} > 6 )) ; then
-              CONTEXT="''${CONTEXT:0:2}..''${CONTEXT: -2}"
-          fi
-          echo "''${CONTEXT}"
-      }
 
-      # other useful functions
-      ## dump plist file as json
-      plview() {
-          for FILE in $@ ; do
-              plutil -convert json "''${FILE}" -o - | jq
-          done
-      }
+      # Some useful helpers
+      source ~/.bash_functions
 
       # export functions to child processes. Make sure to capture all funcs from above
       export -f parse_git_branch parse_cwd parse_k8s_ctx plview
