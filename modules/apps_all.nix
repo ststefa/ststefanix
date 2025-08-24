@@ -1,4 +1,4 @@
-{ pkgs, ... }@args: {
+{ pkgs, ... }: {
 
   ##########################################################################
   #
@@ -104,6 +104,7 @@
     #openlens # not available for aarch64-darwin
     #openssh # sometimes aborts sessions with "package too long" errors, esp. on apume. Using brew.
     opentofu # OSS fork of terraform
+    oras # client for helm OCI registries
     parallel
     pdfminer # PDF parser and analyzer
     # pipx # disabled in favor of "uv tool"
