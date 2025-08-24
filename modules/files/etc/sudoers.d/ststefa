@@ -13,7 +13,7 @@ Defaults        timestamp_timeout=60
 #steinert ALL=(ALL) NOPASSWD: /opt/local/bin/port upgrade outdated
 #steinert ALL=(ALL) NOPASSWD: /opt/local/bin/port uninstall inactive
 
-# general prpose
+# general purpose
 steinert ALL=(ALL) NOPASSWD: /usr/sbin/tcpdump
 
 # set limits
