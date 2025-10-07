@@ -355,6 +355,7 @@
       { name = "discord"; }
       { name = "docker-desktop"; }
       #{ name = "downie"; } # Video downloader, works together with permute
+      { name = "drawpen"; } # Screen annotation tool
       { name = "elgato-control-center"; }
       #{ name = "figma"; } # Drawing app, not better than webapp
       { name = "headlamp"; } # Kubernetes dashboard. Must be manually signed using `xattr -dr com.apple.quarantine /Applications/Headlamp.app`
