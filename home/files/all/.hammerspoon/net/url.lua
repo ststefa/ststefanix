@@ -2,12 +2,12 @@
 --
 -- https://github.com/golgote/neturl
 --
--- Bertrand Mansion, 2011-2021; License MIT
+-- Bertrand Mansion, 2011-2024; License MIT
 -- @module net.url
 -- @alias	M
 
 local M = {}
-M.version = "1.1.0"
+M.version = "1.2"
 
 --- url options
 -- - `separator` is set to `&` by default but could be anything like `&amp;amp;` or `;`
@@ -209,7 +209,7 @@ function M.parseQuery(str, sep)
 	end
 
 	local values = {}
-	for key,val in str:gmatch(string.format('([^%q=]+)(=*[^%q=]*)', sep, sep)) do
+	for key,val in str:gmatch(string.format('([^%s=]+)(=*[^%s]*)', sep, sep)) do
 		local key = decodeValue(key)
 		local keys = {}
 		key = key:gsub('%[([^%]]*)%]', function(v)
