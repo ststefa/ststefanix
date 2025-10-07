@@ -25,18 +25,19 @@
     azure-cli
     bat
     bc # Basic calculator
-    bottom
+    bottom # A graphical process/system monitor for the terminal
     #caddy # golang config server
     #cmakeMinimal # using brew for compiler-related
     colima # Docker on macOS with Lima
     colmena # NixOS deployment tool, https://github.com/zhaofengli/colmena
-    coreutils
+    coreutils # GNU core utilities like `ls`, `cat`, `date`, `install`, `gcp`, `gmkdir`...
     cowsay
     curl
+    d2 # Diagram scripting language
     iproute2mac # some features of iproute2 for MacOS
     darwin.trash # cli tool that mimics rm but uses the system trashcan
     #diffoscope # takes long to bui
-    diffutils
+    diffutils # GNU diff utilities
     #docker # does not include docker daemon
     #docutils #using brew for all py-related
     doxygen # required to build gr-osmosdr
@@ -80,6 +81,7 @@
     k3d # up to date in unstable
     #k3s
     k9s
+    kcat # kafkacat, a client for Kafka
     #kcl-cli # kcl-lsp not available, so using brew for all kcl
     krew # kubectl plugin manager
     kubectl
@@ -256,6 +258,7 @@
       "doxygen" # Generate documentation for several programming languages
       "emqx/mqttx/mqttx-cli" # https://mqttx.app
       "ffmpeg" # Audio/Video processing library
+      "fjira" # CLI for JIRA
       "fmt" # Formatting library for C++
       "gcc" # GNU compiler collection
       "gettext" # GNU internationalization (i18n) and localization (l10n) library
@@ -316,8 +319,10 @@
       #"readline"
       "screen"
       "sdl2" # Low-level access to audio, keyboard, mouse, joystick, and graphics
+      "svt-av1" # AV1 video encoder, req. by ffmpeg
       "switchaudio-osx" # macOS audio source cli (SwitchAudioSource)
       #"terraform" # deprecated in homebrew
+      "terratag" # A tool to tag your cloud infrastructure resources
       "tesseract" # req. by ffmpeg and ghostscript
       "unbound" # DNS resolver
       "uv" # python package manager written in Rust
@@ -336,10 +341,10 @@
       { name = "aldente"; } # Save the battery of your Macbook
       { name = "alfred"; } # App launcher with many plugins
       { name = "apparency"; } # Analyze app signatures
-      { name = "bartender"; } # Manage menubar items
-      { name = "betterdisplay"; }
+      #{ name = "bartender"; } # Manage menubar items, disabled because v6.0.1 currently crashing. Installing v5 manually from https://macbartender.com/Bartender5/
+      { name = "betterdisplay"; } # Manage external monitors better
       { name = "betterzip"; }
-      { name = "camo-studio"; } #
+      { name = "camo-studio"; } # Advanced webcam
       { name = "chatgpt"; }
       { name = "choosy"; } # Customize URL opening behaviour
       #{ name = "chromium"; } # Cannot be opened by MacOS 2024-07-31)
@@ -351,7 +356,7 @@
       { name = "docker-desktop"; }
       #{ name = "downie"; } # Video downloader, works together with permute
       { name = "elgato-control-center"; }
-      #{ name = "figma"; } # Not better than webapp
+      #{ name = "figma"; } # Drawing app, not better than webapp
       { name = "headlamp"; } # Kubernetes dashboard. Must be manually signed using `xattr -dr com.apple.quarantine /Applications/Headlamp.app`
       { name = "hammerspoon"; } # Tap into the MacOS event system
       { name = "imazing"; } # IOS backup tool
@@ -361,8 +366,8 @@
       { name = "little-snitch"; }
       { name = "macfuse"; }
       { name = "microsoft-teams"; }
-      #{ name = "miro"; } # Not better than webapp
-      #{ name = "mqttx"; } # This is the (useless) GUI App. Use mqttx-cli above instead
+      #{ name = "miro"; } # Drawing app, not better than webapp
+      #{ name = "mqttx"; } # Mostly useless GUI App. Use mqttx-cli instead
       { name = "obsidian"; }
       { name = "openlens"; } # GUI for kubernetes
       { name = "orion"; } # Web browser
@@ -382,9 +387,10 @@
       { name = "telegram"; }
       #{ name = "theiaide"; } # Too slow on startup
       { name = "transmit"; } # MacOS FTP app
-      { name = "unison"; } # Versatile and reliable host-to-host sync
+      { name = "unison-app"; } # Versatile and reliable host-to-host sync
       { name = "visual-studio-code"; }
       { name = "vlc"; } # Universal video player
+      #{ name = "whatsapp"; } # Official WhatsApp client. Required for wolaro project
       { name = "wireshark-app"; } # Analyze network data
       { name = "zed"; }
     ];

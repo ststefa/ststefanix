@@ -51,7 +51,7 @@
       { name = "freecad"; greedy = true; }
       { name = "gather"; greedy = true; } # Pixel collab world
       { name = "gimp"; greedy = true; }
-      { name = "handbrake"; greedy = true; }
+      { name = "handbrake-app"; greedy = true; }
       { name = "kicad"; greedy = true; }
       { name = "libreoffice"; greedy = true; }
       { name = "obs"; greedy = true; }
@@ -62,7 +62,7 @@
       { name = "shotcut"; greedy = true; }
       { name = "signal"; greedy = true; }
       { name = "snapmaker-luban"; greedy = true; }
-      { name = "spotify"; greedy = true; }
+      #{ name = "spotify"; greedy = true; } # not using anymore
       { name = "subler"; greedy = true; }
       { name = "tor-browser"; greedy = true; }
       { name = "transmission"; greedy = true; }
