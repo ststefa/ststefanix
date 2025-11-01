@@ -12,6 +12,13 @@
     rm -f ~/.gitconfig
   '';
 
+  programs.delta = {
+    enable = true;
+    options = {
+      features = "side-by-side";
+    };
+  };
+
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -19,10 +26,6 @@
       "*~"
       ".DS_Store"
     ];
-
-    # System level is taken by global config
-    userName = username;
-    userEmail = useremail;
 
     includes = [
       {
@@ -32,37 +35,35 @@
       }
     ];
 
-    extraConfig = {
+    settings = {
+      user={
+        name = username;
+        email = useremail;
+      };
+      # System level is taken by global config
       init.defaultBranch = "main";
       push.autoSetupRemote = true;
       pull.rebase = "merges";
       pull.ff = "only";
+      alias = {
+        alias = "!git config --get-regexp ^alias\\.";
+        brh = "branch";
+        cht = "checkout";
+        cle = "clone";
+        cot = "commit";
+        feh = "fetch";
+        mee = "merge";
+        puh = "push";
+        pul = "pull";
+        ree = "rebase";
+        sth = "stash";
+        sts = "status";
+      };
     };
 
     # signing = {
     #   key = "xxx";
     #   signByDefault = true;
     # };
-
-    delta = {
-      enable = true;
-      options = {
-        features = "side-by-side";
-      };
-    };
-
-    aliases = {
-      brh = "branch";
-      cht = "checkout";
-      cle = "clone";
-      cot = "commit";
-      feh = "fetch";
-      mee = "merge";
-      puh = "push";
-      pul = "pull";
-      ree = "rebase";
-      sth = "stash";
-      sts = "status";
-    };
   };
 }
