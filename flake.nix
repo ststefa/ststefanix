@@ -89,6 +89,23 @@
               home-manager.users.${username} = import ./home;
               home-manager.backupFileExtension = "nixbak";
             }
+            {
+              nixpkgs.overlays = [
+                (final: prev: {
+                  # On Darwin, make libnbd unavailable so packages won't try to use it
+                  libnbd = if prev.stdenv.isDarwin then null else prev.libnbd;
+
+                  # On Darwin, build fio without explicitly enabling libnbd.
+                  # Some nixpkgs revisions pass "--enable-libnbd" unconditionally; strip it here.
+                  fio = if prev.stdenv.isDarwin then prev.fio.overrideAttrs (old: let
+                    oldFlags = (old.configureFlags or []);
+                    newFlags = builtins.filter (f: f != "--enable-libnbd") oldFlags;
+                  in {
+                    configureFlags = newFlags;
+                  }) else prev.fio;
+                })
+              ];
+            }
           ];
         };
 
