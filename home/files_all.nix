@@ -23,6 +23,7 @@
       "Library/Application Support/sops/age/keys.txt".source = (./files/all + "/Library/Application Support/sops/age/age_keys.txt");
 
       # Directories. "recursive" causes links to be created on the deepest level instead of the highest. This allows to mix dir contents with unmanaged content
+      ".cargo".source = ./files/all/.cargo; ".cargo".recursive = true;
       ".hammerspoon".source = ./files/all/.hammerspoon; ".hammerspoon".recursive = true;
       ".ssh".source = ./files/all/.ssh; ".ssh".recursive = true;
       "bin".source = ./files/all/bin; "bin".recursive = true;
