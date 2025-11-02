@@ -5,6 +5,7 @@
     # Manage files in home dir. They will be symlinked to nix store.
     # Will not be overwritten if they exist. If undeclared, they will be removed.
     file = {
+      # Example for a text file with inline content. Remove if applicable.
       ".test".text =
       ''
         # ATTENTION! Managed by Nix

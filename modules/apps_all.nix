@@ -364,7 +364,7 @@
       { name = "betterdisplay"; } # Manage external monitors better
       { name = "betterzip"; }
       { name = "camo-studio"; } # Advanced webcam
-      { name = "chatgpt"; }
+      { name = "chatgpt"; } # Official ChatGPT desktop client
       { name = "choosy"; } # Customize URL opening behaviour
       #{ name = "chromium"; } # Cannot be opened by MacOS 2024-07-31)
       { name = "context"; } # Model Context Protocol (MCP) debugger
