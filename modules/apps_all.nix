@@ -366,7 +366,9 @@
       { name = "camo-studio"; } # Advanced webcam
       { name = "chatgpt"; } # Official ChatGPT desktop client
       { name = "choosy"; } # Customize URL opening behaviour
-      #{ name = "chromium"; } # Cannot be opened by MacOS 2024-07-31)
+      #{ name = "chromium"; } # Cannot be opened by MacOS 2024-07-31. "Warning: chromium has been deprecated because it does not pass the macOS Gatekeeper check! It will be disabled on 2026-09-01")
+      { name = "claude"; } # Anthropic's AI desktop client
+      #{ name = "claude-code"; } # Integrates with zed.Requires paid subscription
       { name = "context"; } # Model Context Protocol (MCP) debugger
       { name = "core-tunnel"; } # Comprehensive ssh tunnel GUI
       { name = "db-browser-for-sqlite"; }
@@ -412,7 +414,7 @@
       { name = "vlc"; } # Universal video player
       #{ name = "whatsapp"; } # Official WhatsApp client. Required for wolaro project
       { name = "wireshark-app"; } # Analyze network data
-      { name = "zed"; }
+      { name = "zed"; } # Rust-based IDE, built with GPUI
       { name = "zulip"; } # Like slack, but open source
     ];
   };
