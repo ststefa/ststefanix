@@ -272,6 +272,7 @@
       #"coder/coder/coder" # Cloud IDE for Developers, cli+server
       "cpu_features" # Cross platform C99 library to get cpu features at runtime
       #"curl" # Moved to nixpkg
+      "diff-pdf" # compare pdf files visually
       "docker" # cli part of docker. Try using nix app?
       "docutils" # Python text processing system for reStructuredText
       "doxygen" # Generate documentation for several programming languages
