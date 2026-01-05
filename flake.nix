@@ -90,6 +90,7 @@
               home-manager.backupFileExtension = "nixbak";
             }
             {
+              # Some overlays to tweak problems
               nixpkgs.overlays = [
                 (final: prev: {
                   # On Darwin, make libnbd unavailable so packages won't try to use it
@@ -103,6 +104,15 @@
                   in {
                     configureFlags = newFlags;
                   }) else prev.fio;
+
+                  # Python twisted has a huge testsuite which frequently fails
+                  python313Packages = prev.python313Packages.overrideScope (pyFinal: pyPrev: {
+                    twisted = pyPrev.twisted.overrideAttrs (_old: {
+                      doCheck = false; # Disable failing test suite on Python 3.13
+                      doInstallCheck = false;
+                      pythonImportsCheck = [];
+                    });
+                  });
                 })
               ];
             }
