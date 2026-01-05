@@ -1,6 +1,6 @@
+[build]
+
 # Enable global build cache
 # Default location is ~/Library/Caches/Mozilla.sccache
 # see https://crates.io/crates/sccache
-
-[build]
 rustc-wrapper = "sccache"
