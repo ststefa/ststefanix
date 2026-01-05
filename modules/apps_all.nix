@@ -282,6 +282,7 @@
       "fmt" # Formatting library for C++
       "gcc" # GNU compiler collection
       "gettext" # GNU internationalization (i18n) and localization (l10n) library
+      "gnupg" # GNU Privacy Guard
       "gossip" # A GUI client for nostr. This is a GUI app, but its not a cask. Start it by executing `gossip` in the terminal.
       "graphviz" # Graph visualization tools
       "harfbuzz" # OpenType text shaping engine
@@ -385,6 +386,7 @@
       { name = "imazing"; } # IOS backup tool
       { name = "istat-menus"; }
       { name = "iterm2"; }
+      { name = "kubeterm"; } # A snappy k8s ui
       { name = "launchcontrol"; }
       { name = "little-snitch"; }
       { name = "macfuse"; }
