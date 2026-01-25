@@ -161,6 +161,8 @@ case "$1" in
         log "----- Starting update of $* -----"
         echo "PATH=${PATH}"
         echo "id: $(id)"
+        echo "sudo -l:"
+        sudo -l
         echo "Opening firewall"
         trap close_firewall exit
         sudo littlesnitch rulegroup --enable update || exit 1
