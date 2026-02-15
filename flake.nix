@@ -105,14 +105,30 @@
                     configureFlags = newFlags;
                   }) else prev.fio;
 
-                  # Python twisted has a huge testsuite which frequently fails
-                  python313Packages = prev.python313Packages.overrideScope (pyFinal: pyPrev: {
-                    twisted = pyPrev.twisted.overrideAttrs (_old: {
-                      doCheck = false; # Disable failing test suite on Python 3.13
-                      doInstallCheck = false;
-                      pythonImportsCheck = [];
-                    });
-                  });
+                  python313 = prev.python313.override {
+                    packageOverrides = pyFinal: pyPrev: {
+                      # twisted compilation failed on 2026-01-05, chatgpt suggested fix
+                      # Python twisted has a huge testsuite which frequently fails
+                      twisted = pyPrev.twisted.overrideAttrs (_old: {
+                        doCheck = false; # Disable failing test suite on Python 3.13
+                        doInstallCheck = false;
+                        pythonImportsCheck = [];
+                      });
+
+                      # rapidfuzz compilation failed on 2026-02-15, chatgpt suggested fix
+                      rapidfuzz = pyPrev.rapidfuzz.overridePythonAttrs (old: {
+                        # Ensure wrapped clang-scan-deps is available and wins on PATH.
+                        nativeBuildInputs = [ prev.clang-tools ] ++ (old.nativeBuildInputs or []);
+
+                        # Pin CMake's scan-deps helper explicitly (modules/atomic detection on Darwin).
+                        cmakeFlags = (old.cmakeFlags or []) ++ [
+                          "-DCMAKE_CXX_COMPILER_CLANG_SCAN_DEPS=${prev.clang-tools}/bin/clang-scan-deps"
+                        ];
+                      });
+                    };
+                  };
+
+                  python313Packages = final.python313.pkgs;
                 })
               ];
             }
