@@ -331,6 +331,7 @@
       "pixman" # pixel manipulation, dependency
       "pkgconf" # Helper tool for compiler and linker flags
       "python@3.13" # Required by several dependencies. Otherwise would be better managed by uv
+      "r" # R data visualization language
       "rav1e" # AV1 video encoder, req. by ffmpeg
       "readline" # Library for command-line editing
       "rpds-py" # Python bindings to Rust's persistent data structures
@@ -402,6 +403,7 @@
       { name = "qlstephen"; } # QuickLook plugin for multiple file types
       { name = "quicklook-csv"; } # QuickLook plugin for csv
       { name = "quicklook-json"; } # QuickLook plugin for json
+      { name = "retrace"; } # local-only screen history recorder
       #{ name = "rustdesk"; } # VNC-like remote desktop tool
       { name = "sf-symbols"; } # A nicely curated set of symbols by Apple
       { name = "skim"; } # PDF viewer/editor
