@@ -121,6 +121,7 @@
     #rustdesk # not up to date, use brew
     #rustup cleanup on hudson required first
     shellcheck
+    shfmt # Shell *and others( formatter)
     sipcalc # nice cli for subnet calculation
     socat
     sops

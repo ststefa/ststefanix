@@ -10,17 +10,16 @@
     enable = true;
     enableCompletion = true;
     bashrcExtra = ''
+      # Some useful helpers managed by nix
+      [[ $- == *i* ]] && source ~/.bash_functions
 
-      # Some useful helpers
-      source ~/.bash_functions
+      # Export functions to child processes. Make sure to capture all funcs from above
+      export -f parse_git_branch parse_cwd parse_k8s_ctx plview ss
 
-      # export functions to child processes. Make sure to capture all funcs from above
-      export -f parse_git_branch parse_cwd parse_k8s_ctx plview
-
-      # macos bash
+      # Decorate prompt with k8s context, cwd, and git branch
       export PS1="\[\033[06;31m\]\$(parse_k8s_ctx)\[\033[00m\]:\[\033[06;32m\]\u@\h\[\033[00m\]:\[\033[06;34m\]\$(parse_cwd)\[\033[00m\]:\[\033[33m\]\$(parse_git_branch)\[\033[00m\] \$ "
 
-      # append to the history file, don't overwrite it
+      # Append to the history file, don't overwrite it
       shopt -s histappend
 
       # K3d runs into the low macos default file ulimit setting of 256.
@@ -69,7 +68,7 @@
       #eval "$(openstack complete)"
 
       # source homebrew completions
-      #. "/opt/homebrew/etc/profile.d/bash_completion.sh"
+      [[ $- == *i* ]] && source "/opt/homebrew/etc/profile.d/bash_completion.sh"
       #eval "$(/opt/homebrew/bin/brew shellenv)"
 
       # Context aliases for k8s commands

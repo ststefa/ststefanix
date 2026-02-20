@@ -57,5 +57,6 @@
 // lib.optionalAttrs (os == "darwin") {
   networking.computerName = hostname;
   networking.localHostName = hostname;
-  system.defaults.smb.NetBIOSName = hostname;
+  # Deactivated because it causes a Mac safety popup upon build
+  #system.defaults.smb.NetBIOSName = hostname;
 }

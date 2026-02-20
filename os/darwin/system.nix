@@ -4,16 +4,9 @@
   config,
   ...
 }:
-###################################################################################
+#  Darwin system configuration
 #
-#  macOS system configuration
-#
-#  All options are documented here:
-#    https://daiderd.com/nix-darwin/manual/index.html#sec-options
-#  Incomplete list of macOS `defaults` commands:
-#    https://github.com/yannbertrand/macos-defaults
-#
-###################################################################################
+#  See https://daiderd.com/nix-darwin/manual/index.html#sec-options
 {
   system = {
     # Required since 25.05 because all activation now takes place as root by default.
@@ -21,6 +14,7 @@
 
     stateVersion = 4;
 
+    #  Incomplete list of macOS `defaults` commands: https://macos-defaults.com
     defaults = {
       dock = {
         autohide = false;
@@ -115,6 +109,7 @@
     ];
   };
 
+  # Create a helpful file to document installed packages and their versions
   environment.etc."nix-packages".text =
     let
       packages = builtins.map (p: "${p.name}") config.environment.systemPackages;

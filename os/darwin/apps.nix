@@ -167,7 +167,6 @@
     greedyCasks = true;
 
     casks = [
-      #"raycast" # Like Alfred
       { name = "aldente"; } # Save the battery of your Macbook
       { name = "alfred"; } # App launcher with many plugins
       { name = "apparency"; } # Analyze app signatures
@@ -177,19 +176,17 @@
       { name = "camo-studio"; } # Advanced webcam
       { name = "chatgpt"; } # Official ChatGPT desktop client
       { name = "choosy"; } # Customize URL opening behaviour
-      #{ name = "chromium"; } # Cannot be opened by MacOS 2024-07-31. "Warning: chromium has been deprecated because it does not pass the macOS Gatekeeper check! It will be disabled on 2026-09-01")
       { name = "claude"; } # Anthropic's AI desktop client
-      #{ name = "claude-code"; } # Integrates with zed.Requires paid subscription
+      #{ name = "claude-code"; } # Integrates with zed. Requires paid subscription
       { name = "context"; } # Model Context Protocol (MCP) debugger
       { name = "core-tunnel"; } # Comprehensive ssh tunnel GUI
       { name = "db-browser-for-sqlite"; }
       { name = "deepl"; }
       { name = "discord"; }
       { name = "docker-desktop"; }
-      #{ name = "downie"; } # Video downloader, works together with permute
+      { name = "downie"; } # Video downloader, works together with permute
       { name = "drawpen"; } # Screen annotation tool
       { name = "elgato-control-center"; }
-      #{ name = "figma"; } # Drawing app, not better than webapp
       { name = "headlamp"; } # Kubernetes dashboard. Must be manually signed using `xattr -dr com.apple.quarantine /Applications/Headlamp.app`
       { name = "hammerspoon"; } # Tap into the MacOS event system
       { name = "imazing"; } # IOS backup tool
@@ -200,13 +197,11 @@
       { name = "little-snitch"; }
       { name = "macfuse"; }
       { name = "microsoft-teams"; }
-      #{ name = "miro"; } # Drawing app, not better than webapp
-      #{ name = "mqttx"; } # Mostly useless GUI App. Use mqttx-cli instead
       { name = "obsidian"; }
       { name = "openlens"; } # GUI for kubernetes
       { name = "orion"; } # Web browser
       { name = "paletro"; } # Use App menus with the keyboard
-      #{ name = "permute"; } # Video converter, works together with downie
+      { name = "permute"; } # Video converter, works together with downie
       { name = "qlmarkdown"; } # QuickLook plugin for markdown
       { name = "qlstephen"; } # QuickLook plugin for multiple file types
       { name = "quicklook-csv"; } # QuickLook plugin for csv
@@ -220,7 +215,6 @@
       { name = "suspicious-package"; } # Analyze pkg files
       { name = "swiftdefaultappsprefpane"; } # Prefpane to configure default apps for filename extension and Uri schemes
       { name = "telegram"; }
-      #{ name = "theiaide"; } # Too slow on startup
       { name = "transmit"; } # MacOS FTP app
       { name = "unison-app"; } # Versatile and reliable host-to-host sync
       { name = "visual-studio-code"; }

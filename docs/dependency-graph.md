@@ -1,5 +1,5 @@
 ```mermaid
-flowchart TD
+flowchart LR
   flake["flake.nix"]
   hosts["inventory/hosts.nix"]
 

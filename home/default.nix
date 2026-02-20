@@ -11,7 +11,6 @@
 {
   imports = [
     ./shell.nix
-    ./core.nix
     ./git.nix
     ./starship.nix
     ./files_common.nix

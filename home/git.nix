@@ -1,9 +1,17 @@
 {
+  config,
   lib,
   username,
   useremail,
   ...
 }: {
+  programs.delta = {
+    enable = true;
+    options = {
+      features = "side-by-side";
+    };
+  };
+
   # `programs.git` will generate the config file: ~/.config/git/config
   # to make git use this config file, `~/.gitconfig` should not exist!
   #
@@ -11,13 +19,6 @@
   home.activation.removeExistingGitconfig = lib.hm.dag.entryBefore ["checkLinkTargets"] ''
     rm -f ~/.gitconfig
   '';
-
-  programs.delta = {
-    enable = true;
-    options = {
-      features = "side-by-side";
-    };
-  };
 
   programs.git = {
     enable = true;
@@ -29,9 +30,11 @@
 
     includes = [
       {
-        # use diffrent email & name for work
-        path = "~/workspace/dbdksar/.gitconfig";
-        condition = "gitdir:~/workspace/dbdksar/";
+        # Tweak git with the (manually supplied) .gitconfig for all repos below dbdksar
+        # This can be duplicated for any other such repo collection and is
+        # usually applicable to work projects.
+        path = "${config.home.homeDirectory}/workspace/dbdksar/.gitconfig";
+        condition = "gitdir:${config.home.homeDirectory}/workspace/dbdksar/**";
       }
     ];
 

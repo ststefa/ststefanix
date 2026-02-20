@@ -1,4 +1,6 @@
-{ ... }:
+{ pkgs, ... }:
 {
-  # Windows package module placeholder.
+  # OS-level Windows package baseline.
+  environment.systemPackages = with pkgs; [
+  ];
 }

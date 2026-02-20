@@ -38,6 +38,16 @@
       #  version = "0.5.0";
       #};
 
+      # 2026-02-20 upstream hash broken, remove overlay asap
+      argocd = prev.argocd.overrideAttrs (old: {
+        ui = old.ui.overrideAttrs (_uiOld: {
+          offlineCache = prev.fetchYarnDeps {
+            yarnLock = "${old.src}/ui/yarn.lock";
+            hash = "sha256-kqBolkQiwZUBic0f+Ek5HwYsOmro1+FStkDLXAre79o=";
+          };
+        });
+      });
+
       libnbd = if prev.stdenv.isDarwin then null else prev.libnbd;
 
       fio =
