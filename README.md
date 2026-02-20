@@ -1,66 +1,83 @@
-# Nix Darwin Kickstarter - Rich Demo
+# ststefanix
 
- This was derived by ststefa from <https://github.com/ryan4yin/nix-darwin-kickstarter/tree/main/rich-demo>.
+Nix configuration organized by clear axes: `nix`, `os`, `client`, and `home`.
+The goal is predictable composition, minimal duplication, and explicit ownership of settings.
 
- An extensive demo featuring a plethora of configurations that can serve as a reference for your setup.
+## Concept Overview
 
- Exercise caution, as it may **OVERWRITE** your system configuration. **DO NOT** deploy it directly to your system.
+This repo models a host configuration as layered deltas:
 
-## How to Start
+1. `nix/*` defines cross-platform system foundation.
+2. `os/<os>/*.nix` defines platform-specific behavior.
+3. `clients/<client>/*.nix` defines client/role-specific system deltas.
+4. `home/default.nix` defines user-level baseline, then imports OS/client home deltas.
 
-1. Install Nix package manager via <https://nixos.org/download.html#nix-install-macos>.
+Think of it as: **foundation -> platform -> role -> user**.
 
-2. Install Homebrew, see <https://brew.sh/>
+## Axes and Ownership
 
-   1. Homebrew is required to install most of the GUI apps, App Store's apps, and some CLI apps that are not available in nix's package repository `nixpkgs`.
+- `nix/` owns shared system concerns:
+  - `nix/core.nix`: Nix settings + host identity baseline.
+  - `nix/apps.nix`: shared `environment.systemPackages` baseline.
+  - `nix/shell.nix`: shared shell/env defaults.
+  - `nix/sudoers.nix`: shared sudoers assembly logic.
+- `os/` owns platform constraints and capabilities:
+  - `os/<os>/system.nix`, `os/<os>/apps.nix`, `os/<os>/home.nix`.
+  - optional `os/<os>/overlays.nix` for platform-only overlay workarounds.
+- `clients/` owns host-role differences:
+  - `clients/<client>/<os>.nix` for system deltas.
+  - `clients/<client>/home.nix` for Home Manager deltas.
+- `home/` owns user-level reusable modules and files.
 
-3. Read all the files in this repository, and understand what they do.
-   1. If you have trouble understanding, <https://github.com/ryan4yin/nixos-and-flakes-book> is a good resource to learn nix and flakes.
+Rule: place code where its **reason to change** belongs.
 
-4. Copy and CUSTOMIZE the configuration you need from this demo to your own configuration.
+## Inventory-Driven Composition
 
-5. Update the flake
+`inventory/hosts.nix` is the source of truth for host metadata.
+Each host entry provides identity and runtime facts (for example `client`, `os`, `system`, `username`, `cores`).
 
-    ```bash
-    nix flake update --extra-experimental-features 'nix-command flakes'
-    ```
+`flake.nix` reads inventory and derives outputs by OS:
 
-6. Run the following command to start your nix-darwin journey(please change `<hostname>` to your hostname):
+- `darwinConfigurations` for hosts with `os = darwin`
+- `nixosConfigurations` for hosts with `os = linux`
+- `homeConfigurations` for hosts with `os = windows` (WSL/Home Manager target)
 
-    ```bash
-    nix build .#darwinConfigurations.<hostname>.system --extra-experimental-features 'nix-command flakes'
+Inventory attributes are passed via `specialArgs`, so modules can be parameterized without hardcoding host names.
 
-    ./result/sw/bin/darwin-rebuild switch --flake .#<hostname>
-    ```
+## Sudoers Strategy
 
-7. Run `just apply` in the root of your nix configuration to apply your configuration.
+Sudoers is assembled declaratively in `nix/sudoers.nix` from plain ASCII fragments:
 
-## Configuration Structure
+- OS fragment: `os/<os>/files/etc/sudoers`
+- optional client fragment: `clients/<client>/files/etc/sudoers`
 
-Your current nix-darwin configuration's structure should be as follows:
+The merged result is written to `/etc/sudoers.d/nix-${username}`.
+This keeps content editable as text while preserving declarative composition.
 
-```bash
-› tree
-.
-├── flake.lock  # nix lock file the keeps the active version
-├── flake.nix   # the entry point of your nix configuration, you need to add your hostname here
-├── home        # home-manager's configuration folder, help you manage your dotfiles & user-level apps.
-│   ├── shell.nix    # customize shell config
-│   ├── core.nix     # user-level apps from nixpkgs(nix's official package repository)
-│   ├── files.nix    # manage user-level files
-│   ├── default.nix  # home-manager's entry point, you need to import all other nix files in home folder here.
-│   ├── git.nix      # customize git's dotfiles
-│   └── starship.nix # customize starship's dotfiles
-├── Makefile    # a Makefile to simplify your nix-darwin workflow.
-├── README.md
-├── modules     # a folder contains all your nix-darwin configuration files
-│   ├── apps.nix        # contains all your homebrew & nix apps(both GUI & CLI)
-│   ├── host-users.nix  # defines your hostname & all your system users
-│   ├── nix-core.nix    # nix's core configuration, you can ignore it for now
-│   ├── sysconf.nix     # system-level config files (e.g. /etc/whatever)
-│   └── system.nix      # defines your macOS's system configuration(like dock, trackpad, keyboard, finder, loginwindow, etc.)
-└── scripts
-    └── darwin_set_proxy.py  # a script to set http proxy for nix & homebrew.
-```
+## Home Manager Placement Rules
 
-`files` and `apps` are further split into a general "*all" part and a host-specific part which is only applied on that host.
+- Global user behavior: `home/*.nix` (for example `home/shell.nix`, `home/git.nix`).
+- OS-specific user behavior: `os/<os>/home.nix`.
+- Client-specific user behavior: `clients/<client>/home.nix`.
+
+`home.file` definitions are merged by target path; collisions only happen when the same destination is declared twice.
+
+## Operational Workflow
+
+Use `just` as the primary entrypoint:
+
+- `just build`: build current host output from inventory.
+- `just diff`: compare current generation with newly built result.
+- `just apply`: switch to the built configuration for current host OS.
+- `just rollback`: rollback one generation.
+
+`just` resolves host OS from `.#hostInventory.<hostname>.os`.
+
+## Design Intent
+
+This layout prefers explicit structure over implicit magic:
+
+- fewer hidden couplings,
+- easier refactors,
+- host portability via inventory,
+- clean boundaries between foundation, platform, role, and user settings.

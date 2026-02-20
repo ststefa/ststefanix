@@ -1,36 +1,17 @@
 {
-  #####
-  # This was derived by @ststefa from github.com:ryan4yin/nix-darwin-kickstarter.git/rich-demo
-  #####
+  description = "Nix configuration with host -> client -> os modularization";
 
-  description = "Nix for macOS configuration";
-
-  #####
-  # Want to know Nix in details? Looking for a beginner-friendly tutorial?
-  # Check out https://github.com/ryan4yin/nixos-and-flakes-book !
-  #####
-
-  # the nixConfig here only affects the flake itself, not the system configuration!
   nixConfig = {
     substituters = [
-      # Query the mirror of USTC first, and then the official cache.
-      #"https://mirrors.ustc.edu.cn/nix-channels/store"
       "https://cache.nixos.org"
     ];
   };
 
-  # This is the standard format for flake.nix. `inputs` are the dependencies of the flake,
-  # Each item in `inputs` will be passed as a parameter to the `outputs` function after being pulled and built.
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable"; # using unstable requires setting system.stateVersion, see modules/system.nix
-    #nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-24.05-darwin";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    # home-manager, used for managing user configuration
     home-manager = {
       url = "github:nix-community/home-manager/master";
-      # The `follows` keyword in inputs is used for inheritance.
-      # Here, `inputs.nixpkgs` of home-manager is kept consistent with the `inputs.nixpkgs` of the current flake,
-      # to avoid problems caused by different versions of nixpkgs dependencies.
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -40,122 +21,113 @@
     };
   };
 
-  # The `outputs` function will return all the build results of the flake.
-  # A flake can have many use cases and different types of outputs,
-  # parameters in `outputs` are defined in `inputs` and can be referenced by their names.
-  # However, `self` is an exception, this special parameter points to the `outputs` itself (self-reference)
-  # The `@` syntax here is used to alias the attribute set of the inputs's parameter, making it convenient to use inside the function.
   outputs =
     inputs@{
-      self,
       nixpkgs,
       darwin,
       home-manager,
       ...
     }:
     let
+      lib = nixpkgs.lib;
+      hosts = import ./inventory/hosts.nix;
 
-      # This function allows the creation of multiple similar configs for different systems. The config is then chosen by specifying it in the nix invocation using the hostname. See Justfile. The variables allow to describe host-specific features, like e.g. packages.
+      mkHostContext =
+        hostName: host:
+        host
+        // {
+          hostname = hostName;
+          inventory = host // { hostname = hostName; };
+        };
+
       mkDarwinConfig =
-        {
-          username,
-          useremail,
-          system,
-          hostname,
-          cores,
-          ...
-        }:
+        hostName: host:
         let
-          specialArgs = inputs // {
-            inherit username useremail hostname cores;
-          };
+          ctx = mkHostContext hostName host;
+          specialArgs = inputs // ctx;
         in
         darwin.lib.darwinSystem {
-          inherit system specialArgs;
+          inherit (ctx) system;
+          inherit specialArgs;
           modules = [
-            ./modules/nix-core.nix
-            ./modules/system.nix
-            ./modules/sysconf.nix
-            ./modules/apps_all.nix
-            ./modules/apps_${hostname}.nix
-            ./modules/host-users.nix
+            # Base: foundation shared across all targets
+            ./nix/core.nix
+            ./nix/apps.nix
+            ./nix/sudoers.nix
+            # OS axis: shared baseline + platform baseline
+            ./nix/shell.nix
+            ./os/darwin/overlays.nix
+            (./os + "/${ctx.os}/system.nix")
+            (./os + "/${ctx.os}/apps.nix")
+            # Client axis: host role delta (os-specific)
+            (./clients + "/${ctx.client}/${ctx.os}.nix")
 
-            # home manager
             home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = specialArgs;
-              home-manager.users.${username} = import ./home;
+              home-manager.users.${ctx.username} = import ./home;
               home-manager.backupFileExtension = "nixbak";
-            }
-            {
-              # Some overlays to tweak problems
-              nixpkgs.overlays = [
-                (final: prev: {
-                  # On Darwin, make libnbd unavailable so packages won't try to use it
-                  libnbd = if prev.stdenv.isDarwin then null else prev.libnbd;
-
-                  # On Darwin, build fio without explicitly enabling libnbd.
-                  # Some nixpkgs revisions pass "--enable-libnbd" unconditionally; strip it here.
-                  fio = if prev.stdenv.isDarwin then prev.fio.overrideAttrs (old: let
-                    oldFlags = (old.configureFlags or []);
-                    newFlags = builtins.filter (f: f != "--enable-libnbd") oldFlags;
-                  in {
-                    configureFlags = newFlags;
-                  }) else prev.fio;
-
-                  python313 = prev.python313.override {
-                    packageOverrides = pyFinal: pyPrev: {
-                      # twisted compilation failed on 2026-01-05, chatgpt suggested fix
-                      # Python twisted has a huge testsuite which frequently fails
-                      twisted = pyPrev.twisted.overrideAttrs (_old: {
-                        doCheck = false; # Disable failing test suite on Python 3.13
-                        doInstallCheck = false;
-                        pythonImportsCheck = [];
-                      });
-
-                      # rapidfuzz compilation failed on 2026-02-15, chatgpt suggested fix
-                      rapidfuzz = pyPrev.rapidfuzz.overridePythonAttrs (old: {
-                        # Ensure wrapped clang-scan-deps is available and wins on PATH.
-                        nativeBuildInputs = [ prev.clang-tools ] ++ (old.nativeBuildInputs or []);
-
-                        # Pin CMake's scan-deps helper explicitly (modules/atomic detection on Darwin).
-                        cmakeFlags = (old.cmakeFlags or []) ++ [
-                          "-DCMAKE_CXX_COMPILER_CLANG_SCAN_DEPS=${prev.clang-tools}/bin/clang-scan-deps"
-                        ];
-                      });
-                    };
-                  };
-
-                  python313Packages = final.python313.pkgs;
-                })
-              ];
             }
           ];
         };
 
+      mkNixosConfig =
+        hostName: host:
+        let
+          ctx = mkHostContext hostName host;
+          specialArgs = inputs // ctx;
+        in
+        nixpkgs.lib.nixosSystem {
+          inherit (ctx) system;
+          inherit specialArgs;
+          modules = [
+            # Base: foundation shared across all targets
+            ./nix/core.nix
+            ./nix/apps.nix
+            ./nix/sudoers.nix
+            # OS axis: shared baseline + platform baseline
+            ./nix/shell.nix
+            (./os + "/${ctx.os}/system.nix")
+            (./os + "/${ctx.os}/apps.nix")
+            # Client axis: host role delta (os-specific)
+            (./clients + "/${ctx.client}/${ctx.os}.nix")
+
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = specialArgs;
+              home-manager.users.${ctx.username} = import ./home;
+              home-manager.backupFileExtension = "nixbak";
+            }
+          ];
+        };
+
+      mkWindowsWslHomeConfig =
+        hostName: host:
+        let
+          ctx = mkHostContext hostName host;
+          pkgs = import nixpkgs { inherit (ctx) system; };
+        in
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = inputs // ctx;
+          modules = [
+            ./home
+          ];
+        };
+
+      darwinHosts = lib.filterAttrs (_: host: host.os == "darwin") hosts;
+      linuxHosts = lib.filterAttrs (_: host: host.os == "linux") hosts;
+      windowsHosts = lib.filterAttrs (_: host: host.os == "windows") hosts;
     in
     {
-      # A separate Mac config for any system
-      ## Main private Mac
-      darwinConfigurations.hudson = mkDarwinConfig {
-        username = "steinert";
-        useremail = "ststefa@heldenzeit.net";
-        system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
-        hostname = "hudson";
-        cores = 10;
-      };
-      ## DB CICD Mac
-      darwinConfigurations.bwpm-L454QQVWM2 = mkDarwinConfig {
-        username = "stefansteinert";
-        useremail = "stefan.steinert-extern@deutschebahn.com";
-        system = "aarch64-darwin";
-        hostname = "bwpm-L454QQVWM2";
-        cores = 8;
-      };
+      darwinConfigurations = lib.mapAttrs mkDarwinConfig darwinHosts;
+      nixosConfigurations = lib.mapAttrs mkNixosConfig linuxHosts;
+      homeConfigurations = lib.mapAttrs mkWindowsWslHomeConfig windowsHosts;
 
-      # nix code formatter, not required for now and interfering
-      #formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
+      hostInventory = hosts;
     };
 }

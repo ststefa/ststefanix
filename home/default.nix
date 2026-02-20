@@ -2,38 +2,29 @@
   username,
   hostname,
   useremail,
+  client,
+  os,
   pkgs,
   ...
 }:
 
 {
-  # import sub modules
   imports = [
     ./shell.nix
     ./core.nix
     ./git.nix
     ./starship.nix
-    ./files_all.nix
-    ./files_${hostname}.nix
+    ./files_common.nix
+    (./. + "/files_${os}.nix")
+    (../os + "/${os}/home.nix")
+    (../clients + "/${client}/home.nix")
   ];
 
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
   home = {
     username = username;
     homeDirectory = if pkgs.stdenv.isDarwin then "/Users/${username}" else "/home/${username}";
-
-    # This value determines the Home Manager release that your
-    # configuration is compatible with. This helps avoid breakage
-    # when a new Home Manager release introduces backwards
-    # incompatible changes.
-    #
-    # You can update Home Manager without changing this value. See
-    # the Home Manager release notes for a list of state version
-    # changes in each release.
     stateVersion = "24.05";
   };
 
-  # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }

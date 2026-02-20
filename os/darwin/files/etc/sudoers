@@ -1,0 +1,5 @@
+# ATTENTION! Managed by Nix
+Defaults        timestamp_timeout=60
+
+# general purpose
+ALL ALL=(ALL) NOPASSWD: /usr/sbin/tcpdump

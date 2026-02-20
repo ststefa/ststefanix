@@ -1,0 +1,4 @@
+{ ... }:
+{
+  # Windows package module placeholder.
+}

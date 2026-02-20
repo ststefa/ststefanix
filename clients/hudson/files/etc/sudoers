@@ -1,0 +1,24 @@
+# tune idle sleep settings. Required for HammerSpoon
+#steinert ALL=(ALL) NOPASSWD: /usr/bin/pmset
+
+# restart audio daemon in case its stuck
+#steinert ALL=(ALL) NOPASSWD: /usr/bin/killall coreaudiod
+
+# set limits
+#obsolete, invoked as root user on boot, see /Library/LaunchDaemons/local.daemon.bootconfig.plist
+#disabled 2021-12-13
+#steinert ALL=(ALL) NOPASSWD: /bin/launchctl limit*
+
+# update locate db in ~/bin/update.sh
+steinert ALL=(ALL) NOPASSWD: /opt/homebrew/bin/gupdatedb
+
+# Open firewall for scripted updates
+steinert ALL=(ALL) NOPASSWD: /usr/local/bin/littlesnitch rulegroup --enable update
+steinert ALL=(ALL) NOPASSWD: /usr/local/bin/littlesnitch rulegroup --disable update
+
+# Invoke a Nix rebuild
+steinert ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/darwin-rebuild switch --flake *
+
+# homebrew casks might require sudo, called in in ~/bin/update.sh
+# obsolete, invoking brew as root not supported, too dangerous
+#steinert ALL=(ALL) NOPASSWD: /opt/homebrew/bin/brew upgrade --cask --greedy

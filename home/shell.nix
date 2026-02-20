@@ -83,9 +83,6 @@
           alias stern-''${CL}="stern --kubeconfig ''${FILE}"
       done
 
-      # Choose java, see https://knasmueller.net/how-to-install-java-openjdk-16-on-macos-big-sur
-      #export JAVA_HOME=/opt/homebrew/opt/openjdk
-
       # fzf
       ## Auto-completion
       ### brew-bash
@@ -97,9 +94,6 @@
       #source "/opt/homebrew/opt/fzf/shell/key-bindings.bash"
       ### nix-bash
       source "$(fzf-share)/key-bindings.bash"
-
-      # Required for gnuradio to find schemas required e.g for file dialogues. It does not work out of the box because nix modifies XDG_DATA_DIRS which is used as a search-path for schemas.
-      export GSETTINGS_SCHEMA_DIR=/opt/homebrew/share/glib-2.0/schemas
 
       # SAP
       ## Default hashi-vault settings
