@@ -30,9 +30,10 @@
 
     includes = [
       {
-        # Tweak git with the (manually supplied) .gitconfig for all repos below dbdksar
-        # This can be duplicated for any other such repo collection and is
-        # usually applicable to work projects.
+        # Tweak git with the (manually supplied) .gitconfig for all repos below dbdksar.
+        # This can be replicated for any other such repo collection and is
+        # usually applicable to work projects, mostly in order to use a
+        # work-specific email+user for commits.
         path = "${config.home.homeDirectory}/workspace/dbdksar/.gitconfig";
         condition = "gitdir:${config.home.homeDirectory}/workspace/dbdksar/**";
       }
