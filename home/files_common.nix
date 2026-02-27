@@ -21,7 +21,6 @@ in
       # Files
       ".ansible.cfg".source = ./files/common/.ansible.cfg;
       ".bash_functions".source = ./files/common/.bash_functions;
-      ".config/sops/age/keys.txt".source = ./files/common/sops/age/keys.txt;
       ".curlrc".source = ./files/common/.curlrc;
       ".pypirc".source = ./files/common/.pypirc;
       ".vimrc".source = ./files/common/.vimrc;

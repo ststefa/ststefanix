@@ -26,6 +26,7 @@ Think of it as: **foundation -> platform -> role -> user**.
   - optional `os/<os>/overlays.nix` for platform-only overlay workarounds.
 - `clients/` owns host-role differences:
   - `clients/<client>/<os>.nix` for system deltas.
+  - `clients/<client>/secrets.nix` for Vault secret mappings.
   - `clients/<client>/home.nix` for Home Manager deltas.
 - `home/` owns user-level reusable modules and files.
 
@@ -62,6 +63,66 @@ This keeps content editable as text while preserving declarative composition.
 
 `home.file` definitions are merged by target path; collisions only happen when the same destination is declared twice.
 
+## Vault Runtime Secrets (Linux + Darwin)
+
+`nix/vault-secrets.nix` aggregates two scopes:
+
+- `ststefanix.vaultSystemSecrets`: root/system service (`systemd` / `launchd.daemons`)
+- `ststefanix.vaultUserSecrets`: user service/agent (`systemd --user` / `launchd.user.agents`)
+
+Use `vaultUserSecrets` for files in `~` (for example `~/.config/sops/...`).
+
+Example host config (same schema on Linux and Darwin, split by scope):
+
+```nix
+{
+  ststefanix.vaultUserSecrets = {
+    address = "https://vault.heldenzeit.net";
+
+    secrets = {
+      age_keys = {
+        vault_secret = "kv/data/ststefanix/age_keys";
+        # One Vault field contains the full keys.txt payload
+        vault_secret_key = "private_key";
+        destination = ".config/sops/age/keys.txt";
+      };
+
+      gh_token = {
+        vault_secret = "kv/data/dev/github";
+        vault_secret_key = "token";
+      };
+    };
+  };
+
+  # Typical Linux-style system secret example: private TLS key for nginx.
+  # (On Darwin you can also use vaultSystemSecrets, but the concrete consumer differs.)
+  ststefanix.vaultSystemSecrets = {
+    secrets = {
+      nginx_tls_key = {
+        vault_secret = "kv/data/web/nginx_tls";
+        vault_secret_key = "private_key";
+        destination = "/run/secrets/nginx/tls.key";
+      };
+    };
+  };
+}
+```
+
+Important:
+- `vaultUserSecrets` uses `~/.vault-token` (authenticate once as the inventory user via `vault login`)
+- `vaultSystemSecrets` uses `/etc/vault.token` (provide a separate root/system token)
+Rendered secret files are owned by the host user from `inventory/hosts.nix` (`username`).
+Model: one Vault field -> one rendered file.
+For `vaultUserSecrets`, `destination` is a path relative to `$HOME` (for example `.config/sops/age/keys.txt`).
+If `destination` is set, Vault Agent still writes the physical file into the scope runtime secrets directory, and the module creates a symlink at `destination`.
+
+Offline/reboot behavior:
+
+- The host still boots if Vault is unreachable.
+- Vault Agent services retry in the background, but restart attempts are throttled to once per hour.
+- Existing rendered secret files remain on disk (last known value) until Vault becomes reachable again and the agent refreshes them.
+- Startup diagnostics are written to the service logs (journald on Linux, `/var/log/vault-agent-system-secrets.log` and `~/Library/Logs/vault-agent-user-secrets.log` on Darwin).
+
 ## Operational Workflow
 
 Use `just` as the primary entrypoint:
@@ -69,6 +130,9 @@ Use `just` as the primary entrypoint:
 - `just build`: build current host output from inventory.
 - `just diff`: compare current generation with newly built result.
 - `just apply`: switch to the built configuration for current host OS.
+- `just refreshsecrets-system`: refresh system-scoped Vault secrets (sudo)
+- `just refreshsecrets-user`: refresh user-scoped Vault secrets (no sudo)
+- `just refreshsecrets`: run both refresh targets
 - `just rollback`: rollback one generation.
 
 `just` resolves host OS from `.#hostInventory.<hostname>.os`.

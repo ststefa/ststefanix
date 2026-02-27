@@ -74,6 +74,99 @@ apply-flake:
   esac
 alias apply := apply-flake
 
+# Login to vault and place tokens properly. Additional vault login args may be supplied.
+vault-login *vault_login_args:
+  #!/usr/bin/env bash
+  set -eu
+
+  os="$(just _host-os)"
+
+  case "$os" in
+    darwin|linux)
+      echo "Running 'vault login' as user $USER"
+      vault login {{vault_login_args}}
+      echo "Installing system token to /etc/vault.token (root-only)"
+      sudo install -m 0600 -o root -g wheel "$HOME/.vault-token" /etc/vault.token
+      ;;
+    windows)
+      echo "System Vault token install is not supported for windows/home-manager-only targets." >&2
+      exit 1
+      ;;
+    *)
+      echo "Unsupported os '$os' for host '{{HOSTNAME}}'." >&2
+      exit 1
+      ;;
+  esac
+alias vault-login-system := vault-login
+
+# Force an immediate refresh of system-level Vault secrets (requires sudo)
+refreshsecrets-system:
+  #!/usr/bin/env bash
+  set -eu
+
+  os="$(just _host-os)"
+
+  case "$os" in
+    darwin)
+      echo "Refreshing system Vault secrets on darwin for {{HOSTNAME}}"
+      plist="/Library/LaunchDaemons/ststefanix.vault-agent-system-secrets.plist"
+      log_file="/var/log/vault-agent-system-secrets.log"
+      sudo launchctl bootout system $plist || true
+      sudo launchctl bootstrap system $plist
+      timeout 5 tail -n0 -f $log_file | grep ERROR || true
+      ;;
+    linux)
+      echo "Refreshing system Vault secrets on linux for {{HOSTNAME}}"
+      sudo systemctl restart vault-agent-system-secrets
+      ;;
+    windows)
+      echo "System Vault secrets refresh is not supported for windows/home-manager-only targets." >&2
+      exit 1
+      ;;
+    *)
+      echo "Unsupported os '$os' for host '{{HOSTNAME}}'." >&2
+      exit 1
+      ;;
+  esac
+
+# Force an immediate refresh of user-level Vault secrets (no sudo)
+refreshsecrets-user:
+  #!/usr/bin/env bash
+  set -eu
+
+  os="$(just _host-os)"
+
+  case "$os" in
+    darwin)
+      echo "Refreshing user Vault secrets on darwin for {{HOSTNAME}}"
+      plist="$HOME/Library/LaunchAgents/ststefanix.vault-agent-user-secrets.plist"
+      log_file="$HOME/Library/Logs/vault-agent-user-secrets.log"
+      launchctl bootout gui/$(id -u) $plist || true
+      launchctl bootstrap gui/$(id -u) $plist
+      timeout 5 tail -n0 -f $log_file | grep ERROR || true
+      ;;
+    linux)
+      echo "Refreshing user Vault secrets on linux for {{HOSTNAME}}"
+      systemctl --user restart vault-agent-user-secrets
+      ;;
+    windows)
+      echo "User Vault secrets refresh is not supported for windows/home-manager-only targets yet." >&2
+      exit 1
+      ;;
+    *)
+      echo "Unsupported os '$os' for host '{{HOSTNAME}}'." >&2
+      exit 1
+      ;;
+  esac
+
+# Refresh both scopes. User scope can also be invoked directly without sudo.
+refreshsecrets:
+  #!/usr/bin/env bash
+  set -eu
+
+  just refreshsecrets-system
+  just refreshsecrets-user
+
 # Build and compare closure against current active generation
 diff:
   #!/usr/bin/env bash

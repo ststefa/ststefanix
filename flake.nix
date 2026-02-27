@@ -56,11 +56,13 @@
             ./nix/sudoers.nix
             # OS axis: shared baseline + platform baseline
             ./nix/shell.nix
+            ./nix/vault-secrets.nix
             ./os/darwin/overlays.nix
             (./os + "/${ctx.os}/system.nix")
             (./os + "/${ctx.os}/apps.nix")
             # Client axis: host role delta (os-specific)
             (./clients + "/${ctx.client}/${ctx.os}.nix")
+            (./clients + "/${ctx.client}/secrets.nix")
 
             home-manager.darwinModules.home-manager
             {
@@ -89,10 +91,12 @@
             ./nix/sudoers.nix
             # OS axis: shared baseline + platform baseline
             ./nix/shell.nix
+            ./nix/vault-secrets.nix
             (./os + "/${ctx.os}/system.nix")
             (./os + "/${ctx.os}/apps.nix")
             # Client axis: host role delta (os-specific)
             (./clients + "/${ctx.client}/${ctx.os}.nix")
+            (./clients + "/${ctx.client}/secrets.nix")
 
             home-manager.nixosModules.home-manager
             {

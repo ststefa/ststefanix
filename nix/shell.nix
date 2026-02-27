@@ -22,6 +22,8 @@ in
     GOBIN = "${homeDir}/bin";
     GOTOOLDIR = "${homeDir}/bin";
 
+    SOPS_AGE_KEY_FILE = "${homeDir}/.config/sops/age/keys.txt";
+
     VAULT_ADDR = "https://vault.heldenzeit.net";
 
     RUFF_CACHE_DIR = "${homeDir}/.cache/ruff";
