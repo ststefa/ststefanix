@@ -17,18 +17,24 @@
 
     brews = [
       "arduino-cli"
+      "deno" # Secure runtime for JavaScript
       "ghostscript"
       "glib"
       "gnuradio"
       "hackrf"
       "jpeg-turbo"
-      "lxc"
+      "lxc" # Client for lxc
       "messense/macos-cross-toolchains/aarch64-unknown-linux-gnu"
       "messense/macos-cross-toolchains/aarch64-unknown-linux-musl"
       "messense/macos-cross-toolchains/x86_64-unknown-linux-gnu"
       "messense/macos-cross-toolchains/x86_64-unknown-linux-musl"
       "messense/macos-cross-toolchains/arm-unknown-linux-gnueabihf"
       "minicom"
+      "nss" # Libraries for security-enabled client and server applications
+      "openexr" # High dynamic-range image file format
+      "openjph" # Open-source implementation of JPEG2000 Part-15
+      "pybind11" #
+      "pygobject3" #
       "soapyhackrf"
       "soapyrtlsdr"
       "soapysdr"
@@ -49,6 +55,7 @@
       { name = "gather"; greedy = true; }
       { name = "gimp"; greedy = true; }
       { name = "handbrake-app"; greedy = true; }
+      { name = "hookmark"; greedy = true; }
       { name = "kicad"; greedy = true; }
       { name = "libreoffice"; greedy = true; }
       { name = "obs"; greedy = true; }
@@ -64,6 +71,7 @@
       { name = "homebrew/cask/transmission"; greedy = true; }
       { name = "tunnelblick"; greedy = true; }
       { name = "veracrypt"; greedy = true; }
+      { name = "vivaldi"; greedy = true; }
       { name = "xquartz"; greedy = true; }
       { name = "zoom"; greedy = true; }
     ];

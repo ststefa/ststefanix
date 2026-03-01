@@ -119,9 +119,14 @@
       "kcl-lang/tap/kcl" # Tool to create an abstraction layer for k8s manifests # Available from nixpkg as "kcl-cli" but missing kcl-lsp
       "kcl-lsp" # kcl language server (for vscode)
       "libarchive" # Multi-format archive and compression library
+      "libgcrypt"
+      "libgpg-error"
       "libheif"
       "libidn2" # dependency of e.g. ffmpeg, gnutls, wget
+      "libksba"
+      "libomp"
       "libpng"
+      "libunistring"
       "libx11" # X11 client-side library
       "lynx" # Text-based web browser
       "lz4"
