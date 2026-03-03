@@ -53,8 +53,11 @@
       ## kubectl krew binaries
       PATH=''${PATH}:''${HOME}/.krew/bin
 
-      ## pipx wrappers
+      ## commonly used wrapper script dir
       PATH=''${PATH}:~/.local/bin
+
+      ## Obsidian tui
+      PATH=''${PATH}:/Applications/Obsidian.app/Contents/MacOS
 
       ## finally export
       export PATH
