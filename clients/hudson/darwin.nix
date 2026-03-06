@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
+    doxygen # required to build gr-osmosdr
     esptool
     hcloud
   ];

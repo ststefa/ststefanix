@@ -1,6 +1,7 @@
+# Cross-platform baseline packages
+
 { pkgs, ... }:
 {
-  # Cross-platform baseline packages used on Darwin and Linux system targets.
   environment.systemPackages = with pkgs; [
     age # A simple and secure file encryption tool
     ansible
@@ -14,17 +15,15 @@
     bottom # A graphical process/system monitor for the terminal
     #caddy # golang config server
     #cmakeMinimal # using brew for compiler-related
-    colima # Docker on macOS with Lima
     colmena # NixOS deployment tool, https://github.com/zhaofengli/colmena
     coreutils # GNU core utilities like `ls`, `cat`, `date`, `install`, `gcp`, `gmkdir`...
     cowsay
     curl
     d2 # Diagram scripting language
-    #diffoscope # takes long to bui
+    #diffoscope # takes long to build
     diffutils # GNU diff utilities
     #docker # does not include docker daemon
     #docutils #using brew for all py-related
-    doxygen # required to build gr-osmosdr
     dutree # Display directory tree with git status
     exiftool
     #ffmpeg-full # does not provide libavformat.dylib which is required for audacity, using brew
@@ -47,10 +46,6 @@
     gnupg
     gnused
     gnutar
-    go # @dbcicd
-    go-task # @dbcicd
-    golangci-lint # @dbcicd
-    golangci-lint-langserver # @dbcicd
     gopls # go language server
     htop # Colored top
     httpie # User-friendly cURL replacement
@@ -73,7 +68,6 @@
     kustomize
     lefthook # git hook setup helper
     less
-    lima # Linux virtual machines on macOS
     lsof
     minio-client
     #mqttx-cli
@@ -86,6 +80,7 @@
     oha # HTTP load generator with tui animation
     #lens # k8s GUI
     #openssh # sometimes aborts sessions with "package too long" errors, esp. on apume. Using brew.
+    openbao # OSS fork of vault
     opentofu # OSS fork of terraform
     oras # client for helm OCI registries
     parallel
@@ -121,8 +116,8 @@
     #rustdesk # not up to date, use brew
     #rustup cleanup on hudson required first
     shellcheck
-    shfmt # Shell *and others( formatter)
-    sipcalc # nice cli for subnet calculation
+    shfmt # Shell (and others) formatter
+    sipcalc # cli for subnet calculation
     socat
     sops
     sphinx
@@ -132,7 +127,7 @@
     stress-ng
     tcpdump
     terraform # Unfree, takes long to build
-    tesseract4
+    tesseract # OCR engine
     tflint
     tldr
     tmux
@@ -142,17 +137,17 @@
     upx # Executable file compressor. Nice for golang ;)
     #uv # python package manager written in rust, not up to date, use brew
     vault # Hashicorp vault cli # Unfree, Takes long to build
-    vendir
+    vendir # CLI tool to vendor portions of git repos, github releases, helm charts, docker image contents, etc. declaratively
     # vscode # Shell integration always resolves symlinks, leading to broken Dock icons and Automator Actions, using brew instead
     watchexec
     wget
     #which # Non-standard version, does not support "-s"
     xh # httpie clone written in Rust. Faster startup
     xterm
-    xz
+    xz # File compression tool
     #yapf # using ruff instead
     yazi # terminal file manager
-    yq
+    yq # jq for yaml
     zellij # terminal multiplexer a la tmux with programmable layouts, nice for shell demos
     zip
     zstd

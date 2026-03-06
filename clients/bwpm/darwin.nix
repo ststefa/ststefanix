@@ -2,6 +2,10 @@
 {
   environment.systemPackages = with pkgs; [
     delve
+    go # @dbcicd
+    go-task # @dbcicd
+    golangci-lint # @dbcicd
+    golangci-lint-langserver # @dbcicd
     kubelogin-oidc
     kubeval
     kubevirt

@@ -1,9 +1,12 @@
+# OS-level Darwin package baseline.
+
 { pkgs, ... }: {
 
-  # OS-level Darwin package baseline.
   environment.systemPackages = with pkgs; [
-    iproute2mac # some features of iproute2 for macOS
+    colima # Docker on macOS with Lima
     darwin.trash # cli tool that mimics rm but uses the system trashcan
+    iproute2mac # some features of iproute2 for macOS
+    lima # Linux virtual machines on macOS
     mas # Mac App Store cli
   ];
 
@@ -90,6 +93,7 @@
       "ffmpeg" # Audio/Video processing library
       "fjira" # CLI for JIRA
       "fmt" # Formatting library for C++
+      "freetype" # Software library to render fonts
       "gcc" # GNU compiler collection
       "gettext" # GNU internationalization (i18n) and localization (l10n) library
       "gnupg" # GNU Privacy Guard
@@ -119,18 +123,19 @@
       "kcl-lang/tap/kcl" # Tool to create an abstraction layer for k8s manifests # Available from nixpkg as "kcl-cli" but missing kcl-lsp
       "kcl-lsp" # kcl language server (for vscode)
       "libarchive" # Multi-format archive and compression library
-      "libgcrypt"
-      "libgpg-error"
-      "libheif"
+      "libgcrypt" # Cryptographic library based on the code from GnuPG
+      "libgpg-error" # Common error values for all GnuPG components
+      "libheif" # ISO/IEC 23008-12:2017 HEIF file format decoder and encoder
       "libidn2" # dependency of e.g. ffmpeg, gnutls, wget
-      "libksba"
-      "libomp"
-      "libpng"
+      "libksba" # X.509 and CMS library
+      "libomp" # LLVM's OpenMP runtime library
+      "libpng" # Library for manipulating PNG images
+      "librsvg" # Library to render SVG files using Cairo
       "libunistring"
       "libx11" # X11 client-side library
       "lynx" # Text-based web browser
-      "lz4"
-      "lzo"
+      "lz4" # Extremely Fast Compression algorithm
+      "lzo" # Real-time data compression library
       "mas" # Mac appstore cli
       "mingw-w64" # Minimalist GNU for Windows and GCC cross-compilers
       "mpdecimal" # Library for decimal floating point arithmetic
