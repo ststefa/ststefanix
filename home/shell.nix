@@ -84,6 +84,9 @@
           alias stern-''${CL}="stern --kubeconfig ''${FILE}"
       done
 
+      # atuin, cool but disabled until I selfhost
+      #eval "$(atuin init bash)"
+
       # fzf
       ## Auto-completion
       ### brew-bash
