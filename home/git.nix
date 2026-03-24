@@ -65,9 +65,11 @@
       };
     };
 
-    # signing = {
-    #   key = "xxx";
-    #   signByDefault = true;
-    # };
+    signing = {
+      # Default behaviour since 2026-03
+      format = null;
+      #key = "xxx";
+      #signByDefault = true;
+    };
   };
 }
