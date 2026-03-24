@@ -5,7 +5,8 @@
 # return a proper error code. The functions are invoked in a "set -x" context
 # and wrapped in logging/timing output. So echos can be used sparingly.
 
-# shellcheck disable=SC2317
+# shellcheck disable=SC2317 # Command appears to be unreachable
+# shellcheck disable=SC2329 # This function is never invoked
 
 update_locate() {
     # This might produce a lot of output from gfind because it cannot access parts of the filesystem (anymore, thank you Apple)
@@ -47,8 +48,7 @@ update_python() {
     log python managed by nix, not updating ; return 0
     local local_rc=0
 
-    #for PYTHON_VERSION in $(ls -d /opt/homebrew/Cellar/python@* | sed -n 's/.*@\(.*\)/\1/p' | sort -V) ; do
-    # python3.12 is now a protected system-level install. Keep the discipline to only pip-install in venvs.
+    # python3.12 and later are protected system-level installs. Keep the discipline to only pip-install in venvs.
     for PYTHON_VERSION in 3.10 3.11 ; do
         echo "Updating python version ${PYTHON_VERSION}"
         echo "Capturing installed package list"
