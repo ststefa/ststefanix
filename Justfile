@@ -39,14 +39,14 @@ build:
 # Everyday tasks
 
 # Update this flake
-update-flake:
+update:
   sudo littlesnitch rulegroup --enable update
   -nix flake update
   sudo littlesnitch rulegroup --disable update
-alias update := update-flake
 
 # Re-apply flake after build has been run once
-apply-flake:
+[private]
+_apply darwin_variant:
   #!/usr/bin/env bash
   set -eu
 
@@ -54,9 +54,25 @@ apply-flake:
 
   case "$os" in
     darwin)
-      echo "Applying darwin configuration for {{HOSTNAME}}"
+      flake_target="{{HOSTNAME}}"
+      message="Applying darwin configuration for {{HOSTNAME}}"
+
+      case "{{darwin_variant}}" in
+        default)
+          ;;
+        nix-only)
+          flake_target="{{HOSTNAME}}-nix-only"
+          message="Applying darwin configuration for {{HOSTNAME}} without Homebrew update"
+          ;;
+        *)
+          echo "Unsupported darwin apply variant '{{darwin_variant}}'." >&2
+          exit 1
+          ;;
+      esac
+
+      echo "$message"
       sudo littlesnitch rulegroup --enable update
-      sudo darwin-rebuild switch --flake ".#{{HOSTNAME}}"
+      sudo darwin-rebuild switch --flake ".#$flake_target"
       sudo littlesnitch rulegroup --disable update
       ;;
     linux)
@@ -72,7 +88,14 @@ apply-flake:
       exit 1
       ;;
   esac
-alias apply := apply-flake
+
+# Re-apply flake
+apply:
+  just _apply default
+
+# Re-apply flake without triggering Homebrew auto-update
+apply-nix-only:
+  just _apply nix-only
 
 # Login to vault and place tokens properly. Additional vault login args may be supplied.
 vault-login *vault_login_args:
@@ -97,7 +120,10 @@ vault-login *vault_login_args:
       exit 1
       ;;
   esac
-alias vault-login-system := vault-login
+
+# Convenience target to login with my user
+vault-login-ststefa:
+  just vault-login -method=ldap username=stefan
 
 # Force an immediate refresh of system-level Vault secrets (requires sudo)
 refreshsecrets-system:
@@ -109,10 +135,23 @@ refreshsecrets-system:
   case "$os" in
     darwin)
       echo "Refreshing system Vault secrets on darwin for {{HOSTNAME}}"
-      plist="/Library/LaunchDaemons/ststefanix.vault-agent-system-secrets.plist"
+      label="ststefanix.vault-agent-system-secrets"
+      current_plist="/run/current-system/Library/LaunchDaemons/$label.plist"
+      installed_plist="/Library/LaunchDaemons/$label.plist"
       log_file="/var/log/vault-agent-system-secrets.log"
-      sudo launchctl bootout system $plist || true
-      sudo launchctl bootstrap system $plist
+
+      if sudo launchctl print "system/$label" >/dev/null 2>&1; then
+        sudo launchctl kickstart -k "system/$label"
+      elif [ -f "$current_plist" ]; then
+        sudo launchctl bootstrap system "$current_plist"
+      elif [ -f "$installed_plist" ]; then
+        sudo launchctl bootstrap system "$installed_plist"
+      else
+        echo "No system secrets configured for this host, thus no system Vault secrets launch daemon is active." >&2
+        echo "If you just added it, run 'just apply' first." >&2
+        exit 0
+      fi
+
       timeout 5 tail -n0 -f $log_file | grep ERROR || true
       ;;
     linux)
@@ -226,11 +265,7 @@ rollback:
 history:
   nix profile history --profile /nix/var/nix/profiles/system
 
-# Wipe profile history older than x and do a nix garbage-collect
+# Wipe profiles older than 30 days and do a nix garbage-collect
 gc:
   sudo nix profile wipe-history --profile /nix/var/nix/profiles/system  --older-than 30d
   nix store gc
-
-# Remove build output
-clean:
-  rm -rf result

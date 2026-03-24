@@ -111,7 +111,7 @@ Example host config (same schema on Linux and Darwin, split by scope):
 Important:
 - `vaultUserSecrets` uses `~/.vault-token` (authenticate once as the inventory user via `vault login`)
 - `vaultSystemSecrets` uses `/etc/vault.token` (provide a separate root/system token)
-Rendered secret files are owned by the host user from `inventory/hosts.nix` (`username`).
+Rendered secret files are owned by the account running the scope service: user-owned for `vaultUserSecrets`, root-owned for `vaultSystemSecrets`.
 Model: one Vault field -> one rendered file.
 For `vaultUserSecrets`, `destination` is a path relative to `$HOME` (for example `.config/sops/age/keys.txt`).
 If `destination` is set, Vault Agent still writes the physical file into the scope runtime secrets directory, and the module creates a symlink at `destination`.
@@ -127,10 +127,14 @@ Offline/reboot behavior:
 
 Use `just` as the primary entrypoint:
 
+- `just update`: update flake inputs.
 - `just build`: build current host output from inventory.
 - `just diff`: compare current generation with newly built result.
 - `just apply`: switch to the built configuration for current host OS.
-- `just refreshsecrets-system`: refresh system-scoped Vault secrets (sudo)
+- `just apply-nix-only`: switch configuration without triggering Homebrew auto-update on Darwin.
+- `just vault-login [args...]`: authenticate to Vault and install `/etc/vault.token`.
+- `just vault-login-ststefa`: convenience wrapper for my usual LDAP login.
+- `just refreshsecrets-system`: refresh system-scoped Vault secrets (sudo). If no `vaultSystemSecrets` are configured for the current host, this is a no-op with an informational message.
 - `just refreshsecrets-user`: refresh user-scoped Vault secrets (no sudo)
 - `just refreshsecrets`: run both refresh targets
 - `just rollback`: rollback one generation.

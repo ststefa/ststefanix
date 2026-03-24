@@ -41,7 +41,7 @@
         };
 
       mkDarwinConfig =
-        hostName: host:
+        hostName: host: extraModules:
         let
           ctx = mkHostContext hostName host;
           specialArgs = inputs // ctx;
@@ -72,7 +72,7 @@
               home-manager.users.${ctx.username} = import ./home;
               home-manager.backupFileExtension = "nixbak";
             }
-          ];
+          ] ++ extraModules;
         };
 
       mkNixosConfig =
@@ -124,11 +124,24 @@
         };
 
       darwinHosts = lib.filterAttrs (_: host: host.os == "darwin") hosts;
+      darwinHostsNoBrewUpdate = lib.mapAttrs' (
+        hostName: host:
+        lib.nameValuePair "${hostName}-nix-only" (
+          mkDarwinConfig hostName host [
+            {
+              homebrew.onActivation.autoUpdate = lib.mkForce false;
+              homebrew.onActivation.upgrade = lib.mkForce false;
+            }
+          ]
+        )
+      ) darwinHosts;
       linuxHosts = lib.filterAttrs (_: host: host.os == "linux") hosts;
       windowsHosts = lib.filterAttrs (_: host: host.os == "windows") hosts;
     in
     {
-      darwinConfigurations = lib.mapAttrs mkDarwinConfig darwinHosts;
+      darwinConfigurations =
+        (lib.mapAttrs (hostName: host: mkDarwinConfig hostName host [ ]) darwinHosts)
+        // darwinHostsNoBrewUpdate;
       nixosConfigurations = lib.mapAttrs mkNixosConfig linuxHosts;
       homeConfigurations = lib.mapAttrs mkWindowsWslHomeConfig windowsHosts;
 
