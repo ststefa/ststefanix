@@ -90,3 +90,6 @@ if ! command -v ss >/dev/null 2>&1; then
         lsof ${lsof_flags}
     }
 fi
+
+# Export functions to child processes. Make sure to capture all funcs from above
+export -f parse_git_branch parse_cwd parse_k8s_ctx plview ss

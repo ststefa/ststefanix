@@ -13,10 +13,7 @@
       # Some useful helpers managed by nix
       [[ $- == *i* ]] && source ~/.bash_functions
 
-      # Export functions to child processes. Make sure to capture all funcs from above
-      export -f parse_git_branch parse_cwd parse_k8s_ctx plview ss
-
-      # Decorate prompt with k8s context, cwd, and git branch
+      # Decorate prompt with k8s context, cwd, and git branch. Uses exported funcs from ~/.bash_functions
       export PS1="\[\033[06;31m\]\$(parse_k8s_ctx)\[\033[00m\]:\[\033[06;32m\]\u@\h\[\033[00m\]:\[\033[06;34m\]\$(parse_cwd)\[\033[00m\]:\[\033[33m\]\$(parse_git_branch)\[\033[00m\] \$ "
 
       # Append to the history file, don't overwrite it
