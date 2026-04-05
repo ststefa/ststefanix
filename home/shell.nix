@@ -81,19 +81,22 @@
           alias stern-''${CL}="stern --kubeconfig ''${FILE}"
       done
 
-      # atuin, cool but disabled until I selfhost
+      # atuin history sync
+      # Conflicts with fzf keybindings
+      # atuin requires ble.sh or bash-preexec. Tha latter is much simpler.
+      [ -f /opt/homebrew/etc/profile.d/bash-preexec.sh ] && . /opt/homebrew/etc/profile.d/bash-preexec.sh
       #eval "$(atuin init bash)"
 
       # fzf
       ## Auto-completion
-      ### brew-bash
+      ### brew-fzf
       #[[ $- == *i* ]] && source "/opt/homebrew/opt/fzf/shell/completion.bash" 2> /dev/null
-      ### nix-bash
+      ### nix-fzf
       [[ $- == *i* ]] && source "$(fzf-share)/completion.bash" 2> /dev/null
       ## Key bindings
-      ### brew-bash
+      ### brew-fzf
       #source "/opt/homebrew/opt/fzf/shell/key-bindings.bash"
-      ### nix-bash
+      ### nix-fzf
       source "$(fzf-share)/key-bindings.bash"
 
       # SAP
