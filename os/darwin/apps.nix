@@ -72,6 +72,7 @@
 
     brews = [
       "at-spi2-core" # Protocol definitions and daemon for D-Bus at-spi
+      "atuin" # Improved shell history with sync
       "bash" # The almighty GNU Bourne Again SHell
       "bash-completion@2" # Bash completion scripts
       "binutils" # GNU binary utilities
@@ -179,6 +180,7 @@
     casks = [
       { name = "aldente"; } # Save the battery of your Macbook
       { name = "alfred"; } # App launcher with many plugins
+      { name = "alt-tab"; } # App switcher
       { name = "apparency"; } # Analyze app signatures
       { name = "bartender"; } # Manage menubar items, disabled because v6.1.0 currently crashing. Installing v5 manually from https://macbartender.com/Bartender5/
       { name = "betterdisplay"; } # Manage external monitors better
