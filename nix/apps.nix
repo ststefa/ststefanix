@@ -18,6 +18,7 @@
     colmena # NixOS deployment tool, https://github.com/zhaofengli/colmena
     coreutils # GNU core utilities like `ls`, `cat`, `date`, `install`, `gcp`, `gmkdir`...
     cowsay
+    cspell
     curl
     d2 # Diagram scripting language
     #diffoscope # takes long to build
@@ -75,12 +76,11 @@
     nixfmt
     nmap
     nodejs
-    nodePackages.cspell
     oath-toolkit # Provides oathtool
     oha # HTTP load generator with tui animation
     #lens # k8s GUI
     #openssh # sometimes aborts sessions with "package too long" errors, esp. on apume. Using brew.
-    openbao # OSS fork of vault
+    openbao # OSS fork of Vault
     opentofu # OSS fork of terraform
     oras # client for helm OCI registries
     parallel
