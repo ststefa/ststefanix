@@ -32,7 +32,10 @@
       #PATH="/opt/homebrew/opt/curl/bin:$PATH"
       #PATH="/opt/homebrew/opt/lsof/bin:$PATH"
       #PATH="/opt/homebrew/opt/openjdk/bin:$PATH" # handled through MacOS wrapper, does not need to be on PATH
+      # Regular ruby executables
       PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+      # Ruby executables added by "gem install ..."
+      PATH="/opt/homebrew/lib/ruby/gems/4.0.0/bin:$PATH"
       #PATH="/opt/homebrew/opt/unzip/bin:$PATH"
       #PATH="/opt/homebrew/opt/man-db/libexec/bin:$PATH"
       ### add all the gnubin paths
