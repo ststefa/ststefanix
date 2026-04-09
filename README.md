@@ -26,7 +26,7 @@ Think of it as: **foundation -> platform -> role -> user**.
   - optional `os/<os>/overlays.nix` for platform-only overlay workarounds.
 - `clients/` owns host-role differences:
   - `clients/<client>/<os>.nix` for system deltas.
-  - `clients/<client>/secrets.nix` for Vault secret mappings.
+  - `clients/<client>/secrets.nix` for OpenBao secret mappings.
   - `clients/<client>/home.nix` for Home Manager deltas.
 - `home/` owns user-level reusable modules and files.
 
@@ -63,44 +63,44 @@ This keeps content editable as text while preserving declarative composition.
 
 `home.file` definitions are merged by target path; collisions only happen when the same destination is declared twice.
 
-## Vault Runtime Secrets (Linux + Darwin)
+## OpenBao Runtime Secrets (Linux + Darwin)
 
-`nix/vault-secrets.nix` aggregates two scopes:
+`nix/bao-secrets.nix` aggregates two scopes:
 
-- `ststefanix.vaultSystemSecrets`: root/system service (`systemd` / `launchd.daemons`)
-- `ststefanix.vaultUserSecrets`: user service/agent (`systemd --user` / `launchd.user.agents`)
+- `ststefanix.baoSystemSecrets`: root/system service (`systemd` / `launchd.daemons`)
+- `ststefanix.baoUserSecrets`: user service/agent (`systemd --user` / `launchd.user.agents`)
 
-Use `vaultUserSecrets` for files in `~` (for example `~/.config/sops/...`).
+Use `baoUserSecrets` for files in `~` (for example `~/.config/sops/...`).
 
 Example host config (same schema on Linux and Darwin, split by scope):
 
 ```nix
 {
-  ststefanix.vaultUserSecrets = {
-    address = "https://vault.heldenzeit.net";
+  ststefanix.baoUserSecrets = {
+    address = "https://bao.heldenzeit.net";
 
     secrets = {
       age_keys = {
-        vault_secret = "kv/data/ststefanix/age_keys";
-        # One Vault field contains the full keys.txt payload
-        vault_secret_key = "private_key";
+        bao_secret = "kv/data/ststefanix/age_keys";
+        # One OpenBao field contains the full keys.txt payload
+        bao_secret_key = "private_key";
         destination = ".config/sops/age/keys.txt";
       };
 
       gh_token = {
-        vault_secret = "kv/data/dev/github";
-        vault_secret_key = "token";
+        bao_secret = "kv/data/dev/github";
+        bao_secret_key = "token";
       };
     };
   };
 
   # Typical Linux-style system secret example: private TLS key for nginx.
-  # (On Darwin you can also use vaultSystemSecrets, but the concrete consumer differs.)
-  ststefanix.vaultSystemSecrets = {
+  # (On Darwin you can also use baoSystemSecrets, but the concrete consumer differs.)
+  ststefanix.baoSystemSecrets = {
     secrets = {
       nginx_tls_key = {
-        vault_secret = "kv/data/web/nginx_tls";
-        vault_secret_key = "private_key";
+        bao_secret = "kv/data/web/nginx_tls";
+        bao_secret_key = "private_key";
         destination = "/run/secrets/nginx/tls.key";
       };
     };
@@ -109,19 +109,19 @@ Example host config (same schema on Linux and Darwin, split by scope):
 ```
 
 Important:
-- `vaultUserSecrets` uses `~/.vault-token` (authenticate once as the inventory user via `vault login`)
-- `vaultSystemSecrets` uses `/etc/vault.token` (provide a separate root/system token)
-Rendered secret files are owned by the account running the scope service: user-owned for `vaultUserSecrets`, root-owned for `vaultSystemSecrets`.
-Model: one Vault field -> one rendered file.
-For `vaultUserSecrets`, `destination` is a path relative to `$HOME` (for example `.config/sops/age/keys.txt`).
-If `destination` is set, Vault Agent still writes the physical file into the scope runtime secrets directory, and the module creates a symlink at `destination`.
+- `baoUserSecrets` uses `~/.vault-token` (OpenBao currently keeps Vault-compatible token helper naming; authenticate once as the inventory user via `bao login`)
+- `baoSystemSecrets` uses `/etc/bao.token` (provide a separate root/system token)
+Rendered secret files are owned by the account running the scope service: user-owned for `baoUserSecrets`, root-owned for `baoSystemSecrets`.
+Model: one OpenBao field -> one rendered file.
+For `baoUserSecrets`, `destination` is a path relative to `$HOME` (for example `.config/sops/age/keys.txt`).
+If `destination` is set, OpenBao Agent still writes the physical file into the scope runtime secrets directory, and the module creates a symlink at `destination`.
 
 Offline/reboot behavior:
 
-- The host still boots if Vault is unreachable.
-- Vault Agent services retry in the background, but restart attempts are throttled to once per hour.
-- Existing rendered secret files remain on disk (last known value) until Vault becomes reachable again and the agent refreshes them.
-- Startup diagnostics are written to the service logs (journald on Linux, `/var/log/vault-agent-system-secrets.log` and `~/Library/Logs/vault-agent-user-secrets.log` on Darwin).
+- The host still boots if OpenBao is unreachable.
+- OpenBao Agent services retry in the background, but restart attempts are throttled to once per hour.
+- Existing rendered secret files remain on disk (last known value) until OpenBao becomes reachable again and the agent refreshes them.
+- Startup diagnostics are written to the service logs (journald on Linux, `/var/log/bao-agent-system-secrets.log` and `~/Library/Logs/bao-agent-user-secrets.log` on Darwin).
 
 ## Operational Workflow
 
@@ -132,10 +132,10 @@ Use `just` as the primary entrypoint:
 - `just diff`: compare current generation with newly built result.
 - `just apply`: switch to the built configuration for current host OS.
 - `just apply-nix-only`: switch configuration without triggering Homebrew auto-update on Darwin.
-- `just vault-login [args...]`: authenticate to Vault and install `/etc/vault.token`.
-- `just vault-login-ststefa`: convenience wrapper for my usual LDAP login.
-- `just refreshsecrets-system`: refresh system-scoped Vault secrets (sudo). If no `vaultSystemSecrets` are configured for the current host, this is a no-op with an informational message.
-- `just refreshsecrets-user`: refresh user-scoped Vault secrets (no sudo)
+- `just bao-login [args...]`: authenticate to OpenBao and install `/etc/bao.token`.
+- `just bao-login-ststefa`: convenience wrapper for my usual LDAP login.
+- `just refreshsecrets-system`: refresh system-scoped OpenBao secrets (sudo). If no `baoSystemSecrets` are configured for the current host, this is a no-op with an informational message.
+- `just refreshsecrets-user`: refresh user-scoped OpenBao secrets (no sudo)
 - `just refreshsecrets`: run both refresh targets
 - `just rollback`: rollback one generation.
 

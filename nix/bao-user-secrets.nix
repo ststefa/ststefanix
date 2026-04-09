@@ -7,8 +7,8 @@
   ...
 }:
 let
-  common = import ./vault-secrets-common.nix { inherit lib pkgs os username; };
-  cfg = config.ststefanix.vaultUserSecrets;
+  common = import ./bao-secrets-common.nix { inherit lib pkgs os username; };
+  cfg = config.ststefanix.baoUserSecrets;
   isLinux = os == "linux";
   isDarwin = os == "darwin";
   homeDir = common.homeDir;
@@ -20,24 +20,24 @@ let
     && builtins.all (seg: seg != "" && seg != "." && seg != "..") (lib.splitString "/" p);
 
   defaultRuntimeDir = "${homeDir}/.local/run/secrets";
-  defaultSinkTokenFile = "${homeDir}/.local/state/vault/.token";
+  defaultSinkTokenFile = "${homeDir}/.local/state/bao/.token";
   scopeOptions = common.mkScopeOptions {
     runtimeDirDefault = defaultRuntimeDir;
-    pidFileDefault = "${defaultRuntimeDir}/vault-agent-user-secrets.pid";
+    pidFileDefault = "${defaultRuntimeDir}/bao-agent-user-secrets.pid";
     sinkTokenFileDefault = defaultSinkTokenFile;
     tokenFileDefault = "${homeDir}/.vault-token";
   };
   pieces = common.mkAgentPieces {
     inherit cfg;
-    name = "vault-agent-user-secrets";
-    logPrefix = "vault-agent-user-secrets";
+    name = "bao-agent-user-secrets";
+    logPrefix = "bao-agent-user-secrets";
     extraManagedDirs = lib.optional isDarwin "${homeDir}/Library/Logs";
     destinationBase = homeDir;
   };
   hasSecrets = pieces.hasSecrets;
 in
 {
-  options.ststefanix.vaultUserSecrets = {
+  options.ststefanix.baoUserSecrets = {
     inherit (scopeOptions)
       package
       address
@@ -58,22 +58,22 @@ in
         assertions = [
           {
             assertion = isLinux || isDarwin;
-            message = "vaultUserSecrets is currently supported only for linux and darwin.";
+            message = "OpenBao user secrets are currently supported only for linux and darwin.";
           }
           {
             assertion = builtins.all (
               secret:
               secret.destination == null || isSafeRelativePath secret.destination
             ) (builtins.attrValues cfg.secrets);
-            message = "vaultUserSecrets.destination must be a safe path relative to $HOME (e.g. .config/sops/age/keys.txt).";
+            message = "OpenBao user secret destinations must be safe paths relative to $HOME (e.g. .config/sops/age/keys.txt).";
           }
         ];
       }
 
       (lib.optionalAttrs isLinux {
         # User unit starts with the user manager (typically after login unless linger is enabled).
-        systemd.user.services.vault-agent-user-secrets = {
-          description = "Vault Agent user secret renderer";
+        systemd.user.services.bao-agent-user-secrets = {
+          description = "OpenBao Agent user secret renderer";
           wants = [ "network-online.target" ];
           after = [ "network-online.target" ];
           wantedBy = [ "default.target" ];
@@ -87,15 +87,15 @@ in
       })
 
       (lib.optionalAttrs isDarwin {
-        launchd.user.agents.vault-agent-user-secrets = {
+        launchd.user.agents.bao-agent-user-secrets = {
           command = "${pieces.runScript}";
           serviceConfig = {
-            Label = "ststefanix.vault-agent-user-secrets";
+            Label = "ststefanix.bao-agent-user-secrets";
             RunAtLoad = true;
             KeepAlive = true;
             ThrottleInterval = 3600;
-            StandardOutPath = "${homeDir}/Library/Logs/vault-agent-user-secrets.log";
-            StandardErrorPath = "${homeDir}/Library/Logs/vault-agent-user-secrets.log";
+            StandardOutPath = "${homeDir}/Library/Logs/bao-agent-user-secrets.log";
+            StandardErrorPath = "${homeDir}/Library/Logs/bao-agent-user-secrets.log";
           };
         };
       })

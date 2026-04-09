@@ -24,7 +24,8 @@ in
 
     SOPS_AGE_KEY_FILE = "${homeDir}/.config/sops/age/keys.txt";
 
-    VAULT_ADDR = "https://vault.heldenzeit.net";
+    BAO_ADDR = "https://bao.heldenzeit.net";
+    VAULT_ADDR = "https://bao.heldenzeit.net";
 
     RUFF_CACHE_DIR = "${homeDir}/.cache/ruff";
   };

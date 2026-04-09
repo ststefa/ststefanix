@@ -54,11 +54,11 @@ _apply darwin_variant:
 
   case "$os" in
     darwin)
-      flake_target="{{HOSTNAME}}"
-      message="Applying darwin configuration for {{HOSTNAME}}"
 
       case "{{darwin_variant}}" in
         default)
+          flake_target="{{HOSTNAME}}"
+          message="Applying darwin configuration for {{HOSTNAME}}"
           ;;
         nix-only)
           flake_target="{{HOSTNAME}}-nix-only"
@@ -97,8 +97,8 @@ apply:
 apply-nix-only:
   just _apply nix-only
 
-# Login to vault and place tokens properly. Additional vault login args may be supplied.
-vault-login *vault_login_args:
+# Login to OpenBao and place tokens properly. Additional `bao login` args may be supplied.
+bao-login *bao_login_args:
   #!/usr/bin/env bash
   set -eu
 
@@ -106,13 +106,13 @@ vault-login *vault_login_args:
 
   case "$os" in
     darwin|linux)
-      echo "Running 'vault login' as user $USER"
-      vault login {{vault_login_args}}
-      echo "Installing system token to /etc/vault.token (root-only)"
-      sudo install -m 0600 -o root -g wheel "$HOME/.vault-token" /etc/vault.token
+      echo "Running 'bao login' on ${BAO_ADDR} as user ${USER}"
+      bao login {{bao_login_args}}
+      echo "Installing OpenBao system token to /etc/bao.token (root-only)"
+      sudo install -m 0600 -o root -g wheel "$HOME/.vault-token" /etc/bao.token
       ;;
     windows)
-      echo "System Vault token install is not supported for windows/home-manager-only targets." >&2
+      echo "OpenBao system token install is not supported for windows/home-manager-only targets." >&2
       exit 1
       ;;
     *)
@@ -122,10 +122,10 @@ vault-login *vault_login_args:
   esac
 
 # Convenience target to login with my user
-vault-login-ststefa:
-  just vault-login -method=ldap username=stefan
+bao-login-stefan:
+  just bao-login -method=ldap username=stefan
 
-# Force an immediate refresh of system-level Vault secrets (requires sudo)
+# Force an immediate refresh of system-level OpenBao secrets (requires sudo)
 refreshsecrets-system:
   #!/usr/bin/env bash
   set -eu
@@ -134,32 +134,49 @@ refreshsecrets-system:
 
   case "$os" in
     darwin)
-      echo "Refreshing system Vault secrets on darwin for {{HOSTNAME}}"
-      label="ststefanix.vault-agent-system-secrets"
+      echo "Refreshing system OpenBao secrets on darwin for {{HOSTNAME}}"
+      label="ststefanix.bao-agent-system-secrets"
       current_plist="/run/current-system/Library/LaunchDaemons/$label.plist"
       installed_plist="/Library/LaunchDaemons/$label.plist"
-      log_file="/var/log/vault-agent-system-secrets.log"
+      log_file="/var/log/bao-agent-system-secrets.log"
+      plist=""
+
+      if [ -f "$current_plist" ]; then
+        plist="$current_plist"
+      elif [ -f "$installed_plist" ]; then
+        plist="$installed_plist"
+      fi
 
       if sudo launchctl print "system/$label" >/dev/null 2>&1; then
-        sudo launchctl kickstart -k "system/$label"
-      elif [ -f "$current_plist" ]; then
-        sudo launchctl bootstrap system "$current_plist"
-      elif [ -f "$installed_plist" ]; then
-        sudo launchctl bootstrap system "$installed_plist"
+        sudo launchctl bootout "system/$label" || true
+        # Wait for bootout to complete
+        for _ in 1 2 3 4 5 6 7 8 9 10; do
+          if ! sudo launchctl print "system/$label" >/dev/null 2>&1; then
+            break
+          fi
+          sleep 0.2
+        done
+        if [ -z "$plist" ]; then
+          echo "Configured OpenBao system daemon is loaded, but no plist was found to bootstrap." >&2
+          exit 1
+        fi
+        sudo launchctl bootstrap system "$plist"
+      elif [ -n "$plist" ]; then
+        sudo launchctl bootstrap system "$plist"
       else
-        echo "No system secrets configured for this host, thus no system Vault secrets launch daemon is active." >&2
+        echo "No system secrets configured for this host, thus no system OpenBao secrets launch daemon is active." >&2
         echo "If you just added it, run 'just apply' first." >&2
         exit 0
       fi
 
-      timeout 5 tail -n0 -f $log_file | grep ERROR || true
+      timeout 5 bash -lc 'tail -n0 -f "$1" | grep -m1 ERROR' _ "$log_file" || true
       ;;
     linux)
-      echo "Refreshing system Vault secrets on linux for {{HOSTNAME}}"
-      sudo systemctl restart vault-agent-system-secrets
+      echo "Refreshing system OpenBao secrets on linux for {{HOSTNAME}}"
+      sudo systemctl restart bao-agent-system-secrets
       ;;
     windows)
-      echo "System Vault secrets refresh is not supported for windows/home-manager-only targets." >&2
+      echo "System OpenBao secrets refresh is not supported for windows/home-manager-only targets." >&2
       exit 1
       ;;
     *)
@@ -168,7 +185,7 @@ refreshsecrets-system:
       ;;
   esac
 
-# Force an immediate refresh of user-level Vault secrets (no sudo)
+# Force an immediate refresh of user-level OpenBao secrets (no sudo)
 refreshsecrets-user:
   #!/usr/bin/env bash
   set -eu
@@ -177,19 +194,44 @@ refreshsecrets-user:
 
   case "$os" in
     darwin)
-      echo "Refreshing user Vault secrets on darwin for {{HOSTNAME}}"
-      plist="$HOME/Library/LaunchAgents/ststefanix.vault-agent-user-secrets.plist"
-      log_file="$HOME/Library/Logs/vault-agent-user-secrets.log"
-      launchctl bootout gui/$(id -u) $plist || true
-      launchctl bootstrap gui/$(id -u) $plist
-      timeout 5 tail -n0 -f $log_file | grep ERROR || true
+      echo "Refreshing user OpenBao secrets on darwin for {{HOSTNAME}}"
+      uid="$(id -u)"
+      domain="gui/$uid"
+      label="ststefanix.bao-agent-user-secrets"
+      plist="$HOME/Library/LaunchAgents/$label.plist"
+      log_file="$HOME/Library/Logs/bao-agent-user-secrets.log"
+
+      if launchctl print "$domain/$label" >/dev/null 2>&1; then
+        launchctl bootout "$domain/$label" || true
+        # Wait for bootout to complete
+        for _ in 1 2 3 4 5 6 7 8 9 10; do
+          if ! launchctl print "$domain/$label" >/dev/null 2>&1; then
+            break
+          fi
+          sleep 0.2
+        done
+        if [ -f "$plist" ]; then
+          launchctl bootstrap "$domain" "$plist"
+        else
+          echo "Configured OpenBao user agent is loaded, but no plist was found to bootstrap." >&2
+          exit 1
+        fi
+      elif [ -f "$plist" ]; then
+        launchctl bootstrap "$domain" "$plist"
+      else
+        echo "No user secrets configured for this host, thus no user OpenBao secrets launch agent is active." >&2
+        echo "If you just added it, run 'just apply' first." >&2
+        exit 0
+      fi
+
+      timeout 5 bash -lc 'tail -n0 -f "$1" | grep -m1 ERROR' _ "$log_file" || true
       ;;
     linux)
-      echo "Refreshing user Vault secrets on linux for {{HOSTNAME}}"
-      systemctl --user restart vault-agent-user-secrets
+      echo "Refreshing user OpenBao secrets on linux for {{HOSTNAME}}"
+      systemctl --user restart bao-agent-user-secrets
       ;;
     windows)
-      echo "User Vault secrets refresh is not supported for windows/home-manager-only targets yet." >&2
+      echo "User OpenBao secrets refresh is not supported for windows/home-manager-only targets yet." >&2
       exit 1
       ;;
     *)

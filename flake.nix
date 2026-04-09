@@ -56,7 +56,7 @@
             ./nix/sudoers.nix
             # OS axis: shared baseline + platform baseline
             ./nix/shell.nix
-            ./nix/vault-secrets.nix
+            ./nix/bao-secrets.nix
             ./os/darwin/overlays.nix
             (./os + "/${ctx.os}/system.nix")
             (./os + "/${ctx.os}/apps.nix")
@@ -91,7 +91,7 @@
             ./nix/sudoers.nix
             # OS axis: shared baseline + platform baseline
             ./nix/shell.nix
-            ./nix/vault-secrets.nix
+            ./nix/bao-secrets.nix
             (./os + "/${ctx.os}/system.nix")
             (./os + "/${ctx.os}/apps.nix")
             # Client axis: host role delta (os-specific)

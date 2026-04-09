@@ -7,30 +7,30 @@
   ...
 }:
 let
-  common = import ./vault-secrets-common.nix { inherit lib pkgs os username; };
-  cfg = config.ststefanix.vaultSystemSecrets;
+  common = import ./bao-secrets-common.nix { inherit lib pkgs os username; };
+  cfg = config.ststefanix.baoSystemSecrets;
   isLinux = os == "linux";
   isDarwin = os == "darwin";
 
   defaultRuntimeDir = if isDarwin then "/private/var/run/secrets" else "/run/secrets";
-  defaultSinkTokenFile = if isDarwin then "/private/var/run/vault/.token" else "/run/vault/.token";
+  defaultSinkTokenFile = if isDarwin then "/private/var/run/bao/.token" else "/run/bao/.token";
   scopeOptions = common.mkScopeOptions {
     runtimeDirDefault = defaultRuntimeDir;
-    pidFileDefault = "${defaultRuntimeDir}/vault-agent-system-secrets.pid";
+    pidFileDefault = "${defaultRuntimeDir}/bao-agent-system-secrets.pid";
     sinkTokenFileDefault = defaultSinkTokenFile;
-    tokenFileDefault = "/etc/vault.token";
+    tokenFileDefault = "/etc/bao.token";
   };
 
   escapeSh = lib.escapeShellArg;
   pieces = common.mkAgentPieces {
     inherit cfg;
-    name = "vault-agent-system-secrets";
-    logPrefix = "vault-agent-system-secrets";
+    name = "bao-agent-system-secrets";
+    logPrefix = "bao-agent-system-secrets";
   };
   managedSystemDirs = pieces.managedDirs;
 in
 {
-  options.ststefanix.vaultSystemSecrets = {
+  options.ststefanix.baoSystemSecrets = {
     inherit (scopeOptions)
       package
       address
@@ -51,15 +51,15 @@ in
         assertions = [
           {
             assertion = isLinux || isDarwin;
-            message = "vaultSystemSecrets is currently supported only for linux and darwin.";
+            message = "OpenBao system secrets are currently supported only for linux and darwin.";
           }
         ];
       }
 
       (lib.optionalAttrs isLinux {
         systemd.tmpfiles.rules = map (d: "d ${d} 0750 root root -") managedSystemDirs;
-        systemd.services.vault-agent-system-secrets = {
-          description = "Vault Agent system secret renderer";
+        systemd.services.bao-agent-system-secrets = {
+          description = "OpenBao Agent system secret renderer";
           wantedBy = [ "multi-user.target" ];
           wants = [ "network-online.target" ];
           after = [ "network-online.target" ];
@@ -73,21 +73,21 @@ in
       })
 
       (lib.optionalAttrs isDarwin {
-        system.activationScripts.vaultAgentSystemSecrets.text = ''
+        system.activationScripts.baoAgentSystemSecrets.text = ''
           /bin/mkdir -p ${lib.concatMapStringsSep " " escapeSh managedSystemDirs}
           /usr/sbin/chown root:wheel ${lib.concatMapStringsSep " " escapeSh managedSystemDirs}
           /bin/chmod 0750 ${lib.concatMapStringsSep " " escapeSh managedSystemDirs}
         '';
 
-        launchd.daemons.vault-agent-system-secrets = {
+        launchd.daemons.bao-agent-system-secrets = {
           command = "${pieces.runScript}";
           serviceConfig = {
-            Label = "ststefanix.vault-agent-system-secrets";
+            Label = "ststefanix.bao-agent-system-secrets";
             RunAtLoad = true;
             KeepAlive = true;
             ThrottleInterval = 3600;
-            StandardOutPath = "/var/log/vault-agent-system-secrets.log";
-            StandardErrorPath = "/var/log/vault-agent-system-secrets.log";
+            StandardOutPath = "/var/log/bao-agent-system-secrets.log";
+            StandardErrorPath = "/var/log/bao-agent-system-secrets.log";
           };
         };
       })

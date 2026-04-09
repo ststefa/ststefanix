@@ -21,12 +21,12 @@ in
     {
       package = lib.mkOption {
         type = lib.types.package;
-        default = pkgs.vault;
+        default = pkgs.openbao;
       };
 
       address = lib.mkOption {
         type = lib.types.str;
-        default = "https://vault.heldenzeit.net";
+        default = "https://bao.heldenzeit.net";
       };
 
       logLevel = lib.mkOption {
@@ -68,8 +68,8 @@ in
         default = { };
         type = lib.types.attrsOf (lib.types.submodule {
           options = {
-            vault_secret = lib.mkOption { type = lib.types.str; };
-            vault_secret_key = lib.mkOption { type = lib.types.str; default = "value"; };
+            bao_secret = lib.mkOption { type = lib.types.str; };
+            bao_secret_key = lib.mkOption { type = lib.types.str; default = "value"; };
             destination = lib.mkOption { type = lib.types.nullOr lib.types.str; default = null; };
           };
         });
@@ -114,29 +114,22 @@ in
       linkDirs = lib.unique (map builtins.dirOf linkDestinations);
       managedDirs = lib.unique ([ cfg.runtimeDir (builtins.dirOf cfg.sinkTokenFile) ] ++ extraManagedDirs);
 
-      mkVaultTemplateBlock =
+      mkBaoTemplateBlock =
         secretName: secret:
         let
           renderedPath = "${cfg.runtimeDir}/${secretName}";
-          resolvedDestination =
-            if secret.destination == null then
-              null
-            else if destinationBase == null then
-              secret.destination
-            else
-              "${destinationBase}/${secret.destination}";
         in
         ''
 template {
   destination = "${renderedPath}"
   perms = "0400"
   contents = <<EOT
-{{ with secret "${secret.vault_secret}" }}{{ index .Data.data "${secret.vault_secret_key}" }}{{ end }}
+{{ with secret "${secret.bao_secret}" }}{{ index .Data.data "${secret.bao_secret_key}" }}{{ end }}
 EOT
 }
         '';
 
-      templateBlocks = lib.concatStringsSep "\n" (lib.mapAttrsToList mkVaultTemplateBlock cfg.secrets);
+      templateBlocks = lib.concatStringsSep "\n" (lib.mapAttrsToList mkBaoTemplateBlock cfg.secrets);
 
       agentConfig = pkgs.writeText "${name}.hcl" ''
         pid_file = "${cfg.pidFile}"
@@ -167,7 +160,17 @@ EOT
 
       envExports =
         lib.concatStringsSep "\n"
-          (lib.mapAttrsToList (n: v: "export ${n}=${escapeSh v}") (cfg.environment // { VAULT_ADDR = cfg.address; }));
+          (
+            lib.mapAttrsToList
+              (n: v: "export ${n}=${escapeSh v}")
+              (
+                cfg.environment
+                // {
+                  BAO_ADDR = cfg.address;
+                  VAULT_ADDR = cfg.address;
+                }
+              )
+          );
 
       runScript = pkgs.writeShellScript name ''
         set -eu
@@ -186,12 +189,12 @@ EOT
             pair // { inherit dst; }
           ) linkPairsFiltered
         )}
-        echo "[${logPrefix}] starting vault agent (vault: ${cfg.address})"
+        echo "[${logPrefix}] starting OpenBao agent (address: ${cfg.address})"
         if [ ! -f ${escapeSh cfg.tokenFile} ]; then
           echo "[${logPrefix}] warning: token file not found at ${cfg.tokenFile}"
         fi
         echo "[${logPrefix}] rendering ${toString (builtins.length renderedSecretPaths)} secret file(s)"
-        exec ${cfg.package}/bin/vault agent -log-level=${escapeSh cfg.logLevel} -config=${escapeSh agentConfig}
+        exec ${cfg.package}/bin/bao agent -log-level=${escapeSh cfg.logLevel} -config=${escapeSh agentConfig}
       '';
     in
     {
