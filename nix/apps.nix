@@ -136,7 +136,7 @@
     unzip
     upx # Executable file compressor. Nice for golang ;)
     #uv # python package manager written in rust, not up to date, use brew
-    vault # Hashicorp vault cli # Unfree, Takes long to build
+    #vault # Hashicorp vault cli # Unfree, Takes long to build
     vendir # CLI tool to vendor portions of git repos, github releases, helm charts, docker image contents, etc. declaratively
     # vscode # Shell integration always resolves symlinks, leading to broken Dock icons and Automator Actions, using brew instead
     watchexec

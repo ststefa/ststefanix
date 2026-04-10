@@ -101,7 +101,7 @@
       "gossip" # A GUI client for nostr. This is a GUI app, but its not a cask. Start it by executing `gossip` in the terminal.
       "graphviz" # Graph visualization tools
       "harfbuzz" # OpenType text shaping engine
-      "hashicorp/tap/vault"
+      #"hashicorp/tap/vault"
       "hwloc" # Portable abstraction of the hierarchical topology of modern architectures
       #"imagemagick" # using nixpkg instead
       "jfrog-cli" # CLI for Artifactory
@@ -217,7 +217,7 @@
       { name = "qlmarkdown"; } # QuickLook plugin for markdown
       { name = "qlstephen"; } # QuickLook plugin for multiple file types
       { name = "quicklook-csv"; } # QuickLook plugin for csv
-      { name = "quicklook-json"; } # QuickLook plugin for json
+      # { name = "quicklook-json"; } # QuickLook plugin for json. "Disabled because it no longer meets the criteria for acceptable casks! It was disabled on 2025-12-23."
       { name = "retrace"; } # local-only screen history recorder
       #{ name = "rustdesk"; } # VNC-like remote desktop tool
       { name = "sf-symbols"; } # A nicely curated set of symbols by Apple
