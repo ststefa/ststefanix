@@ -11,6 +11,7 @@
       "AusweisApp" = 948660805;
       "BitPay" = 1440200291;
       "Bitcoin Expert" = 1237809495;
+      "DuckDuckGo" = 663592361; # Need a dedicated minimal Browser for parallel OIDC Sessions
       "GarageBand" = 682658836;
       "iMovie" = 408981434;
       "Telefon" = 406825478;
@@ -72,7 +73,7 @@
       { name = "homebrew/cask/transmission"; greedy = true; }
       { name = "tunnelblick"; greedy = true; }
       { name = "veracrypt"; greedy = true; }
-      { name = "vivaldi"; greedy = true; }
+      #{ name = "vivaldi"; greedy = true; } # Removed because nix-installed Browsers have problems with local-network permissions (because the executable location changes). Using AppStore Browser instead
       { name = "xquartz"; greedy = true; }
       { name = "zoom"; greedy = true; }
     ];
