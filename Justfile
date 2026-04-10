@@ -38,7 +38,7 @@ build:
 
 # Everyday tasks
 
-# Update this flake
+# Update flake inputs to most recent version
 update:
   sudo littlesnitch rulegroup --enable update
   -nix flake update
