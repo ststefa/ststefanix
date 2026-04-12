@@ -83,6 +83,7 @@
       "cmake" # Cross-platform make
       "coder" # Cloud IDE for Developers, "slim" cli-only
       #"coder/coder/coder" # Cloud IDE for Developers, cli+server
+      "container" # MacOS container system (github.com/apple/container)
       "cpu_features" # Cross platform C99 library to get cpu features at runtime
       #"curl" # using nixpkg instead
       "diff-pdf" # compare pdf files visually
@@ -210,6 +211,7 @@
       { name = "microsoft-teams"; }
       { name = "obsidian"; }
       { name = "openlens"; } # GUI for kubernetes
+      { name = "orchard"; } # UI for Apple containers
       { name = "orion"; } # Web browser
       { name = "paletro"; } # Use App menus with the keyboard
       { name = "permute"; } # Video converter, works together with downie
