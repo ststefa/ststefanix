@@ -38,7 +38,6 @@
       "ColorSlurp" = 1287239339;
       "Consent-O-Matic" = 1606897889;
       #"Core Tunnel" = 1354318707; # Appstore version cannot do advanced things, see https://community.codinn.com/t/core-tunnel-difference-between-codinn-store-and-app-store-versions/4590 . Using cask instead.
-      "djay Pro" = 450527929;
       #"EasyFind" = 6739447813; # No longer available on appstore
       "Free Ruler" = 1483172210;
       "Gapplin" = 768053424;
@@ -101,7 +100,7 @@
       "gossip" # A GUI client for nostr. This is a GUI app, but its not a cask. Start it by executing `gossip` in the terminal.
       "graphviz" # Graph visualization tools
       "harfbuzz" # OpenType text shaping engine
-      #"hashicorp/tap/vault"
+      "hashicorp/tap/vault" # Replaced by openbao, but sometimes needed due to compatibility with docs
       "hwloc" # Portable abstraction of the hierarchical topology of modern architectures
       #"imagemagick" # using nixpkg instead
       "jfrog-cli" # CLI for Artifactory

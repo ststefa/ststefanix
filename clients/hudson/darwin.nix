@@ -11,6 +11,7 @@
       "AusweisApp" = 948660805;
       "BitPay" = 1440200291;
       "Bitcoin Expert" = 1237809495;
+      "djay Pro" = 450527929;
       "DuckDuckGo" = 663592361; # Need a dedicated minimal Browser for parallel OIDC Sessions
       "GarageBand" = 682658836;
       "iMovie" = 408981434;
