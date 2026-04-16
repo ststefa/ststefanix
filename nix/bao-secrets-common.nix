@@ -34,6 +34,13 @@ in
         default = "info";
       };
 
+      # OpenBao polls static KV secrets on an interval. This default keeps
+      # propagation reasonably quick without hammering the server.
+      staticSecretRenderInterval = lib.mkOption {
+        type = lib.types.str;
+        default = "3m";
+      };
+
       runtimeDir = lib.mkOption {
         type = lib.types.str;
         default = runtimeDirDefault;
@@ -151,6 +158,11 @@ EOT
               mode = 0600
             }
           }
+        }
+
+        # This controls how often non-leased secrets such as KV v2 are re-read.
+        template_config {
+          static_secret_render_interval = "${cfg.staticSecretRenderInterval}"
         }
 
         ${templateBlocks}

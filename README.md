@@ -113,8 +113,21 @@ Important:
 - `baoSystemSecrets` uses `/etc/bao.token` (provide a separate root/system token)
 Rendered secret files are owned by the account running the scope service: user-owned for `baoUserSecrets`, root-owned for `baoSystemSecrets`.
 Model: one OpenBao field -> one rendered file.
-For `baoUserSecrets`, `destination` is a path relative to `$HOME` (for example `.config/sops/age/keys.txt`).
-If `destination` is set, OpenBao Agent still writes the physical file into the scope runtime secrets directory, and the module creates a symlink at `destination`.
+The `3m` default lives in the shared module, so Linux and Darwin behave the same unless a scope overrides it explicitly.
+Static KV secrets are re-polled every `3m` by default via `staticSecretRenderInterval`; override per scope if you need faster or slower propagation.
+Scope override means setting the option on `baoUserSecrets` or `baoSystemSecrets` in the host module that owns that scope, for example:
+
+```nix
+{
+  ststefanix.baoUserSecrets.staticSecretRenderInterval = "1m";
+  ststefanix.baoSystemSecrets.staticSecretRenderInterval = "10m";
+}
+```
+
+The natural place for that override is usually `clients/<client>/secrets.nix`, because that file already owns the host-specific OpenBao secret mapping.
+For an OS-wide default, place it in `os/<os>/system.nix` or another OS-level module that owns shared OpenBao behavior.
+
+For `baoUserSecrets`, `destination` is a path relative to `$HOME` (for example `.config/sops/age/keys.txt`). If `destination` is set, OpenBao Agent still writes the physical file into the scope runtime secrets directory, and the module creates a symlink at `destination`.
 
 Offline/reboot behavior:
 

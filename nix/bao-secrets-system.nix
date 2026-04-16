@@ -35,6 +35,9 @@ in
       package
       address
       logLevel
+      # System-scoped hosts can override this if they need a different balance
+      # between propagation speed and server load than the shared default.
+      staticSecretRenderInterval
       runtimeDir
       pidFile
       sinkTokenFile

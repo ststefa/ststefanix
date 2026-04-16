@@ -42,6 +42,9 @@ in
       package
       address
       logLevel
+      # User-scoped hosts can override this if they need faster or slower
+      # propagation than the shared default from bao-secrets-common.nix.
+      staticSecretRenderInterval
       runtimeDir
       pidFile
       sinkTokenFile
