@@ -12,9 +12,10 @@
 #ssh-add --apple-use-keychain ~/.ssh/id_rsa
 # 2024-11-01 Use Apple again
 /usr/bin/ssh-add --apple-use-keychain ~/.ssh/id_ed25519
-/usr/bin/ssh-add --apple-use-keychain ~/.ssh/id_rsa
+# Deprecating original rsa key
+#/usr/bin/ssh-add --apple-use-keychain ~/.ssh/id_rsa
+# Arq key not required in sh
 #/usr/bin/ssh-add --apple-use-keychain ~/.ssh/arq2024
-#/usr/bin/ssh-add --apple-use-keychain ~/.ssh/db/steinert.id_rsa
 
 
 ### T-Systems CH Keys
@@ -41,6 +42,9 @@
 ### German Edge Cloud GEC
 #/usr/bin/ssh-add --apple-use-keychain ~/.ssh/gec/stefan_ed25519
 #/usr/bin/ssh-add --apple-use-keychain ~/.ssh/gec/observability
+
+### DB ardks
+#/usr/bin/ssh-add --apple-use-keychain ~/.ssh/db/steinert.id_rsa
 
 echo "List of active keys:"
 /usr/bin/ssh-add -l
