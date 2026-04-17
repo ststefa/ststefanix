@@ -89,7 +89,8 @@ if ! command -v ss >/dev/null 2>&1; then
         ${udp_flag} && lsof_flags="${lsof_flags} -iUDP"
         lsof ${lsof_flags}
     }
+    export -f ss
 fi
 
 # Export functions to child processes. Make sure to capture all funcs from above
-export -f parse_git_branch parse_cwd parse_k8s_ctx plview ss
+export -f parse_git_branch parse_cwd parse_k8s_ctx plview
