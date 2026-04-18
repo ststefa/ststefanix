@@ -71,7 +71,7 @@
 
     brews = [
       "at-spi2-core" # Protocol definitions and daemon for D-Bus at-spi
-      "atuin" # Improved shell history with sync
+      #"atuin" # Improved shell history with sync # Moved to nixpkgs
       "bash" # The almighty GNU Bourne Again SHell
       "bash-completion@2" # Bash completion scripts
       "binutils" # GNU binary utilities

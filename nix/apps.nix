@@ -8,6 +8,7 @@
     argocd
     argocd-autopilot
     asciinema # terminal session recorder
+    atuin # Replacement for a shell history
     awscli2
     azure-cli
     bat
