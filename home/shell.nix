@@ -88,19 +88,22 @@
       # Conflicts with fzf keybindings
       # atuin requires ble.sh or bash-preexec. Tha latter is much simpler.
       [ -f /opt/homebrew/etc/profile.d/bash-preexec.sh ] && . /opt/homebrew/etc/profile.d/bash-preexec.sh
-      #eval "$(atuin init bash)"
+      eval "$(atuin init bash)"
+      # Restore normal history search on arrow up. Invoke atuin only on Ctrl-r
+      bind '"\e[A": history-search-backward'
+      bind '"\e[B": history-search-forward'
 
       # fzf
       ## Auto-completion
-      ### brew-fzf
+      ### brew-fzf, usually not used
       #[[ $- == *i* ]] && source "/opt/homebrew/opt/fzf/shell/completion.bash" 2> /dev/null
-      ### nix-fzf
-      [[ $- == *i* ]] && source "$(fzf-share)/completion.bash" 2> /dev/null
+      ### nix-fzf, disabled in favour of atuin
+      #[[ $- == *i* ]] && source "$(fzf-share)/completion.bash" 2> /dev/null
       ## Key bindings
-      ### brew-fzf
+      ### brew-fzf, usually not used
       #source "/opt/homebrew/opt/fzf/shell/key-bindings.bash"
-      ### nix-fzf
-      source "$(fzf-share)/key-bindings.bash"
+      ### nix-fzf, disabled in favour of atuin
+      #source "$(fzf-share)/key-bindings.bash"
 
       # SAP
       ## Default hashi-vault settings
