@@ -208,6 +208,7 @@ records = true
 [daemon]
 ## Enables using the daemon to sync. Requires the daemon to be running in the background. Start it with `atuin daemon`
 enabled = true
+autostart = true
 
 ## How often the daemon should sync in seconds
 sync_frequency = 60
@@ -246,7 +247,7 @@ sync_frequency = 60
 ## The "workspace" mode is skipped when not in a workspace or workspaces = false.
 ## Default filter mode can be overridden with the filter_mode setting.
 # filters = [ "global", "host", "session", "session-preload", "workspace", "directory" ]
-filters = [ "global", "host", "session", "session-preload" ]
+filters = [ "global", "session", "host" ]
 
 [tmux]
 ## Enable using atuin with tmux popup (requires tmux >= 3.2)
@@ -297,7 +298,7 @@ filters = [ "global", "host", "session", "session-preload" ]
 # columns = ["duration", { type = "directory", width = 30 }, "command"]
 ##
 ## Show host for multi-machine sync users:
-columns = ["duration", "time", "host", "command"]
+columns = ["duration", { type = "time", width = 7 }, { type = "host", width = 9 }, "command"]
 ##
 ## Show exit codes prominently:
 # columns = ["exit", "duration", "command"]
