@@ -28,6 +28,8 @@ in
       # Directories. "recursive" causes links to be created on the deepest level instead of the highest. This allows to mix dir contents with unmanaged content
       ".cargo".source = ./files/common/.cargo;
       ".cargo".recursive = true;
+      ".config".source = ./files/common/.config;
+      ".config".recursive = true;
       ".ssh".source = ./files/common/.ssh;
       ".ssh".recursive = true;
       "bin".source = ./files/common/bin;

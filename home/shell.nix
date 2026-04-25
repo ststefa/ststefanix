@@ -88,10 +88,8 @@
       # Conflicts with fzf keybindings
       # atuin requires ble.sh or bash-preexec. Tha latter is much simpler.
       [ -f /opt/homebrew/etc/profile.d/bash-preexec.sh ] && . /opt/homebrew/etc/profile.d/bash-preexec.sh
-      eval "$(atuin init bash)"
-      # Restore normal history search on arrow up. Invoke atuin only on Ctrl-r
-      bind '"\e[A": history-search-backward'
-      bind '"\e[B": history-search-forward'
+      # Normal history search on arrow up. Invoke atuin only on Ctrl-r
+      eval "$(atuin init bash --disable-up-arrow)"
 
       # fzf
       ## Auto-completion
