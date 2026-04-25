@@ -8,7 +8,8 @@ in
 {
   home = {
     # Manage files in home dir. They will be symlinked to nix store.
-    # Will not be overwritten if they exist. If undeclared, they will be removed.
+    # If the destination file exists, it will be moved to *.nixbak.
+    # If a file is undeclared (e.g., commented out) here, it will be removed.
     file = {
       # Example for a text file with inline content. Remove if applicable.
       ".nix-inventory".text = ''
