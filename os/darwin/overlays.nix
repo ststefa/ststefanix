@@ -39,50 +39,62 @@
       #};
 
       # 2026-02-20 upstream hash broken, remove overlay asap
-      argocd = prev.argocd.overrideAttrs (old: {
-        ui = old.ui.overrideAttrs (_uiOld: {
-          offlineCache = prev.fetchYarnDeps {
-            yarnLock = "${old.src}/ui/yarn.lock";
-            hash = "sha256-kqBolkQiwZUBic0f+Ek5HwYsOmro1+FStkDLXAre79o=";
-          };
-        });
-      });
+      # 2026-05-03 overlay disabled, upstream was fixed
+      #argocd = prev.argocd.overrideAttrs (old: {
+      #  ui = old.ui.overrideAttrs (_uiOld: {
+      #    offlineCache = prev.fetchYarnDeps {
+      #      yarnLock = "${old.src}/ui/yarn.lock";
+      #      hash = "sha256-kqBolkQiwZUBic0f+Ek5HwYsOmro1+FStkDLXAre79o=";
+      #    };
+      #  });
+      #});
 
-      libnbd = if prev.stdenv.isDarwin then null else prev.libnbd;
+      # 2026-04-25 d2 0.7.x in nixpkgs pulls Linux-only GBM/Playwright runtime deps
+      # on Darwin, which drags in unsupported libdrm/mesa packages on aarch64-darwin.
+      # 2026-05-03 overlay disabled, upstream was fixed
+      #d2 = prev.d2.overrideAttrs (old: {
+      #  buildInputs = [ ];
+      #  postInstall = ''
+      #    installManPage ci/release/template/man/d2.1
+      #  '';
+      #});
 
-      fio =
-        if prev.stdenv.isDarwin then
-          prev.fio.overrideAttrs (
-            old:
-            let
-              oldFlags = old.configureFlags or [ ];
-              newFlags = builtins.filter (f: f != "--enable-libnbd") oldFlags;
-            in
-            {
-              configureFlags = newFlags;
-            }
-          )
-        else
-          prev.fio;
+      # 2025-12 fio cannot be built due to libbnd deps, disable it
+      # 2026-05-03 overlay disabled, upstream was fixed
+      #libnbd = if prev.stdenv.isDarwin then null else prev.libnbd;
+      #fio =
+      #  if prev.stdenv.isDarwin then
+      #    prev.fio.overrideAttrs (
+      #      old:
+      #      let
+      #        oldFlags = old.configureFlags or [ ];
+      #        newFlags = builtins.filter (f: f != "--enable-libnbd") oldFlags;
+      #      in
+      #      {
+      #        configureFlags = newFlags;
+      #      }
+      #    )
+      #  else
+      #    prev.fio;
 
-      python313 = prev.python313.override {
-        packageOverrides = pyFinal: pyPrev: {
-          twisted = pyPrev.twisted.overrideAttrs (_old: {
-            doCheck = false;
-            doInstallCheck = false;
-            pythonImportsCheck = [ ];
-          });
+      # 2025-12 twisted fails build due to excessive testsuite, disable it
+      #python313 = prev.python313.override {
+      #  packageOverrides = pyFinal: pyPrev: {
+      #    twisted = pyPrev.twisted.overrideAttrs (_old: {
+      #      doCheck = false;
+      #      doInstallCheck = false;
+      #      pythonImportsCheck = [ ];
+      #    });
+      #    rapidfuzz = pyPrev.rapidfuzz.overridePythonAttrs (old: {
+      #      nativeBuildInputs = [ prev.clang-tools ] ++ (old.nativeBuildInputs or [ ]);
+      #      cmakeFlags = (old.cmakeFlags or [ ]) ++ [
+      #        "-DCMAKE_CXX_COMPILER_CLANG_SCAN_DEPS=${prev.clang-tools}/bin/clang-scan-deps"
+      #      ];
+      #    });
+      #  };
+      #};
+      #python313Packages = final.python313.pkgs;
 
-          rapidfuzz = pyPrev.rapidfuzz.overridePythonAttrs (old: {
-            nativeBuildInputs = [ prev.clang-tools ] ++ (old.nativeBuildInputs or [ ]);
-            cmakeFlags = (old.cmakeFlags or [ ]) ++ [
-              "-DCMAKE_CXX_COMPILER_CLANG_SCAN_DEPS=${prev.clang-tools}/bin/clang-scan-deps"
-            ];
-          });
-        };
-      };
-
-      python313Packages = final.python313.pkgs;
     })
   ];
 }
