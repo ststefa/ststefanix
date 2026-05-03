@@ -38,10 +38,12 @@
       "ColorSlurp" = 1287239339;
       "Consent-O-Matic" = 1606897889;
       #"Core Tunnel" = 1354318707; # Appstore version cannot do advanced things, see https://community.codinn.com/t/core-tunnel-difference-between-codinn-store-and-app-store-versions/4590 . Using cask instead.
+      "DuckDuckGo" = 663592361; # Need a dedicated minimal Browser for parallel OIDC Sessions
       #"EasyFind" = 6739447813; # No longer available on appstore
       "Free Ruler" = 1483172210;
       "Gapplin" = 768053424;
       "HazeOver" = 430798174;
+      "iPreview" = 1519213509;
       "com.kagimacOS.Kagi-Search" = 1622835804;
       "Keynote" = 409183694;
       "Meeter" = 1510445899;
@@ -215,9 +217,9 @@
       { name = "orion"; } # Web browser
       { name = "paletro"; } # Use App menus with the keyboard
       { name = "permute"; } # Video converter, works together with downie
-      { name = "qlmarkdown"; } # QuickLook plugin for markdown
-      { name = "qlstephen"; } # QuickLook plugin for multiple file types
-      { name = "quicklook-csv"; } # QuickLook plugin for csv
+      #{ name = "qlmarkdown"; } # QuickLook plugin for markdown. Replaced by ipreview.appp (from appstore)
+      #{ name = "qlstephen"; } # QuickLook plugin for multiple file types. Replaced by ipreview.appp (from appstore)
+      #{ name = "quicklook-csv"; } # QuickLook plugin for csv. Replaced by ipreview.appp (from appstore)
       # { name = "quicklook-json"; } # QuickLook plugin for json. "Disabled because it no longer meets the criteria for acceptable casks! It was disabled on 2025-12-23."
       { name = "retrace"; } # local-only screen history recorder
       #{ name = "rustdesk"; } # VNC-like remote desktop tool
