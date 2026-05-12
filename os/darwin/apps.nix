@@ -31,8 +31,8 @@
     # On 2025-04-11, `mas list` shows no output. This leads to reinstall on every nix invocation. Probably some changes in Apples APIs. Disabling entire masApps.
     # On 2025-04-16 it works again. Enabling masApps.
     masApps = {
-      "Affinity Designer 2" = 1616831348;
-      "Affinity Photo 2" = 1616822987;
+      #"Affinity Designer 2" = 1616831348; # Removed from Appstore
+      #"Affinity Photo 2" = 1616822987; # Removed from Appstore
       "Affinity Publisher 2" = 1606941598;
       "Amphetamine" = 937984704;
       "ColorSlurp" = 1287239339;
@@ -51,7 +51,7 @@
       "Msg Viewer Pro" = 1019539949;
       "Numbers" = 409203825;
       "OCRKit" = 410309628;
-      "Pages" = 409201541;
+      #"Pages" = 409201541; # Removed from Appstore
       "Sandkorn" = 1377973524;
       "Strongbox" = 897283731;
       "VisualDesigner" = 1193683552;
