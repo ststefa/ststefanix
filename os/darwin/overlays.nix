@@ -78,6 +78,7 @@
       #    prev.fio;
 
       # 2025-12 twisted fails build due to excessive testsuite, disable it
+      # 2026-05-03 overlay disabled, upstream was fixed
       #python313 = prev.python313.override {
       #  packageOverrides = pyFinal: pyPrev: {
       #    twisted = pyPrev.twisted.overrideAttrs (_old: {
