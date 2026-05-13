@@ -24,8 +24,8 @@ update_brew() {
     export HOMEBREW_CURLRC=~/.curlrc
     #export HOMEBREW_CURL_RETRIES=2
     echo "Capturing installed package list"
-    brew list --versions > $(roll_file ~/backup/brew_packages.txt)
-    brew tap > $(roll_file ~/backup/brew_taps.txt)
+    brew list --versions > "$(roll_file ~/backup/brew_packages.txt)"
+    brew tap > "$(roll_file ~/backup/brew_taps.txt)"
 
     brew update && brew upgrade
     (( local_rc += $? ))
@@ -34,7 +34,6 @@ update_brew() {
     brew cleanup
     (( local_rc += $? ))
 
-    echo "Removing download cache older than 14d"
     cache_dir="$(brew --cache)" || return 1
     find "${cache_dir}" -type l -mtime +14 | while read -r link; do
         target="$(readlink "${link}")"
@@ -42,9 +41,6 @@ update_brew() {
             /*) ;;
             *) target="$(dirname "${link}")/${target}" ;;
         esac
-        echo "Removing:"
-        echo "  link:   ${link}"
-        echo "  target: ${target}"
         rm -f -- "${link}" "${target}"
     done
 
@@ -66,7 +62,7 @@ update_python() {
     for PYTHON_VERSION in 3.10 3.11 ; do
         echo "Updating python version ${PYTHON_VERSION}"
         echo "Capturing installed package list"
-        "pip${PYTHON_VERSION}" list --format json | jq > $(roll_file "${HOME}/backup/python${PYTHON_VERSION}_packages.json")
+        "pip${PYTHON_VERSION}" list --format json | jq > "$(roll_file "${HOME}/backup/python${PYTHON_VERSION}_packages.json")"
         OUTDATED="$("pip${PYTHON_VERSION}" list -o --format json)"
         if [[ $(echo "${OUTDATED}" | jq length) == 0 ]] ; then
             echo "Everything up to date"
