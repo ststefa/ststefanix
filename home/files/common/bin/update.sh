@@ -22,7 +22,7 @@ update_brew() {
     local local_rc=0
 
     export HOMEBREW_CURLRC=~/.curlrc
-    export HOMEBREW_CURL_RETRIES=2
+    #export HOMEBREW_CURL_RETRIES=2
     echo "Capturing installed package list"
     brew list --versions > $(roll_file ~/backup/brew_packages.txt)
     brew tap > $(roll_file ~/backup/brew_taps.txt)
@@ -33,6 +33,20 @@ update_brew() {
     (( local_rc += $? ))
     brew cleanup
     (( local_rc += $? ))
+
+    echo "Removing download cache older than 14d"
+    cache_dir="$(brew --cache)" || return 1
+    find "${cache_dir}" -type l -mtime +14 | while read -r link; do
+        target="$(readlink "${link}")"
+        case "${target}" in
+            /*) ;;
+            *) target="$(dirname "${link}")/${target}" ;;
+        esac
+        echo "Removing:"
+        echo "  link:   ${link}"
+        echo "  target: ${target}"
+        rm -f -- "${link}" "${target}"
+    done
 
     return "${local_rc}"
 }
