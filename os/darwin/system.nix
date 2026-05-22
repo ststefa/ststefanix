@@ -26,16 +26,24 @@
       };
 
       finder = {
+        _FXEnableColumnAutoSizing = true;
         _FXShowPosixPathInTitle = false;
+        _FXSortFoldersFirst = true;
+        FXDefaultSearchScope = "SCcf";
         FXEnableExtensionChangeWarning = false;
+        FXPreferredViewStyle = "clmv";
         QuitMenuItem = true;
+        ShowExternalHardDrivesOnDesktop = true;
+        ShowHardDrivesOnDesktop = true;
+        ShowMountedServersOnDesktop = true;
         ShowPathbar = true;
+        ShowRemovableMediaOnDesktop = true;
         ShowStatusBar = true;
       };
 
       NSGlobalDomain = {
-        "com.apple.swipescrolldirection" = true;
         "com.apple.sound.beep.feedback" = 1;
+        "com.apple.swipescrolldirection" = true;
         InitialKeyRepeat = 15;
         KeyRepeat = 2;
         NSAutomaticCapitalizationEnabled = false;
@@ -48,7 +56,6 @@
       };
 
       CustomUserPreferences = {
-        ".GlobalPreferences" = { };
         NSGlobalDomain = {
           WebKitDeveloperExtras = true;
         };
@@ -57,14 +64,6 @@
         };
         "com.apple.AppleMultitouchTrackpad" = {
           Clicking = 1;
-        };
-        "com.apple.finder" = {
-          ShowExternalHardDrivesOnDesktop = true;
-          ShowHardDrivesOnDesktop = true;
-          ShowMountedServersOnDesktop = true;
-          ShowRemovableMediaOnDesktop = true;
-          _FXSortFoldersFirst = true;
-          FXDefaultSearchScope = "SCcf";
         };
         "com.apple.desktopservices" = {
           DSDontWriteNetworkStores = true;
@@ -75,13 +74,11 @@
         };
         "com.apple.WindowManager" = {
           EnableStandardClickToShowDesktop = 0;
-          StandardHideDesktopIcons = 0;
           HideDesktop = 0;
           StageManagerHideWidgets = 0;
+          StandardHideDesktopIcons = 0;
           StandardHideWidgets = 0;
         };
-        "com.apple.screensaver" = { };
-        "com.apple.screencapture" = { };
         "com.apple.ImageCapture".disableHotPlug = true;
       };
 
