@@ -38,7 +38,7 @@
       "ColorSlurp" = 1287239339;
       "Consent-O-Matic" = 1606897889;
       #"Core Tunnel" = 1354318707; # Appstore version cannot do advanced things, see https://community.codinn.com/t/core-tunnel-difference-between-codinn-store-and-app-store-versions/4590 . Using cask instead.
-      "DuckDuckGo & optional Duck.ai" = 663592361; # Need a dedicated minimal Browser for parallel OIDC Sessions
+      "DuckDuckGo & optional Duck.ai" = 663592361; # Need a dedicated minimal Browser for parallel OIDC Sessions. Install from Appstore to prevent brew/nix problem with changing paths, which conflicts with Apple TCC
       #"EasyFind" = 6739447813; # No longer available on appstore
       "Free Ruler" = 1483172210;
       "Gapplin" = 768053424;
