@@ -43,7 +43,7 @@
     # WSL target runs on a Linux userland.
     system = "x86_64-linux";
     username = "bill";
-    useremail = "winni@example.invalid";
+    useremail = "bill@example.invalid";
     cores = 8;
   };
 }

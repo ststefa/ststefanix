@@ -4,7 +4,7 @@
     doxygen # required to build gr-osmosdr
     esptool
     hcloud
-    typst # Document generator a la TeX
+    typst # Document generator á la TeX
   ];
 
   homebrew = {
