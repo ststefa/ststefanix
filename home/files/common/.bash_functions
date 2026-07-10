@@ -35,6 +35,36 @@ parse_k8s_ctx() {
 }
 export -f parse_k8s_ctx
 
+# Idempotent PATH modification
+path_prepend() {
+    case ":$PATH:" in
+        *":$1:"*)
+            ;;
+        *)
+            PATH="$1:$PATH"
+            ;;
+    esac
+}
+path_append() {
+    case ":$PATH:" in
+        *":$1:"*)
+            ;;
+        *)
+            PATH="$PATH:$1"
+            ;;
+    esac
+}
+# Move a PATH entry to the front even if it already exists.
+path_promote() {
+    local entry="$1"
+    local old_path=":$PATH:"
+    old_path="${old_path//:$entry:/:}"
+    old_path="${old_path#:}"
+    old_path="${old_path%:}"
+    PATH="$entry${old_path:+:$old_path}"
+}
+
+
 # Dump plist file as json
 plview() {
     for FILE in $@ ; do

@@ -11,7 +11,9 @@
     enableCompletion = true;
     bashrcExtra = ''
       # Some useful helpers managed by nix
-      [[ $- == *i* ]] && source ~/.bash_functions
+      #[[ $- == *i* ]] && source ~/.bash_functions
+      # Always source
+      source ~/.bash_functions
 
       # Decorate prompt with k8s context, cwd, and git branch. Uses exported funcs from ~/.bash_functions
       export PS1="\[\033[06;31m\]\$(parse_k8s_ctx)\[\033[00m\]:\[\033[06;32m\]\u@\h\[\033[00m\]:\[\033[06;34m\]\$(parse_cwd)\[\033[00m\]:\[\033[33m\]\$(parse_git_branch)\[\033[00m\] \$ "
@@ -23,40 +25,63 @@
       # This also requires launchctl setup, see /usr/local/bin/bootconfig.sh
       ulimit -n 16384
 
-      # PATH modifications
+      # PATH modifications using path_prepend/append/path_promote from `~/.bash_functions`
+      # Note that the last promoted entry will be the first in $PATH!
+      # The order is:
+      # - Nix
+      # - Homebrew
+      # - macOS, including path_helper entries
+      # - personal tools
 
-      ## Prefer homebrew tools. This might impact installers and other mechanisms which build on apple specifics
-      PATH="/opt/homebrew/bin:$PATH"
+      # nix-darwin resets PATH in /etc/bashrc after /etc/profile ran macOS path_helper.
+      # Run path_helper here again so fresh login shells and nested login shells see the same macOS PATH entries.
+      if [ -x /usr/libexec/path_helper ]; then
+          eval "$(/usr/libexec/path_helper -s)"
+      fi
+
+      ## Add Homebrew before macOS system paths. Nix profile paths are moved in front below.
+      path_promote "/opt/homebrew/bin"
+
       ### Add some homebrew keg-only paths. These disabled ones are managed by nix
-      #PATH="/opt/homebrew/opt/binutils/bin:$PATH"
-      #PATH="/opt/homebrew/opt/curl/bin:$PATH"
-      #PATH="/opt/homebrew/opt/lsof/bin:$PATH"
-      #PATH="/opt/homebrew/opt/openjdk/bin:$PATH" # handled through MacOS wrapper, does not need to be on PATH
-      # Regular ruby executables
-      PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-      # Ruby executables added by "gem install ..."
-      PATH="/opt/homebrew/lib/ruby/gems/4.0.0/bin:$PATH"
-      #PATH="/opt/homebrew/opt/unzip/bin:$PATH"
-      #PATH="/opt/homebrew/opt/man-db/libexec/bin:$PATH"
+      #path_promote "/opt/homebrew/opt/binutils/bin"
+      #path_promote "/opt/homebrew/opt/curl/bin"
+      #path_promote "/opt/homebrew/opt/lsof/bin"
+      #path_promote "/opt/homebrew/opt/openjdk/bin" # handled through MacOS wrapper, does not need to be on PATH
+
       ### add all the gnubin paths
       for GPATH in /opt/homebrew/opt/*/libexec/gnubin ; do
-          PATH="''${GPATH}:''${PATH}"
+          path_promote "''${GPATH}"
       done
 
-      ## personal bin
-      PATH=''${PATH}:''${HOME}/bin
+      # Regular Ruby executables. Must win over /usr/bin/ruby, but not over Nix.
+      path_promote "/opt/homebrew/opt/ruby/bin"
 
-      ## rust bin (created by homebrew rustup-init
-      PATH=''${PATH}:''${HOME}/.cargo/bin
+      ## Keep Nix profile paths before Homebrew, Ruby, and macOS system paths.
+      path_promote "/nix/var/nix/profiles/default/bin"
+      path_promote "/run/current-system/sw/bin"
+      path_promote "/etc/profiles/per-user/$USER/bin"
+      path_promote "$HOME/.nix-profile/bin"
+
+      ## personal bin
+      path_append "$HOME/bin"
+
+      ## rust bin (created by homebrew rustup-init)
+      path_append "$HOME/.cargo/bin"
 
       ## kubectl krew binaries
-      PATH=''${PATH}:''${HOME}/.krew/bin
+      path_append "$HOME/.krew/bin"
 
       ## commonly used wrapper script dir
-      PATH=''${PATH}:~/.local/bin
+      path_append "$HOME/.local/bin"
 
       ## Obsidian tui
-      PATH=''${PATH}:/Applications/Obsidian.app/Contents/MacOS
+      path_append "/Applications/Obsidian.app/Contents/MacOS"
+
+      # Ruby executables added by "gem install ..."
+      path_append "/opt/homebrew/lib/ruby/gems/4.0.0/bin"
+      # User-installed Ruby gem executables
+      path_append "$HOME/.local/share/gem/ruby/4.0.0/bin"
+
 
       ## finally export
       export PATH
