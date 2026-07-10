@@ -98,7 +98,8 @@ update_rust() {
 update_ruby() {
     # It is crucial not to do "gem update --system". That will destroy the brew-installed system ruby!
     command -v gem
-    gem update
+    # Do not use plain `gem update` because it will mess with brew cellar gems
+    gem update --user-install
 }
 
 log() {
