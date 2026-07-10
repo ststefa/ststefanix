@@ -13,6 +13,8 @@
     azure-cli
     bat
     bc # Basic calculator
+    #bitwarden-desktop # Bitwarden password safe GUI. Compilation fails, using brew
+    #bitwarden-cli # Bitwarden password safe CLI. Using brew
     bottom # A graphical process/system monitor for the terminal
     #caddy # golang config server
     #cmakeMinimal # using brew for compiler-related

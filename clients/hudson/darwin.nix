@@ -4,6 +4,7 @@
     doxygen # required to build gr-osmosdr
     esptool
     hcloud
+    hydra-check # query nix hydra cicd, see https://github.com/nix-community/hydra-check
     typst # Document generator á la TeX
   ];
 

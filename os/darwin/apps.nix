@@ -40,10 +40,10 @@
       #"Core Tunnel" = 1354318707; # Appstore version cannot do advanced things, see https://community.codinn.com/t/core-tunnel-difference-between-codinn-store-and-app-store-versions/4590 . Using cask instead.
       "DuckDuckGo & optional Duck.ai" = 663592361; # Need a dedicated minimal Browser for parallel OIDC Sessions. Install from Appstore to prevent brew/nix problem with changing paths, which conflicts with Apple TCC
       #"EasyFind" = 6739447813; # No longer available on appstore
-      "Free Ruler" = 1483172210;
-      "Gapplin" = 768053424;
-      "HazeOver" = 430798174;
-      "iPreview" = 1519213509;
+      "Free Ruler" = 1483172210; # Visual screen ruler
+      "Gapplin" = 768053424; # SVG viewer
+      "HazeOver" = 430798174; # Screen dimmer
+      "iPreview" = 1519213509; # Enables Quicklook for multiple filetypes
       "com.kagimacOS.Kagi-Search" = 1622835804;
       "Keynote" = 409183694;
       "Meeter" = 1510445899;
@@ -77,6 +77,7 @@
       "bash" # The almighty GNU Bourne Again SHell
       "bash-completion@2" # Bash completion scripts
       "binutils" # GNU binary utilities
+      "bitwarden-cli"
       "boost" # C++ libraries
       "ca-certificates" # Mozilla CA bundle
       "cairo" # dependency of e.g. ffmpeg, ghostscript, gnuradio
@@ -187,6 +188,7 @@
       { name = "bartender"; } # Manage menubar items, disabled because v6.1.0 currently crashing. Installing v5 manually from https://macbartender.com/Bartender5/
       { name = "betterdisplay"; } # Manage external monitors better
       { name = "betterzip"; }
+      { name = "bitwarden"; }
       { name = "camo-studio"; } # Advanced webcam
       { name = "chatgpt"; } # Official ChatGPT desktop client
       { name = "choosy"; } # Customize URL opening behaviour
