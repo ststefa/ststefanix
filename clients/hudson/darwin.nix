@@ -60,7 +60,7 @@
       { name = "gimp"; greedy = true; }
       { name = "handbrake-app"; greedy = true; }
       { name = "hookmark"; greedy = true; }
-      { name = "kicad"; greedy = true; }
+      #{ name = "kicad"; greedy = true; } # too big and not really used
       { name = "libreoffice"; greedy = true; }
       { name = "obs"; greedy = true; }
       { name = "openscad"; greedy = true; }
