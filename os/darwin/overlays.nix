@@ -100,13 +100,14 @@
       # the affected pytest cases and keep the rest of the test suite enabled.
       # The installed package currently comes from python3.14, so override the
       # top-level package instead of a specific Python package set.
-      poetry = prev.poetry.overridePythonAttrs (old: {
-        disabledTests = (old.disabledTests or [ ]) ++ [
-          "test_execute_executes_a_batch_of_operations"
-          "test_execute_prints_warning_for_yanked_package"
-        ];
-        pythonImportsCheck = [ ];
-      });
+      # 2026-08-08 overlay disabled, upstream was fixed
+      #poetry = prev.poetry.overridePythonAttrs (old: {
+      #  disabledTests = (old.disabledTests or [ ]) ++ [
+      #    "test_execute_executes_a_batch_of_operations"
+      #    "test_execute_prints_warning_for_yanked_package"
+      #  ];
+      #  pythonImportsCheck = [ ];
+      #});
 
     })
   ];
