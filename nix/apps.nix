@@ -64,7 +64,7 @@
     k3d # up to date in unstable
     #k3s
     k9s
-    kcat # kafkacat, a client for Kafka
+    #kcat # kafkacat, a client for Kafka. 2026-08-17 disabled because libserdes dep broken
     #kcl-cli # kcl-lsp not available, so using brew for all kcl
     krew # kubectl plugin manager
     kubectl
