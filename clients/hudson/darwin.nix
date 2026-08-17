@@ -21,6 +21,7 @@
 
     brews = [
       "arduino-cli"
+      "artifact-keeper/tap/ak"
       "deno" # Secure runtime for JavaScript
       "ghostscript"
       "glib"
@@ -70,6 +71,7 @@
       { name = "shotcut"; greedy = true; }
       { name = "signal"; greedy = true; }
       { name = "snapmaker-luban"; greedy = true; }
+      { name = "snapmaker-orca"; greedy = true; }
       { name = "subler"; greedy = true; }
       { name = "tor-browser"; greedy = true; }
       { name = "homebrew/cask/transmission"; greedy = true; }

@@ -63,6 +63,7 @@
 
     # Taps *must* be declared here if brews are installed from them. Also for brews installed in host-specific apps!
     taps = [
+      "artifact-keeper/tap"
       "emqx/mqttx"
       "hashicorp/tap"
       "kcl-lang/tap"
