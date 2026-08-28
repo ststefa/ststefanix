@@ -40,6 +40,7 @@
     fzf
     gawk
     #gcc # using brew for compiler-related
+    gh # Github CLI
     git
     git-crypt
     git-agecrypt
@@ -121,6 +122,7 @@
     shellcheck
     shfmt # Shell (and others) formatter
     sipcalc # cli for subnet calculation
+    skopeo # CLI for various operations on container images and image repositories
     socat
     sops
     sphinx
