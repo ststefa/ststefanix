@@ -61,9 +61,9 @@
 
       # 2025-12 fio cannot be built due to libbnd deps, disable it
       # 2026-05-03 overlay disabled, upstream was fixed
-      #libnbd = if prev.stdenv.isDarwin then null else prev.libnbd;
+      #libnbd = if prev.stdenv.hostPlatform.isDarwin then null else prev.libnbd;
       #fio =
-      #  if prev.stdenv.isDarwin then
+      #  if prev.stdenv.hostPlatform.isDarwin then
       #    prev.fio.overrideAttrs (
       #      old:
       #      let
