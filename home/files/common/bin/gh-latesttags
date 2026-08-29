@@ -1,0 +1,27 @@
+#!/bin/bash
+# $Id: 2026-08-28 ststefa $
+# Query latests tags using Github "gh" cli
+
+if (($# != 2)); then
+    echo "Usage: $(basename ${0}) <org> <pkg>, where <org> is the github org and <pkg> the pkg in that org. An org's packages can be browsed at https://github.com/orgs/<org>/packages" >&2
+    exit 1
+fi
+
+ORG="${1}"
+PKG="${2}"
+
+gh api "/orgs/${ORG}/packages/container/${PKG}/versions?per_page=100" --jq '
+    [
+      .[]
+      | {
+          created_at,
+          digest: .name,
+          tags: [
+            .metadata.container.tags[]?
+            | select(startswith("buildcache-") | not)
+          ]
+        }
+      | select(.tags | length > 0)
+    ]
+    | sort_by(.created_at)
+'

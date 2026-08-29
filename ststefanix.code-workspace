@@ -177,6 +177,7 @@
 			"rstcheck",
 			"sccache",
 			"shellenv",
+			"skopeo",
 			"soapyhackrf",
 			"soapyrtlsdr",
 			"soapysdr",
