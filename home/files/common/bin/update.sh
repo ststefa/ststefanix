@@ -27,9 +27,9 @@ update_brew() {
     brew list --versions > "$(roll_file ~/backup/brew_packages.txt)"
     brew tap > "$(roll_file ~/backup/brew_taps.txt)"
 
-    brew update && brew upgrade
+    brew update && brew upgrade --yes
     (( local_rc += $? ))
-    brew upgrade --cask --greedy
+    brew upgrade --cask --greedy --yes
     (( local_rc += $? ))
     brew cleanup
     (( local_rc += $? ))
@@ -109,6 +109,7 @@ log() {
 # Rolls $1 to older version if it exists, preserving three generations.
 # Writes $1 to &1 so it can be chained by the caller
 roll_file() {
+    { set +x; } 2>/dev/null
     if [[ -f "${1}" ]] ; then
         for NUM in 2 1 ; do
             if [[ -f "${1}.${NUM}" ]] ; then
@@ -118,6 +119,7 @@ roll_file() {
         mv "${1}" "${1}.1"
     fi
     echo "$1"
+    set -x
 }
 
 # Dynamically collect list of update functions, identified by regex.
