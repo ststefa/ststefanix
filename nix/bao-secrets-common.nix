@@ -1,11 +1,12 @@
 {
   lib,
   pkgs,
-  os,
+  system,
   username,
 }:
 let
-  isDarwin = os == "darwin";
+  hostPlatform = lib.systems.elaborate { inherit system; };
+  isDarwin = hostPlatform.parsed.kernel.name == "darwin";
   homeDir = if isDarwin then "/Users/${username}" else "/home/${username}";
 in
 {
@@ -13,17 +14,9 @@ in
 
   mkScopeOptions =
     {
-      runtimeDirDefault,
-      pidFileDefault,
-      sinkTokenFileDefault,
       tokenFileDefault,
     }:
     {
-      package = lib.mkOption {
-        type = lib.types.package;
-        default = pkgs.openbao;
-      };
-
       address = lib.mkOption {
         type = lib.types.str;
         default = "https://bao.heldenzeit.net";
@@ -41,34 +34,9 @@ in
         default = "3m";
       };
 
-      runtimeDir = lib.mkOption {
-        type = lib.types.str;
-        default = runtimeDirDefault;
-      };
-
-      pidFile = lib.mkOption {
-        type = lib.types.str;
-        default = pidFileDefault;
-      };
-
-      sinkTokenFile = lib.mkOption {
-        type = lib.types.str;
-        default = sinkTokenFileDefault;
-      };
-
       tokenFile = lib.mkOption {
         type = lib.types.str;
         default = tokenFileDefault;
-      };
-
-      environment = lib.mkOption {
-        type = lib.types.attrsOf lib.types.str;
-        default = { };
-      };
-
-      extraConfig = lib.mkOption {
-        type = lib.types.lines;
-        default = "";
       };
 
       secrets = lib.mkOption {
@@ -88,6 +56,9 @@ in
       cfg,
       name,
       logPrefix,
+      runtimeDir,
+      pidFile,
+      sinkTokenFile,
       extraManagedDirs ? [ ],
       destinationBase ? null,
     }:
@@ -95,7 +66,7 @@ in
       escapeSh = lib.escapeShellArg;
       renderedSecretPaths = lib.mapAttrsToList (
         secretName: secret:
-        "${cfg.runtimeDir}/${secretName}"
+        "${runtimeDir}/${secretName}"
       ) cfg.secrets;
       linkDestinations = lib.mapAttrsToList (
         _secretName: secret:
@@ -112,19 +83,19 @@ in
           null
         else
           {
-            src = "${cfg.runtimeDir}/${secretName}";
+            src = "${runtimeDir}/${secretName}";
             dst = secret.destination;
           }
       ) cfg.secrets;
       linkPairsFiltered = builtins.filter (x: x != null) linkPairs;
       secretDirs = lib.unique (map builtins.dirOf renderedSecretPaths);
       linkDirs = lib.unique (map builtins.dirOf linkDestinations);
-      managedDirs = lib.unique ([ cfg.runtimeDir (builtins.dirOf cfg.sinkTokenFile) ] ++ extraManagedDirs);
+      managedDirs = lib.unique ([ runtimeDir (builtins.dirOf sinkTokenFile) ] ++ extraManagedDirs);
 
       mkBaoTemplateBlock =
         secretName: secret:
         let
-          renderedPath = "${cfg.runtimeDir}/${secretName}";
+          renderedPath = "${runtimeDir}/${secretName}";
         in
         ''
 template {
@@ -139,7 +110,7 @@ EOT
       templateBlocks = lib.concatStringsSep "\n" (lib.mapAttrsToList mkBaoTemplateBlock cfg.secrets);
 
       agentConfig = pkgs.writeText "${name}.hcl" ''
-        pid_file = "${cfg.pidFile}"
+        pid_file = "${pidFile}"
 
         vault {
           address = "${cfg.address}"
@@ -154,7 +125,7 @@ EOT
 
           sink "file" {
             config = {
-              path = "${cfg.sinkTokenFile}"
+              path = "${sinkTokenFile}"
               mode = 0600
             }
           }
@@ -166,8 +137,6 @@ EOT
         }
 
         ${templateBlocks}
-
-        ${cfg.extraConfig}
       '';
 
       envExports =
@@ -175,13 +144,10 @@ EOT
           (
             lib.mapAttrsToList
               (n: v: "export ${n}=${escapeSh v}")
-              (
-                cfg.environment
-                // {
-                  BAO_ADDR = cfg.address;
-                  VAULT_ADDR = cfg.address;
-                }
-              )
+              {
+                BAO_ADDR = cfg.address;
+                VAULT_ADDR = cfg.address;
+              }
           );
 
       runScript = pkgs.writeShellScript name ''
@@ -206,7 +172,7 @@ EOT
           echo "[${logPrefix}] warning: token file not found at ${cfg.tokenFile}"
         fi
         echo "[${logPrefix}] rendering ${toString (builtins.length renderedSecretPaths)} secret file(s)"
-        exec ${cfg.package}/bin/bao agent -log-level=${escapeSh cfg.logLevel} -config=${escapeSh agentConfig}
+        exec ${pkgs.openbao}/bin/bao agent -log-level=${escapeSh cfg.logLevel} -config=${escapeSh agentConfig}
       '';
     in
     {

@@ -1,16 +1,17 @@
 {
   config,
   lib,
-  os,
   pkgs,
+  system,
   username,
   ...
 }:
 let
-  common = import ./bao-secrets-common.nix { inherit lib pkgs os username; };
+  common = import ./bao-secrets-common.nix { inherit lib pkgs system username; };
   cfg = config.ststefanix.baoUserSecrets;
-  isLinux = os == "linux";
-  isDarwin = os == "darwin";
+  hostPlatform = lib.systems.elaborate { inherit system; };
+  isLinux = hostPlatform.parsed.kernel.name == "linux";
+  isDarwin = hostPlatform.parsed.kernel.name == "darwin";
   homeDir = common.homeDir;
 
   isSafeRelativePath =
@@ -20,42 +21,36 @@ let
     && builtins.all (seg: seg != "" && seg != "." && seg != "..") (lib.splitString "/" p);
 
   defaultRuntimeDir = "${homeDir}/.local/run/secrets";
+  defaultPidFile = "${defaultRuntimeDir}/bao-agent-user-secrets.pid";
   defaultSinkTokenFile = "${homeDir}/.local/state/bao/.token";
   scopeOptions = common.mkScopeOptions {
-    runtimeDirDefault = defaultRuntimeDir;
-    pidFileDefault = "${defaultRuntimeDir}/bao-agent-user-secrets.pid";
-    sinkTokenFileDefault = defaultSinkTokenFile;
     tokenFileDefault = "${homeDir}/.vault-token";
   };
   pieces = common.mkAgentPieces {
     inherit cfg;
     name = "bao-agent-user-secrets";
     logPrefix = "bao-agent-user-secrets";
+    runtimeDir = defaultRuntimeDir;
+    pidFile = defaultPidFile;
+    sinkTokenFile = defaultSinkTokenFile;
     extraManagedDirs = lib.optional isDarwin "${homeDir}/Library/Logs";
     destinationBase = homeDir;
   };
-  hasSecrets = pieces.hasSecrets;
 in
 {
   options.ststefanix.baoUserSecrets = {
     inherit (scopeOptions)
-      package
       address
       logLevel
       # User-scoped hosts can override this if they need faster or slower
       # propagation than the shared default from bao-secrets-common.nix.
       staticSecretRenderInterval
-      runtimeDir
-      pidFile
-      sinkTokenFile
       tokenFile
-      environment
-      extraConfig
       secrets
       ;
   };
 
-  config = lib.mkIf hasSecrets (
+  config = lib.mkIf pieces.hasSecrets (
     lib.mkMerge [
       {
         assertions = [

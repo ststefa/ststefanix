@@ -1,23 +1,22 @@
 {
   config,
   lib,
-  os,
   pkgs,
+  system,
   username,
   ...
 }:
 let
-  common = import ./bao-secrets-common.nix { inherit lib pkgs os username; };
+  common = import ./bao-secrets-common.nix { inherit lib pkgs system username; };
   cfg = config.ststefanix.baoSystemSecrets;
-  isLinux = os == "linux";
-  isDarwin = os == "darwin";
+  hostPlatform = lib.systems.elaborate { inherit system; };
+  isLinux = hostPlatform.parsed.kernel.name == "linux";
+  isDarwin = hostPlatform.parsed.kernel.name == "darwin";
 
   defaultRuntimeDir = if isDarwin then "/private/var/run/secrets" else "/run/secrets";
+  defaultPidFile = "${defaultRuntimeDir}/bao-agent-system-secrets.pid";
   defaultSinkTokenFile = if isDarwin then "/private/var/run/bao/.token" else "/run/bao/.token";
   scopeOptions = common.mkScopeOptions {
-    runtimeDirDefault = defaultRuntimeDir;
-    pidFileDefault = "${defaultRuntimeDir}/bao-agent-system-secrets.pid";
-    sinkTokenFileDefault = defaultSinkTokenFile;
     tokenFileDefault = "/etc/bao.token";
   };
 
@@ -26,24 +25,21 @@ let
     inherit cfg;
     name = "bao-agent-system-secrets";
     logPrefix = "bao-agent-system-secrets";
+    runtimeDir = defaultRuntimeDir;
+    pidFile = defaultPidFile;
+    sinkTokenFile = defaultSinkTokenFile;
   };
   managedSystemDirs = pieces.managedDirs;
 in
 {
   options.ststefanix.baoSystemSecrets = {
     inherit (scopeOptions)
-      package
       address
       logLevel
       # System-scoped hosts can override this if they need a different balance
       # between propagation speed and server load than the shared default.
       staticSecretRenderInterval
-      runtimeDir
-      pidFile
-      sinkTokenFile
       tokenFile
-      environment
-      extraConfig
       secrets
       ;
   };
