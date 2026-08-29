@@ -245,8 +245,8 @@ refreshsecrets:
   #!/usr/bin/env bash
   set -eu
 
-  just refreshsecrets-system
   just refreshsecrets-user
+  sudo just refreshsecrets-system
 
 # Build and compare closure against current active generation
 diff:

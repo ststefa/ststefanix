@@ -63,7 +63,7 @@ This keeps content editable as text while preserving declarative composition.
 
 `home.file` definitions are merged by target path; collisions only happen when the same destination is declared twice.
 
-## OpenBao Runtime Secrets (Linux + Darwin)
+## OpenBao Runtime Secrets (only Linux + Darwin, not Win)
 
 `nix/bao-secrets.nix` aggregates two scopes:
 
@@ -111,10 +111,15 @@ Example host config (same schema on Linux and Darwin, split by scope):
 Important:
 - `baoUserSecrets` uses `~/.vault-token` (OpenBao currently keeps Vault-compatible token helper naming; authenticate once as the inventory user via `bao login`)
 - `baoSystemSecrets` uses `/etc/bao.token` (provide a separate root/system token)
+
 Rendered secret files are owned by the account running the scope service: user-owned for `baoUserSecrets`, root-owned for `baoSystemSecrets`.
+
 Model: one OpenBao field -> one rendered file.
-The `3m` default lives in the shared module, so Linux and Darwin behave the same unless a scope overrides it explicitly.
+
+Secrets are refreshed in intervals so that a change to the backend is automatically reflected locally. There is a `3m` default that lives in the shared module, so Linux and Darwin behave the same unless a scope overrides it explicitly.
+
 Static KV secrets are re-polled every `3m` by default via `staticSecretRenderInterval`; override per scope if you need faster or slower propagation.
+
 Scope override means setting the option on `baoUserSecrets` or `baoSystemSecrets` in the host module that owns that scope, for example:
 
 ```nix
@@ -145,6 +150,8 @@ Use `just` as the primary entrypoint:
 - `just diff`: compare current generation with newly built result.
 - `just apply`: switch to the built configuration for current host OS.
 - `just apply-nix-only`: switch configuration without triggering Homebrew auto-update on Darwin.
+- `just gc`: Show profile history
+- `just history`: Wipe profiles older than 30 days and do a nix garbage-collect
 - `just bao-login [args...]`: authenticate to OpenBao and install `/etc/bao.token`.
 - `just bao-login-ststefa`: convenience wrapper for my usual LDAP login.
 - `just refreshsecrets-system`: refresh system-scoped OpenBao secrets (sudo). If no `baoSystemSecrets` are configured for the current host, this is a no-op with an informational message.
@@ -168,7 +175,7 @@ This layout prefers explicit structure over implicit magic:
 This shows how the parts are connected together
 
 ```mermaid
-flowchart LR
+graph LR
   flake["flake.nix"]
   hosts["inventory/hosts.nix"]
 
@@ -186,7 +193,6 @@ flowchart LR
   clients_windows_home["clients/winni/home.nix"]
 
   extra_darwin["os/darwin/system.nix -> merged sudoers fragments"]
-  unreachable_windows["currently not in flake outputs:\nos/windows/{system,apps}.nix\nclients/winni/{common,windows}.nix"]
 
   hosts -->|"darwin hosts"| os_darwin
   hosts -->|"linux hosts"| os_linux
@@ -200,5 +206,4 @@ flowchart LR
   hosts --> home_default
 
   os_darwin --> extra_darwin
-  hosts -.-> unreachable_windows
 ```
