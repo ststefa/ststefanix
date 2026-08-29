@@ -131,7 +131,7 @@
     stern
     stress-ng
     tcpdump
-    terraform # Unfree, takes long to build
+    #terraform # Unfree, takes long to build
     tesseract # OCR engine
     tflint
     tldr
