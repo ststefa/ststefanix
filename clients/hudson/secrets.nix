@@ -7,6 +7,11 @@
         bao_secret_key = "private_keys";
         destination = ".config/sops/age/keys.txt";
       };
+      pushover_conf = {
+        bao_secret = "kv/data/users/stefan/pushover_conf";
+        bao_secret_key = "conf";
+        destination = ".config/pushover.conf";
+      };
       arq2024 = {
         bao_secret = "kv/data/users/stefan/ssh/arq2024";
         bao_secret_key = "priv";
