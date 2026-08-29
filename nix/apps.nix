@@ -122,7 +122,7 @@
     shellcheck
     shfmt # Shell (and others) formatter
     sipcalc # cli for subnet calculation
-    skopeo # CLI for various operations on container images and image repositories
+    skopeo # CLI for various operations on container images and image repositories, e.g. to copy multi-arch images
     socat
     sops
     sphinx
