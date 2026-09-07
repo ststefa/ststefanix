@@ -42,8 +42,10 @@
     #gcc # using brew for compiler-related
     gh # Github CLI
     git
-    git-crypt
     git-agecrypt
+    git-crypt
+    git-filter-repo # Remove files from git history (e.g. secrets)
+    gitleaks # Scan repo history for secrets
     glances # nicer top
     glow # markdown previewer in terminal
     gnugrep
@@ -147,7 +149,7 @@
     watchexec
     wget
     #which # Non-standard version, does not support "-s"
-    xh # httpie clone written in Rust. Faster startup
+    xh # httpie clone written in Rust
     xterm
     xz # File compression tool
     #yapf # using ruff instead
