@@ -7,6 +7,11 @@
         bao_secret_key = "private_keys";
         destination = ".config/sops/age/keys.txt";
       };
+      openstack_secure_yaml = {
+        bao_secret = "kv/data/users/stefan/openstack/secure_yaml";
+        bao_secret_key = "secure_yaml";
+        destination = ".config/openstack/secure.yaml";
+      };
       pushover_conf = {
         bao_secret = "kv/data/users/stefan/pushover_conf";
         bao_secret_key = "conf";
