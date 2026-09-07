@@ -1,0 +1,49 @@
+clouds:
+    # T-Systems Schweiz
+    tsch_rz_t_001:
+        auth:
+            auth_url: 'https://auth.o13bb.otc.t-systems.com/v3'
+            project_name: 'eu-ch_splunk'
+            domain_name: 'tsch_rz_t_001'
+            username: 'ssteine2'
+        region_name: 'eu-ch'
+    tsch_rz_p_001:
+        auth:
+            auth_url: 'https://auth.o13bb.otc.t-systems.com/v3'
+            project_name: 'eu-ch_splunk'
+            domain_name: 'tsch_rz_p_001'
+            username: 'ssteine2'
+        region_name: 'eu-ch'
+    #tsch_rz_t_001-global:
+    #    auth:
+    #        auth_url: 'https://auth.o13bb.otc.t-systems.com/v3'
+    #        project_name: 'eu-ch'
+    #        domain_name: 'tsch_rz_t_001'
+    #        username: 'ssteine2'
+    #    region_name: 'eu-ch'
+    #tsch_rz_p_001-global:
+    #    auth:
+    #        auth_url: 'https://auth.o13bb.otc.t-systems.com/v3'
+    #        project_name: 'eu-ch'
+    #        domain_name: 'tsch_rz_p_001'
+    #        username: 'ssteine2'
+    #    region_name: 'eu-ch'
+    # https://docs.openstack.org/keystone/queens/user/application_credentials.html
+    #tsch_rz_p_001-cred:
+    #    auth:
+    #        auth_url: 'https://auth.o13bb.otc.t-systems.com/v3'
+    #        auth_type: 'v3applicationcredential'
+    #        project_name: 'eu-ch_splunk'
+    #        domain_name: 'tsch_rz_p_001'
+    #    region_name: 'eu-ch'
+
+    # German Edge Cloud (GEC)
+    #gecobs:
+    #    auth:
+    #        auth_url: 'https://identity.optimist.innovo.cloud/v3'
+    #        project_name: 'internal-team-ops_center_observability'
+    #        domain_name: Default
+    #        # The following two are not required (it seems)
+    #        #project_id: 128e51ea12b1424ea640b06b3e6b9b15
+    #        #project_domain_id: default
+    #        username: 'stefan.steinert.ext@german-edge-cloud.io'
