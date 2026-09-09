@@ -234,7 +234,6 @@
       { name = "swiftdefaultappsprefpane"; } # Prefpane to configure default apps for filename extension and Uri schemes
       { name = "telegram"; }
       { name = "transmit"; } # MacOS FTP app
-      { name = "unison-app"; } # Versatile and reliable host-to-host sync
       { name = "visual-studio-code"; }
       { name = "vlc"; } # Universal video player
       #{ name = "whatsapp"; } # Official WhatsApp client. Required for wolaro project
