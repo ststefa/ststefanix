@@ -186,7 +186,7 @@
       { name = "alfred"; } # App launcher with many plugins
       { name = "alt-tab"; } # App switcher
       { name = "apparency"; } # Analyze app signatures
-      { name = "bartender"; } # Manage menubar items, disabled because v6.1.0 currently crashing. Installing v5 manually from https://macbartender.com/Bartender5/
+      { name = "bartender"; } # Manage menubar items
       { name = "betterdisplay"; } # Manage external monitors better
       { name = "betterzip"; }
       { name = "bitwarden"; }
