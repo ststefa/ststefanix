@@ -11,7 +11,8 @@
     atuin # Replacement for a shell history
     awscli2
     azure-cli
-    bat
+    bat # cat clone with syntax highlighting and Git integration
+    bats # Bash Automated Testing System
     bc # Basic calculator
     #bitwarden-desktop # Bitwarden password safe GUI. Compilation fails, using brew
     #bitwarden-cli # Bitwarden password safe CLI. Using brew

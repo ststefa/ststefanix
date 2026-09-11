@@ -38,6 +38,10 @@ build:
 
 # Everyday tasks
 
+# Run shell script tests
+test:
+  bats -p tests
+
 # Update flake inputs to most recent version
 update:
   sudo littlesnitch rulegroup --enable update
