@@ -1,27 +1,81 @@
 #!/bin/bash
 # $Id: 2026-08-28 ststefa $
-# Query latests tags using Github "gh" cli
+# Query latest n tags using Github "gh" cli
 
-if (($# != 2)); then
-    echo "Usage: $(basename ${0}) <org> <pkg>, where <org> is the github org and <pkg> the pkg in that org. An org's packages can be browsed at https://github.com/orgs/<org>/packages" >&2
-    exit 1
+usage() {
+  cat >&2 <<EOF
+Usage: $(basename "${0}") <org> <package> [limit]
+
+Print the newest tagged versions of a GitHub organization container package.
+
+Arguments:
+  org       GitHub organization name.
+  package   Container package name in that organization.
+  limit     Optional number of tagged versions to print. Defaults to 5.
+
+Browse packages at:
+  https://github.com/orgs/<org>/packages?ecosystem=container
+EOF
+}
+
+if (($# < 2 || $# > 3)); then
+  usage
+  exit 1
 fi
 
 ORG="${1}"
 PKG="${2}"
+LIMIT="${3:-5}"
 
-gh api "/orgs/${ORG}/packages/container/${PKG}/versions?per_page=100" --jq '
-    [
-      .[]
-      | {
-          created_at,
-          digest: .name,
-          tags: [
-            .metadata.container.tags[]?
-            | select(startswith("buildcache-") | not)
-          ]
-        }
-      | select(.tags | length > 0)
-    ]
-    | sort_by(.created_at)
-'
+tmp="$(mktemp)"
+trap 'rm -f "${tmp}"' EXIT
+
+page=1
+
+while true ; do
+  if ! json="$(
+    gh api "/orgs/${ORG}/packages/container/${PKG}/versions" \
+      -X GET \
+      -F per_page=100 \
+      -F page="${page}"
+  )"; then
+    exit 1
+  fi
+
+  if ! count="$(jq 'if type == "array" then length else error("expected array") end' <<<"${json}")"; then
+    exit 1
+  fi
+  ((count == 0)) && break
+
+  jq -c '
+    .[]
+    | {
+        created_at,
+        digest: .name,
+        tags: [
+          .metadata.container.tags[]?
+          | select(
+              (
+                startswith("buildcache-")
+                or startswith("sha")
+                or test("^[0-9a-f]{7,40}$")
+              )
+              | not
+            )
+        ]
+      }
+    | select(.tags | length > 0)
+  ' <<<"${json}" >> "${tmp}"
+
+  found="$(wc -l < "${tmp}" | tr -d " ")"
+  ((found >= LIMIT)) && break
+
+  page=$((page + 1))
+done
+
+jq -s --argjson limit "${LIMIT}" '
+  sort_by(.created_at)
+  | reverse
+  | .[:$limit]
+  | sort_by(.created_at)
+' "${tmp}"
