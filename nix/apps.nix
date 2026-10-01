@@ -54,6 +54,7 @@
     gnupg
     gnused
     gnutar
+    go # Go Programming language
     gopls # go language server
     htop # Colored top
     httpie # User-friendly cURL replacement
