@@ -109,6 +109,12 @@
       #  pythonImportsCheck = [ ];
       #});
 
+      # 2026-10-01 recode 3.7.16 segfaults in its Darwin test suite, which
+      # breaks fortune-mod. Keep fortune installed and only skip recode checks.
+      recode = prev.recode.overrideAttrs (_old: {
+        doCheck = false;
+      });
+
     })
   ];
 }
