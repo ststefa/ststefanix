@@ -38,7 +38,8 @@
     fio # Flexible I/O tester
     fortune
     fswatch
-    fzf
+    #fzf # replaced by atuin
+
     gawk
     #gcc # using brew for compiler-related
     gh # Github CLI
@@ -123,6 +124,7 @@
     #ruff # not up to date, use brew
     #rustdesk # not up to date, use brew
     #rustup cleanup on hudson required first
+    secretspec # A very promising approach to secret handling, see <secretspec.dev>
     shellcheck
     shfmt # Shell (and others) formatter
     sipcalc # cli for subnet calculation
