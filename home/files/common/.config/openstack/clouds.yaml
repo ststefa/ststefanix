@@ -1,3 +1,5 @@
+# Secrets are externalized to openbao://users/stefan/openstack/secure_yaml
+
 clouds:
     # T-Systems Schweiz
     tsch_rz_t_001:

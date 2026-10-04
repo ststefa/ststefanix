@@ -2,6 +2,7 @@
 
 { pkgs, ... }:
 {
+  # Common nix packages for all OS's
   environment.systemPackages = with pkgs; [
     age # A simple and secure file encryption tool
     ansible

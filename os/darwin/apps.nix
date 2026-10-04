@@ -2,6 +2,7 @@
 
 { pkgs, ... }: {
 
+  # Darwin-only nix packages. See nix/apps.nix for common packages
   environment.systemPackages = with pkgs; [
     colima # Docker on macOS with Lima
     darwin.trash # cli tool that mimics rm but uses the system trashcan
