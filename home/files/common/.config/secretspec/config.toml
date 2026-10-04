@@ -1,0 +1,6 @@
+#:schema https://secretspec.dev/schema/config.schema.json
+# see https://secretspec.dev/reference/configuration/
+
+[defaults]
+provider = "openbao"
+profile = "development"
