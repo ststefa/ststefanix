@@ -79,7 +79,7 @@
       "bash" # The almighty GNU Bourne Again SHell
       "bash-completion@2" # Bash completion scripts
       "binutils" # GNU binary utilities
-      "bitwarden-cli"
+      "bitwarden-cli@2026.8.0" # needs to be pinned because vaultwarden is behind, see obsidian://adv-uri?vault=notes&uid=2c85773d-2c60-4804-b2f2-964417df7999&filepath=Bitwarden.md
       "boost" # C++ libraries
       "ca-certificates" # Mozilla CA bundle
       "cairo" # dependency of e.g. ffmpeg, ghostscript, gnuradio
