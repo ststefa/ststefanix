@@ -129,6 +129,7 @@
         lib.nameValuePair "${hostName}-nix-only" (
           mkDarwinConfig hostName host [
             {
+              homebrew.enable = lib.mkForce false;
               homebrew.onActivation.autoUpdate = lib.mkForce false;
               homebrew.onActivation.upgrade = lib.mkForce false;
             }
