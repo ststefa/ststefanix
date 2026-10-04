@@ -74,7 +74,7 @@
       { name = "snapmaker-orca"; greedy = true; }
       { name = "subler"; greedy = true; }
       { name = "tor-browser"; greedy = true; }
-      { name = "homebrew/cask/transmission"; greedy = true; }
+      { name = "transmission"; greedy = true; }
       { name = "tunnelblick"; greedy = true; }
       { name = "veracrypt"; greedy = true; }
       #{ name = "vivaldi"; greedy = true; } # Removed because nix-installed Browsers have problems with local-network permissions (because the executable location changes). Using AppStore Browser instead

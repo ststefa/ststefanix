@@ -156,7 +156,7 @@
     #which # Non-standard version, does not support "-s"
     xh # httpie clone written in Rust
     xterm
-    xz # File compression tool
+    xz # File compression tool. Overriden by nix app but left here due to brew dependencies
     #yapf # using ruff instead
     yazi # terminal file manager
     yq # jq for yaml

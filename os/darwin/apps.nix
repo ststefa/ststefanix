@@ -67,14 +67,16 @@
       "artifact-keeper/tap"
       "emqx/mqttx"
       "hashicorp/tap"
+      #"homebrew/services" # deprecated
       "kcl-lang/tap"
       "messense/macos-cross-toolchains"
       "puppetlabs/puppet"
-      #"homebrew/services" # deprecated
+      "steinert/versions" # pinned casks, see /opt/homebrew/Library/Taps/steinert/homebrew-versions
     ];
 
     brews = [
       "at-spi2-core" # Protocol definitions and daemon for D-Bus at-spi
+      "apfel" # Apple Intelligence from the command-line, with OpenAi-compatible API server
       #"atuin" # Improved shell history with sync # Moved to nixpkgs
       "bash" # The almighty GNU Bourne Again SHell
       "bash-completion@2" # Bash completion scripts
@@ -110,10 +112,12 @@
       "hwloc" # Portable abstraction of the hierarchical topology of modern architectures
       #"imagemagick" # using nixpkg instead
       "jfrog-cli" # CLI for Artifactory
+      "ksops" # Flexible Kustomize Plugin for SOPS Encrypted Resources
       "kubeseal" # Client for k8s sealred secrets
       "libnghttp2" # HTTP/2 C Library
       "libde265" # Open h.265 video codec
       "libssh" # C library SSHv1/SSHv2 client and server protocols
+      "links" # Lynx-like WWW browser
       "llvm" # LLVM compiler infrastructure
       "lld" # LLVM linker
       "m4" # Macro processing language
@@ -123,6 +127,7 @@
       "openjdk" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk to attach Apple wrappers. Or add /opt/homebrew/opt/openjdk/bin to PATH to have it invoked directly.
       "openssl@3" # Cryptography and SSL/TLS Toolkit
       "pango" # Framework for layout and rendering of i18n text
+      "podman" # Tool for managing OCI containers and pods
       "ipinfo-cli" # Command-line interface for IPinfo.io
       #"iproute2mac" # using nixpkg instead
       #"k3d" # using nixpkg instead
@@ -156,6 +161,7 @@
       "pixman" # pixel manipulation, dependency
       "pkgconf" # Helper tool for compiler and linker flags
       "python@3.13" # Required by several dependencies. Otherwise would be better managed by uv
+      "python@3.14" # Required by several dependencies. Otherwise would be better managed by uv
       "r" # R data visualization language
       "rav1e" # AV1 video encoder, req. by ffmpeg
       "readline" # Library for command-line editing
@@ -173,6 +179,7 @@
       "unbound" # DNS resolver
       "uv" # python package manager written in Rust
       #"vault-cli" # This is "Jackrabbit FileVault" which has nothing to do with Hashicorp
+      "wasmtime" # Standalone JIT-style runtime for WebAssembly, using Cranelift
       "yt-dlp" # audio/video downloader
       "z3" # High-performance theorem prover
       "zstd" # Zstandard is a real-time compression algorithm
@@ -192,10 +199,11 @@
       { name = "betterzip"; }
       { name = "bitwarden"; }
       { name = "camo-studio"; } # Advanced webcam
-      { name = "chatgpt"; } # Official ChatGPT desktop client
+      { name = "chatgpt"; } # Official ChatGPT desktop client by OpenAI
       { name = "choosy"; } # Customize URL opening behaviour
       { name = "claude"; } # Anthropic's AI desktop client
       #{ name = "claude-code"; } # Integrates with zed. Requires paid subscription
+      { name = "codex"; } # OpenAI vscode plugin
       { name = "context"; } # Model Context Protocol (MCP) debugger
       { name = "core-tunnel"; } # Comprehensive ssh tunnel GUI
       { name = "db-browser-for-sqlite"; }
@@ -203,13 +211,18 @@
       { name = "discord"; }
       { name = "docker-desktop"; }
       { name = "downie"; } # Video downloader, works together with permute
+      { name = "drawio"; }
       { name = "drawpen"; } # Screen annotation tool
+      { name = "easyfind"; } # Somewhat old but still useful search tool
       { name = "elgato-control-center"; }
+      { name = "ente"; } # Ente Photos Library
+      { name = "gpg-suite@nightly"; } # gpg extension for Apple Mail
       { name = "headlamp"; } # Kubernetes dashboard. Must be manually signed using `xattr -dr com.apple.quarantine /Applications/Headlamp.app`
       { name = "hammerspoon"; } # Tap into the MacOS event system
       { name = "imazing"; } # IOS backup tool
       { name = "istat-menus"; }
       { name = "iterm2"; }
+      { name = "karabiner-elements"; } # Input event remapping for keyboard and mouse
       { name = "kubeterm"; } # A snappy k8s ui
       { name = "launchcontrol"; }
       { name = "little-snitch"; }
