@@ -3,21 +3,23 @@
 set -euo pipefail
 
 usage() {
-  cat <<'EOF'
+  cat <<EOF
 Recursively operate on a tree of OpenBao kv-store secrets
 Usage:
   $(basename $0) list <kv-path>
+  $(basename $0) copy [--yes] <source-kv-path> <dest-kv-path>
   $(basename $0) delete [--yes] <kv-path>
 
 Examples:
   $(basename $0) list kv/secretspec/artifactkeeper
+  $(basename $0) copy kv/secretspec/artifactkeeper kv/secretspec/artifactkeeper-copy
+  $(basename $0) copy --yes kv/secretspec/artifactkeeper kv/secretspec/artifactkeeper-copy
   $(basename $0) delete kv/secretspec/artifactkeeper
   $(basename $0) delete --yes kv/secretspec/artifactkeeper
 
 Notes:
   - <kv-path> is the user-facing KV path, not the API path.
-  - delete without --yes is a dry run.
-  - delete --yes uses `bao kv metadata delete`, which removes all versions.
+  - Modifying operations (copy/delete) are dry-run by dafault. Adding a '--yes' performs the modifications
 EOF
 }
 
@@ -86,6 +88,49 @@ delete_tree() {
   fi
 }
 
+copy_tree() {
+  local source_root="$1"
+  local dest_root="$2"
+  local dry_run="$3"
+  local secret
+  local rel_path
+  local dest_path
+  local found=0
+  local tmp_secrets
+  local tmp_data
+
+  [[ "$source_root" != "$dest_root" ]] || die "source and destination must differ"
+
+  tmp_secrets="$(mktemp)"
+  tmp_data="$(mktemp)"
+  trap 'rm -f "$tmp_secrets" "$tmp_data"' RETURN
+
+  walk_tree "$source_root" > "$tmp_secrets"
+
+  while IFS= read -r secret; do
+    [[ -n "$secret" ]] || continue
+    found=1
+
+    rel_path="${secret#"$source_root"}"
+    rel_path="${rel_path#/}"
+    dest_path="$dest_root/$rel_path"
+
+    if [[ "$dry_run" == "true" ]]; then
+      printf 'would copy %s -> %s\n' "$secret" "$dest_path"
+    else
+      printf 'copying %s -> %s\n' "$secret" "$dest_path"
+      bao kv get -format=json "$secret" | jq '.data.data' > "$tmp_data"
+      bao kv put "$dest_path" @"$tmp_data"
+    fi
+  done < "$tmp_secrets"
+
+  if [[ "$found" == "0" ]]; then
+    printf 'no secrets found under %s\n' "$source_root"
+  elif [[ "$dry_run" == "true" ]]; then
+    printf 'note: dry run only; rerun with --yes to copy all listed secrets\n'
+  fi
+}
+
 main() {
   require_cmd bao
   require_cmd jq
@@ -104,6 +149,21 @@ main() {
         exit 2
       }
       walk_tree "$(trim_slashes "$1")"
+      ;;
+    copy)
+      local dry_run="true"
+
+      if [[ "${1:-}" == "--yes" ]]; then
+        dry_run="false"
+        shift
+      fi
+
+      [[ "$#" == "2" ]] || {
+        usage
+        exit 2
+      }
+
+      copy_tree "$(trim_slashes "$1")" "$(trim_slashes "$2")" "$dry_run"
       ;;
     delete)
       local dry_run="true"
