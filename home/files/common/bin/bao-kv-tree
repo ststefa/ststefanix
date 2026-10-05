@@ -1,0 +1,133 @@
+#!/bin/bash
+# $Id: 2026-10-05 ststefa $
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Recursively operate on a tree of OpenBao kv-store secrets
+Usage:
+  $(basename $0) list <kv-path>
+  $(basename $0) delete [--yes] <kv-path>
+
+Examples:
+  $(basename $0) list kv/secretspec/artifactkeeper
+  $(basename $0) delete kv/secretspec/artifactkeeper
+  $(basename $0) delete --yes kv/secretspec/artifactkeeper
+
+Notes:
+  - <kv-path> is the user-facing KV path, not the API path.
+  - delete without --yes is a dry run.
+  - delete --yes uses `bao kv metadata delete`, which removes all versions.
+EOF
+}
+
+die() {
+  printf 'error: %s\n' "$*" >&2
+  exit 1
+}
+
+require_cmd() {
+  command -v "$1" >/dev/null 2>&1 || die "required command not found: $1"
+}
+
+trim_slashes() {
+  local path="$1"
+  path="${path#/}"
+  path="${path%/}"
+  printf '%s\n' "$path"
+}
+
+list_children() {
+  local path="$1"
+  bao kv list -format=json "$path" 2>/dev/null | jq -r '.[]?' || true
+}
+
+walk_tree() {
+  local path="$1"
+  local child
+  local children
+
+  children="$(list_children "$path")"
+  [[ -n "$children" ]] || return 0
+
+  while IFS= read -r child; do
+    [[ -n "$child" ]] || continue
+
+    if [[ "$child" == */ ]]; then
+      walk_tree "${path}/${child%/}"
+    else
+      printf '%s/%s\n' "$path" "$child"
+    fi
+  done <<< "$children"
+}
+
+delete_tree() {
+  local root="$1"
+  local dry_run="$2"
+  local secret
+  local found=0
+
+  while IFS= read -r secret; do
+    [[ -n "$secret" ]] || continue
+    found=1
+
+    if [[ "$dry_run" == "true" ]]; then
+      printf 'would delete %s\n' "$secret"
+    else
+      printf 'deleting %s\n' "$secret"
+      bao kv metadata delete "$secret"
+    fi
+  done < <(walk_tree "$root")
+
+  if [[ "$found" == "0" ]]; then
+    printf 'no secrets found under %s\n' "$root"
+  elif [[ "$dry_run" == "true" ]]; then
+    printf 'note: dry run only; rerun with --yes to delete all listed secrets\n'
+  fi
+}
+
+main() {
+  require_cmd bao
+  require_cmd jq
+
+  local command="${1:-}"
+  [[ -n "$command" ]] || {
+    usage
+    exit 2
+  }
+  shift
+
+  case "$command" in
+    list)
+      [[ "$#" == "1" ]] || {
+        usage
+        exit 2
+      }
+      walk_tree "$(trim_slashes "$1")"
+      ;;
+    delete)
+      local dry_run="true"
+
+      if [[ "${1:-}" == "--yes" ]]; then
+        dry_run="false"
+        shift
+      fi
+
+      [[ "$#" == "1" ]] || {
+        usage
+        exit 2
+      }
+
+      delete_tree "$(trim_slashes "$1")" "$dry_run"
+      ;;
+    -h|--help|help)
+      usage
+      ;;
+    *)
+      usage
+      exit 2
+      ;;
+  esac
+}
+
+main "$@"
