@@ -103,31 +103,88 @@ apply-nix-only:
 
 # Login to OpenBao and place tokens properly. Additional `bao login` args may be supplied.
 bao-login *bao_login_args:
-  #!/usr/bin/env bash
-  set -eu
+    #!/usr/bin/env bash
+    set -euo pipefail
 
-  os="$(just _host-os)"
+    os="$(just _host-os)"
 
-  case "$os" in
-    darwin|linux)
-      echo "Running 'bao login' on ${BAO_ADDR} as user ${USER}"
-      bao login {{bao_login_args}}
-      echo "Installing OpenBao system token to /etc/bao.token (root-only)"
-      sudo install -m 0600 -o root -g wheel "$HOME/.vault-token" /etc/bao.token
-      ;;
-    windows)
-      echo "OpenBao system token install is not supported for windows/home-manager-only targets." >&2
-      exit 1
-      ;;
-    *)
-      echo "Unsupported os '$os' for host '{{HOSTNAME}}'." >&2
-      exit 1
-      ;;
-  esac
+    case "$os" in
+      darwin|linux)
+        echo "Running 'bao login' on ${BAO_ADDR} as user ${USER}"
+        bao login {{bao_login_args}}
+        just _bao-install-system-token
+        ;;
+      windows)
+        echo "OpenBao system token install is not supported for windows/home-manager-only targets." >&2
+        exit 1
+        ;;
+      *)
+        echo "Unsupported os '$os' for host '{{HOSTNAME}}'." >&2
+        exit 1
+        ;;
+    esac
 
-# Convenience target to login with my user
-bao-login-stefan:
-  just bao-login -method=ldap username=stefan
+
+# Login using the external LDAP auth plugin.
+bao-login-ldap username:
+    #!/usr/bin/env bash
+    # A simple "bao login --method=ldap" is no longer possible with bao 2.7+
+    set -euo pipefail
+
+    os="$(just _host-os)"
+
+    case "$os" in
+      darwin|linux)
+        echo "Running LDAP login on ${BAO_ADDR} as user '{{username}}'"
+
+        read -rs -p 'LDAP password: ' ldap_password
+        echo
+
+        token="$(
+          printf '%s' "$ldap_password" |
+            bao write -format=json \
+              "auth/ldap/login/{{username}}" \
+              password=- |
+            jq -er '.auth.client_token'
+        )"
+
+        unset ldap_password
+
+        # Store the token using the configured OpenBao token helper.
+        printf '%s\n' "$token" | bao login -
+
+        unset token
+
+        just _bao-install-system-token
+        ;;
+      windows)
+        echo "OpenBao system token install is not supported for windows/home-manager-only targets." >&2
+        exit 1
+        ;;
+      *)
+        echo "Unsupported os '$os' for host '{{HOSTNAME}}'." >&2
+        exit 1
+        ;;
+    esac
+
+
+# Install the current OpenBao token for system services.
+_bao-install-system-token:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    os="$(just _host-os)"
+
+    echo "Installing OpenBao system token to /etc/bao.token (root-only)"
+
+    case "$os" in
+      darwin)
+        sudo install -m 0600 -o root -g wheel "$HOME/.vault-token" /etc/bao.token
+        ;;
+      linux)
+        sudo install -m 0600 -o root -g root "$HOME/.vault-token" /etc/bao.token
+        ;;
+    esac
 
 # Force an immediate refresh of system-level OpenBao secrets (requires sudo)
 refreshsecrets-system:
