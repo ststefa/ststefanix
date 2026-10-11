@@ -2,5 +2,10 @@
 # see https://secretspec.dev/reference/configuration/
 
 [defaults]
-provider = "openbao"
-profile = "development"
+provider = "keyring"
+profile = "default"
+
+# Default provider for projects using `providers = ["developer"]`
+[defaults.providers]
+#developer = "keyring://"
+developer = "openbao://bao.heldenzeit.net/kv"
