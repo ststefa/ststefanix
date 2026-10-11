@@ -8,12 +8,12 @@
 		"version": "2.0.0",
 		"tasks": [
 			{
+				"label": "just: history",
 				"type": "shell",
 				"command": "just",
 				"args": [
 					"history"
 				],
-				"label": "just: history",
 				"problemMatcher": [
 					"$tsc"
 				],
@@ -48,12 +48,12 @@
 				}
 			},
 			{
+				"label": "just: update-flake",
 				"type": "shell",
 				"command": "just",
 				"args": [
 					"update-flake"
 				],
-				"label": "just: update-flake",
 				"problemMatcher": [
 					"$tsc"
 				],
@@ -64,19 +64,19 @@
 				}
 			},
 			{
+				"label": "just: apply-nix-only",
 				"type": "shell",
 				"command": "just",
 				"args": [
-					"apply-flake"
+					"apply-nix-only"
 				],
-				"label": "just: apply-flake",
 				"problemMatcher": [
 					"$tsc"
 				],
 				"presentation": {
 					"panel": "dedicated",
 					"showReuseMessage": false,
-					"clear": false
+					"clear": true
 				}
 			}
 		]
@@ -85,6 +85,7 @@
 		"cSpell.words": [
 			"aldente",
 			"alfred",
+			"apfel",
 			"apparency",
 			"arduino",
 			"asciinema",
@@ -112,6 +113,7 @@
 			"dymo",
 			"elgato",
 			"emqx",
+			"ente",
 			"ffplay",
 			"ffprobe",
 			"fftw",
@@ -140,6 +142,7 @@
 			"jfrog",
 			"Kagi",
 			"kagimac",
+			"karabiner",
 			"kicad",
 			"kubelogin",
 			"kubeseal",
@@ -169,6 +172,7 @@
 			"pdfminer",
 			"pihole",
 			"pmset",
+			"prek",
 			"pypirc",
 			"qlmarkdown",
 			"qlstephen",

@@ -97,6 +97,7 @@
     pdfminer # PDF parser and analyzer
     # pipx # disabled in favor of "uv tool"
     poetry # python package manager
+    prek # a git pre-commit tool written in rust
     pstree
     psutils
     pv
