@@ -81,14 +81,14 @@
       "bash" # The almighty GNU Bourne Again SHell
       "bash-completion@2" # Bash completion scripts
       "binutils" # GNU binary utilities
-      "bitwarden-cli@2026.8.0" # needs to be pinned because vaultwarden is behind, see obsidian://adv-uri?vault=notes&uid=2c85773d-2c60-4804-b2f2-964417df7999&filepath=Bitwarden.md
+      "bitwarden-cli" # Might need to be pinned if vaultwarden is behind, see obsidian://adv-uri?vault=notes&uid=2c85773d-2c60-4804-b2f2-964417df7999&filepath=Bitwarden.md
       "boost" # C++ libraries
       "ca-certificates" # Mozilla CA bundle
       "cairo" # dependency of e.g. ffmpeg, ghostscript, gnuradio
       "certifi" # Mozilla CA bundle for Python
       "cliclick" # Command line interface for macOS mouse and keyboard events
       "cmake" # Cross-platform make
-      "coder" # Cloud IDE for Developers, "slim" cli-only
+      #"coder" # Cloud IDE for Developers, "slim" cli-only
       #"coder/coder/coder" # Cloud IDE for Developers, cli+server
       "container" # MacOS container system (github.com/apple/container)
       "cpu_features" # Cross platform C99 library to get cpu features at runtime
@@ -125,7 +125,7 @@
       "mdp" # Command-line based markdown presentation tool
       "nettle" # Low-level cryptographic library
       "openjdk" # To activate: sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk to attach Apple wrappers. Or add /opt/homebrew/opt/openjdk/bin to PATH to have it invoked directly.
-      "openssl@3" # Cryptography and SSL/TLS Toolkit
+      "openssl" # Cryptography and SSL/TLS Toolkit
       "pango" # Framework for layout and rendering of i18n text
       "podman" # Tool for managing OCI containers and pods
       "ipinfo-cli" # Command-line interface for IPinfo.io
@@ -154,7 +154,6 @@
       "ollama" # Command-line tool for running large language models
       "openldap" # dependency of lighttpd
       "open-mpi" # High performance message passing library, dependency of fftw, gnuradio, hackrf and soapyhackrf
-      #"openssl@3" # dependency of e.g. vault-cli
       "openssh" # OpenSSH client and server
       "pandoc" # Swiss-army knife of markup format conversion
       # "pipx" # using uv instead

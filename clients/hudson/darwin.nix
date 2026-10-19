@@ -50,7 +50,7 @@
       { name = "audacity"; greedy = true; }
       { name = "blender"; greedy = true; }
       { name = "calibre"; greedy = true; }
-      { name = "dymo-connect"; greedy = true; }
+      #{ name = "dymo-connect"; greedy = true; } # Old Version 1.6.1 which requires Rosetta. Get 1.6.3+ from <https://www.dymo.de/support?cfid=online-support> instead
       { name = "google-chrome"; greedy = true; }
       { name = "gqrx"; greedy = true; }
       { name = "element"; greedy = true; }
