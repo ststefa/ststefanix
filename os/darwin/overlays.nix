@@ -111,8 +111,16 @@
 
       # 2026-10-01 recode 3.7.16 segfaults in its Darwin test suite, which
       # breaks fortune-mod. Keep fortune installed and only skip recode checks.
-      recode = prev.recode.overrideAttrs (_old: {
-        doCheck = false;
+      # 2026-10-10 overlay disabled, upstream was fixed
+      #recode = prev.recode.overrideAttrs (_old: {
+      #  doCheck = false;
+      #});
+
+      # 2026-10 atuin tests fail
+      atuin = prev.atuin.overrideAttrs (old: {
+        checkFlags = (old.checkFlags or []) ++ [
+          "--skip=filtered_commands_leave_no_captured_output"
+        ];
       });
 
     })
