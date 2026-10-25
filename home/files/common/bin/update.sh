@@ -34,15 +34,32 @@ update_brew() {
     brew cleanup
     (( local_rc += $? ))
 
+    echo "Cleaning up brew cache"
+    local cache_dir link target file file_size
+    local deleted_count=0 deleted_bytes=0
     cache_dir="$(brew --cache)" || return 1
-    find "${cache_dir}" -type l -mtime +14 | while read -r link; do
+    while IFS= read -r -d '' link; do
         target="$(readlink "${link}")"
         case "${target}" in
             /*) ;;
             *) target="$(dirname "${link}")/${target}" ;;
         esac
-        rm -f -- "${link}" "${target}"
-    done
+        for file in "${link}" "${target}"; do
+            [[ -e "${file}" || -L "${file}" ]] || continue
+            file_size="$(stat -c %s -- "${file}" 2>/dev/null || stat -f %z -- "${file}")" || {
+                local_rc=1
+                continue
+            }
+            if rm -f -- "${file}"; then
+                (( deleted_count += 1 ))
+                (( deleted_bytes += file_size ))
+            else
+                local_rc=1
+            fi
+        done
+    done < <(find "${cache_dir}" -type l -mtime +14 -print0)
+    awk -v count="${deleted_count}" -v bytes="${deleted_bytes}" \
+        'BEGIN { printf "Deleted %d files, total size: %.2f MB\n", count, bytes / 1000000 }'
 
     return "${local_rc}"
 }
