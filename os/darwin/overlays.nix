@@ -116,12 +116,13 @@
       #  doCheck = false;
       #});
 
-      # 2026-10 atuin tests fail
-      atuin = prev.atuin.overrideAttrs (old: {
-        checkFlags = (old.checkFlags or []) ++ [
-          "--skip=filtered_commands_leave_no_captured_output"
-        ];
-      });
+      # 2026-10-19 atuin tests fail
+      # 2026-10-25 overlay disabled, upstream was fixed
+      #atuin = prev.atuin.overrideAttrs (old: {
+      #  checkFlags = (old.checkFlags or []) ++ [
+      #    "--skip=filtered_commands_leave_no_captured_output"
+      #  ];
+      #});
 
     })
   ];
