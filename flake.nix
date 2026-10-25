@@ -1,5 +1,5 @@
 {
-  description = "Nix configuration with host -> client -> os modularization";
+  description = "Nix configuration with host -> client -> os modularization and secrets management";
 
   nixConfig = {
     substituters = [
