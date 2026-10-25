@@ -11,7 +11,7 @@
     asciinema # terminal session recorder
     atuin # Replacement for a shell history
     awscli2
-    azure-cli
+    #azure-cli # Disabled for now due to dependency conflicts in the python fabric pkg
     bat # cat clone with syntax highlighting and Git integration
     bats # Bash Automated Testing System
     bc # Basic calculator
@@ -80,7 +80,7 @@
     lefthook # git hook setup helper
     less
     lsof
-    minio-client
+    # minio-client # no longer maintained, replaced with rclone
     #mqttx-cli
     nixd # nix language server, used by vscode nix plugin
     nixfmt
@@ -118,6 +118,7 @@
     #python311Packages.virtualenv
     #python311Packages.wheel
     qemu_kvm
+    rclone
     redis # client and server
     ripgrep
     #rstcheck # python3.11-rstcheck-core-1.0.3.drv tests fail
