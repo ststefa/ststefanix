@@ -1,6 +1,7 @@
-{ pkgs, username, os, ... }:
+{ pkgs, ... }:
 let
-  homeDir = if os == "darwin" then "/Users/${username}" else "/home/${username}";
+  # Expanded by each user's shell, rather than fixed to the primary user's home.
+  homeDir = "$HOME";
   gemHome = "${homeDir}/.local/share/gem/ruby/4.0.0";
 in
 {
@@ -26,6 +27,9 @@ in
     GOTOOLDIR = "${homeDir}/bin";
 
     SOPS_AGE_KEY_FILE = "${homeDir}/.config/sops/age/keys.txt";
+
+    # This is usually "~/Library/Application Support/artifact-keeper"
+    AK_CONFIG_DIR = "${homeDir}/.config/artifact-keeper/";
 
     BAO_ADDR = "https://bao.heldenzeit.net";
     VAULT_ADDR = "https://bao.heldenzeit.net";
