@@ -118,7 +118,7 @@
     #python311Packages.virtualenv
     #python311Packages.wheel
     qemu_kvm
-    rclone
+    rclone # S3 client
     redis # client and server
     ripgrep
     #rstcheck # python3.11-rstcheck-core-1.0.3.drv tests fail

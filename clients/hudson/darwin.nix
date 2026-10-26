@@ -63,9 +63,11 @@
       { name = "hookmark"; greedy = true; }
       #{ name = "kicad"; greedy = true; } # too big and not really used
       { name = "libreoffice"; greedy = true; }
+      { name = "lightcraft"; greedy = true; }
       { name = "obs"; greedy = true; }
       #{ name = "openscad"; greedy = true; } # deprecated since 2026-09-01
       { name = "orcaslicer"; greedy = true; }
+      { name = "photocraft"; greedy = true; }
       { name = "powerphotos"; greedy = true; }
       { name = "puppetlabs/puppet/pdk"; greedy = true; }
       { name = "shotcut"; greedy = true; }
