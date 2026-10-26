@@ -1,0 +1,7 @@
+default_instance = "home"
+output_format = ""
+color = ""
+
+[instances.home]
+url = "https://bin.nom.cx"
+api_version = "v1"
