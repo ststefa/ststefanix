@@ -7,6 +7,16 @@
         bao_secret_key = "private_keys";
         destination = ".config/sops/age/keys.txt";
       };
+      aws_credentials = {
+        bao_secret = "kv/data/users/stefan/aws/credentials";
+        bao_secret_key = "keys";
+        destination = ".aws/credentials";
+      };
+      aws_mfaconfig = {
+        bao_secret = "kv/data/users/stefan/aws/mfaconfig";
+        bao_secret_key = "config";
+        destination = ".aws/mfa-config";
+      };
       openstack_secure_yaml = {
         bao_secret = "kv/data/users/stefan/openstack/secure_yaml";
         bao_secret_key = "secure_yaml";
@@ -17,42 +27,42 @@
         bao_secret_key = "conf";
         destination = ".config/pushover.conf";
       };
-      arq2024 = {
+      ssh_arq2024 = {
         bao_secret = "kv/data/users/stefan/ssh/arq2024";
         bao_secret_key = "priv";
         destination = ".ssh/arq2024";
       };
-      arq2024_pub = {
+      ssh_arq2024_pub = {
         bao_secret = "kv/data/users/stefan/ssh/arq2024";
         bao_secret_key = "pub";
         destination = ".ssh/arq2024.pub";
       };
-      id_rsa = {
+      ssh_id_rsa = {
         bao_secret = "kv/data/users/stefan/ssh/id_rsa";
         bao_secret_key = "priv";
         destination = ".ssh/id_rsa";
       };
-      id_rsa_pub = {
+      ssh_id_rsa_pub = {
         bao_secret = "kv/data/users/stefan/ssh/id_rsa";
         bao_secret_key = "pub";
         destination = ".ssh/id_rsa.pub";
       };
-      id_ed25519 = {
+      ssh_id_ed25519 = {
         bao_secret = "kv/data/users/stefan/ssh/id_ed25519";
         bao_secret_key = "priv";
         destination = ".ssh/id_ed25519";
       };
-      id_ed25519_pub = {
+      ssh_id_ed25519_pub = {
         bao_secret = "kv/data/users/stefan/ssh/id_ed25519";
         bao_secret_key = "pub";
         destination = ".ssh/id_ed25519.pub";
       };
-      pq = {
+      ssh_pq = {
         bao_secret = "kv/data/users/stefan/ssh/pq";
         bao_secret_key = "priv";
         destination = ".ssh/pq";
       };
-      pq_pub = {
+      ssh_pq_pub = {
         bao_secret = "kv/data/users/stefan/ssh/pq";
         bao_secret_key = "pub";
         destination = ".ssh/pq.pub";
