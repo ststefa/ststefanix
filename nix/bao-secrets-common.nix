@@ -152,8 +152,16 @@ EOT
 
       runScript = pkgs.writeShellScript name ''
         set -eu
+        umask 077
         ${envExports}
         ${lib.concatMapStringsSep "\n" (dir: "mkdir -p ${escapeSh dir}") (lib.unique (managedDirs ++ secretDirs ++ linkDirs))}
+        # Unchanged template contents may not be rendered again. Repair modes
+        # of existing secrets explicitly, including when OpenBao is offline.
+        ${lib.concatMapStringsSep "\n" (path: ''
+          if [ -f ${escapeSh path} ]; then
+            chmod 0400 ${escapeSh path}
+          fi
+        '') renderedSecretPaths}
         ${lib.concatMapStringsSep "\n" (pair: "ln -sfn ${escapeSh pair.src} ${escapeSh pair.dst}") (
           map (
             pair:
